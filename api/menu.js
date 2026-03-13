@@ -1,49 +1,83 @@
-const { put, list, head } = require('@vercel/blob');
+const fs = require('fs');
+const path = require('path');
 
 const PIN = process.env.OWNER_PIN || '126019';
-const BLOB_KEY = 'ols-menu.json';
+const TMP_FILE = path.join('/tmp', 'ols-menu.json');
 
-module.exports = async function handler(req, res) {
+// البيانات الأولية — تظهر أول مرة
+const DEFAULT = {
+  categories: [
+    {id:"poke",ar:"بوكي بول",en:"Poke Bowls",order:1},
+    {id:"protein",ar:"بروتين بولز",en:"Protein Bowls",order:2},
+    {id:"tortilla",ar:"تورتيلا",en:"Tortilla",order:3},
+    {id:"salad",ar:"سلطات وأكثر",en:"Salads & More",order:4}
+  ],
+  allergens: {
+    gluten:{icon:"🌾",ar:"جلوتين",en:"Gluten"},
+    dairy:{icon:"🥛",ar:"ألبان",en:"Dairy"},
+    seafood:{icon:"🦐",ar:"مأكولات بحرية",en:"Seafood"},
+    soy:{icon:"🫘",ar:"صويا",en:"Soy"},
+    eggs:{icon:"🥚",ar:"بيض",en:"Eggs"},
+    nuts:{icon:"🥜",ar:"مكسرات",en:"Nuts"},
+    mushroom:{icon:"🍄",ar:"فطر",en:"Mushroom"},
+    fish:{icon:"🐟",ar:"سمك",en:"Fish"}
+  },
+  items: [
+    {id:"zaatar",category:"poke",cookType:"grill",image:"https://framerusercontent.com/images/6jeapKAyTYG2MGHqv9WC80Rsc.jpg?width=800",name:{ar:"زعتر كرانش",en:"Crunchy Za'atar Bowl"},description:{ar:"مكعبات البطاطس المقرمشة، دجاج مشوي، وأرز أبيض، مغطاة بخلطة الزعتر العطرية وزيت الزيتون الغني",en:"Crispy potato cubes, grilled chicken, and white rice topped with aromatic za'atar blend and rich olive oil"},price:29,priceLabel:null,allergens:["gluten"],ingredients:{ar:["أرز أبيض","دجاج مشوي","بطاطس مقرمشة","زعتر","زيت زيتون"],en:["White Rice","Grilled Chicken","Crispy Potato","Za'atar","Olive Oil"]},macros:{cal:520,protein:32,carbs:58,fat:18},available:true,order:1},
+    {id:"shrimp-crunch",category:"poke",cookType:"fry",image:"https://framerusercontent.com/images/FmahIMXUKmUeve91alADLECCrJw.jpg?width=800",name:{ar:"شريمب كرانش",en:"Shrimp Crunch"},description:{ar:"رز أبيض، روبيان مقلي بالبانكو، صوص الصويا، سمسم، مانجو، ملفوف مشكل، رمان، جواكامولي وكراب",en:"White rice, panko fried shrimp, soy sauce, sesame, mango, mixed cabbage, pomegranate, guacamole and crab"},price:38,priceLabel:null,allergens:["seafood","soy","gluten"],ingredients:{ar:["رز سوشي","روبيان مقلي","ملفوف الصويا","رمان","ذرة","خيار","مانجو","جواكامولي","كراب","صوص أولس"],en:["Sushi Rice","Fried Shrimp","Soy Cabbage","Pomegranate","Corn","Cucumber","Mango","Guacamole","Crab","OLS Sauce"]},macros:{cal:580,protein:28,carbs:65,fat:22},available:true,order:2},
+    {id:"shrimp-escape",category:"poke",cookType:"grill",image:"https://framerusercontent.com/images/1YYrLArrKSBp6J5v5sy2YILx0I.jpg?width=800",name:{ar:"شريمب إسكيب",en:"Shrimp Escape"},description:{ar:"رز أبيض، روبيان مشوي، صوص الصويا، سمسم، بروكلي، أناناس، خس، وكراب",en:"White rice, grilled shrimp, soy sauce, sesame seeds, broccoli, pineapple, lettuce, and crab"},price:42,priceLabel:null,allergens:["seafood","soy"],ingredients:{ar:["رز سوشي","روبيان مشوي","أناناس","بروكلي","كراب","خيار","خس","جواكامولي","صوص أولس"],en:["Sushi Rice","Grilled Shrimp","Pineapple","Broccoli","Crab","Cucumber","Lettuce","Guacamole","OLS Sauce"]},macros:{cal:490,protein:34,carbs:55,fat:14},available:true,order:3},
+    {id:"cheat-treat",category:"poke",cookType:"fry",image:"https://framerusercontent.com/images/BK2RLJmqMGZDMdWpCJv878aUrw.jpg?width=800",name:{ar:"تشيت تريت",en:"Cheat Treat"},description:{ar:"رز أبيض، دجاج مقلي بالبانكو، صوص الصويا، سمسم، ذرة، أفوكادو، طماطم كرزية، ملفوف ورمان",en:"White rice, panko fried chicken, soy sauce, sesame, corn, avocado, cherry tomatoes, cabbage and pomegranate"},price:32,priceLabel:null,allergens:["gluten","soy"],ingredients:{ar:["رز سوشي","دجاج مقلي","طماطم شيري","ملفوف","جواكامولي","جزر","خس","رمان","ذرة","صوص أولس"],en:["Sushi Rice","Fried Chicken","Cherry Tomatoes","Cabbage","Guacamole","Carrot","Lettuce","Pomegranate","Corn","OLS Sauce"]},macros:{cal:540,protein:30,carbs:62,fat:19},available:true,order:4},
+    {id:"grilled-gain",category:"poke",cookType:"grill",image:"https://framerusercontent.com/images/r3U4B4mLm6qMBvMy39gZ13vVdiE.jpg?width=800",name:{ar:"قين المشوي",en:"Grilled Gain"},description:{ar:"رز أبيض، دجاج مشوي، صوص الصويا، سمسم، ذرة، أفوكادو، ملفوف مشكل",en:"White rice, grilled chicken, soy sauce, sesame seeds, corn, avocado, mixed cabbage"},price:34,priceLabel:null,allergens:["soy"],ingredients:{ar:["رز سوشي","دجاج مشوي","خس","ملفوف الصويا","ذرة","جزر","رمان","خيار","جواكامولي","صوص أولس"],en:["Sushi Rice","Grilled Chicken","Lettuce","Soy Cabbage","Corn","Carrot","Pomegranate","Cucumber","Guacamole","OLS Sauce"]},macros:{cal:470,protein:36,carbs:52,fat:14},available:true,order:5},
+    {id:"salmon-crunch",category:"poke",cookType:"fry",image:"https://framerusercontent.com/images/KUikxWzBJFHgv8RXpDJDujx3BOk.jpg?width=800",name:{ar:"سالمون كرانش",en:"Salmon Crunch"},description:{ar:"رز أبيض، سالمون مقلي، بروكلي، أناناس، وخس",en:"White rice, fried salmon, broccoli, pineapple, and lettuce"},price:44,priceLabel:null,allergens:["fish","gluten"],ingredients:{ar:["رز سوشي","سالمون مقلي","بروكلي","أناناس","خس"],en:["Sushi Rice","Fried Salmon","Broccoli","Pineapple","Lettuce"]},macros:{cal:510,protein:38,carbs:48,fat:20},available:true,order:6},
+    {id:"buffalo-chicken",category:"protein",cookType:"fry",image:"https://framerusercontent.com/images/AnexMaqiqPVAFvJXcAkEopMY6U.jpg?width=800",name:{ar:"دجاج البافلو",en:"Buffalo Chicken"},description:{ar:"دجاج مقلي مقرمش بصوص بافلو أحمر على الأرز الأبيض بطعم جريء ولاذع",en:"Crispy fried chicken in red buffalo sauce over white rice for a bold, tangy crunch"},price:22,priceLabel:{ar:"يبدأ من",en:"From"},allergens:["gluten","dairy"],ingredients:{ar:["دجاج مقلي","صوص بافلو","ثوم","زيت زيتون","زبدة","توابل مشكلة"],en:["Fried Chicken","Buffalo Sauce","Garlic","Olive Oil","Butter","Mixed Spices"]},macros:{cal:450,protein:35,carbs:38,fat:18},available:true,order:1},
+    {id:"lemon-chicken",category:"protein",cookType:"grill",image:"https://framerusercontent.com/images/teoLWBY4ghQwPmaFN5MMEYWhiY.jpg?width=800",name:{ar:"دجاج الليمون",en:"Lemon Chicken"},description:{ar:"دجاج بصوص ليمون خفيف على الأرز الأبيض بنكهة منعشة ومتوازنة",en:"Tender chicken in light lemon sauce over white rice for a refreshing, balanced flavor"},price:22,priceLabel:{ar:"يبدأ من",en:"From"},allergens:["dairy"],ingredients:{ar:["دجاج مشوي","عصير ليمون","زيت زيتون","ثوم","كريمة طهي","توابل مشكلة"],en:["Grilled Chicken","Lemon Juice","Olive Oil","Garlic","Cooking Cream","Mixed Spices"]},macros:{cal:420,protein:38,carbs:32,fat:16},available:true,order:2},
+    {id:"bbq-chicken",category:"protein",cookType:"grill",image:"https://framerusercontent.com/images/OawS8mfyOvK9IA6F2yzqAGrlc.jpg?width=800",name:{ar:"دجاج الباربكيو",en:"BBQ Chicken"},description:{ar:"دجاج طري بصوص باربكيو غني على الأرز الأبيض بنكهة حلوة ومدخنة",en:"Juicy chicken in rich barbecue sauce over white rice with a sweet, smoky flavor"},price:22,priceLabel:{ar:"يبدأ من",en:"From"},allergens:[],ingredients:{ar:["دجاج مشوي","صوص باربكيو","ثوم","زيت زيتون","توابل مدخنة"],en:["Grilled Chicken","BBQ Sauce","Garlic","Olive Oil","Smoked Spices"]},macros:{cal:440,protein:36,carbs:42,fat:14},available:true,order:3},
+    {id:"mushroom-chicken",category:"protein",cookType:"grill",image:"https://framerusercontent.com/images/U4aJ5G663fpgBmlNped8wPFLY.jpg?width=800",name:{ar:"دجاج الفطر",en:"Mushroom Chicken"},description:{ar:"دجاج بصوص مشروم كريمي على الأرز الأبيض بطعم ناعم ومريح",en:"Chicken in creamy mushroom sauce over white rice for a smooth, comforting flavor"},price:22,priceLabel:{ar:"يبدأ من",en:"From"},allergens:["dairy","mushroom"],ingredients:{ar:["دجاج مشوي","فطر طازج","كريمة طهي","زيت زيتون","ثوم","توابل مشكلة"],en:["Grilled Chicken","Fresh Mushroom","Cooking Cream","Olive Oil","Garlic","Mixed Spices"]},macros:{cal:430,protein:37,carbs:30,fat:18},available:true,order:4},
+    {id:"tortilla-chicken",category:"tortilla",cookType:"grill",image:"https://framerusercontent.com/images/JNmXDwWspFjpW2Dx6AZ7sebn4.jpg?width=800",name:{ar:"تورتيلا الدجاج",en:"Chicken Tortilla"},description:{ar:"دجاج مطهو مع فلفل بارد وتوابل خاصة وصوص محار ولمسة جبن ذائب بطعم غني ومتكامل. يحتوي على فطر",en:"Tender chicken sautéed with bell peppers, special spices, oyster sauce, and melted cheese. Contains mushrooms"},price:29,priceLabel:null,allergens:["gluten","dairy","mushroom"],ingredients:{ar:["دجاج","فطر","جبنة شيدر","جبنة موزاريلا","زيت زيتون","ثوم","فلفل رومي","توابل مشكلة","تورتيلا"],en:["Chicken","Mushroom","Cheddar","Mozzarella","Olive Oil","Garlic","Bell Pepper","Mixed Spices","Tortilla Wrap"]},macros:{cal:480,protein:34,carbs:38,fat:22},available:true,order:1},
+    {id:"tortilla-beef",category:"tortilla",cookType:"grill",image:"https://framerusercontent.com/images/CuEv8FOusByWUjWo9BKf2CST8.jpg?width=800",name:{ar:"تورتيلا اللحم",en:"Beef Tortilla"},description:{ar:"تورتيلا لحم طري مع فلفل بارد وبهارات خاصة وصوص محار ولمسة جبن ذائب. يحتوي على فطر",en:"Juicy beef with bell peppers, special spices, oyster sauce, and melted cheese. Contains mushrooms"},price:33,priceLabel:null,allergens:["gluten","dairy","mushroom"],ingredients:{ar:["لحم بقري","فطر","جبنة شيدر","جبنة موزاريلا","زيت زيتون","ثوم","فلفل رومي","توابل مشكلة","تورتيلا"],en:["Beef","Mushroom","Cheddar","Mozzarella","Olive Oil","Garlic","Bell Pepper","Mixed Spices","Tortilla Wrap"]},macros:{cal:530,protein:38,carbs:36,fat:26},available:true,order:2},
+    {id:"tortilla-buffalo-chicken",category:"tortilla",cookType:"fry",image:"https://framerusercontent.com/images/AiSvrpBvgCDmLgtB2TwQ3PMSDrw.jpg?width=800",name:{ar:"تورتيلا بافلو دجاج",en:"Buffalo Chicken Tortilla"},description:{ar:"تورتيلا محشية بدجاج البافلو الحار مع خس طازج وصلصة الرانش",en:"Tortilla wrap filled with buffalo chicken, fresh lettuce and ranch sauce"},price:32,priceLabel:null,allergens:["gluten","dairy"],ingredients:{ar:["دجاج مقلي","صوص بافلو","خس","رانش","تورتيلا"],en:["Fried Chicken","Buffalo Sauce","Lettuce","Ranch","Tortilla Wrap"]},macros:{cal:510,protein:30,carbs:42,fat:24},available:true,order:3},
+    {id:"tortilla-buffalo-shrimp",category:"tortilla",cookType:"fry",image:"https://framerusercontent.com/images/AG5kxCAXrznGa5x8GbHPH6ekg.jpg?width=800",name:{ar:"تورتيلا بافلو روبيان",en:"Buffalo Shrimp Tortilla"},description:{ar:"تورتيلا محشية بالروبيان البافلو الحار مع خس طازج وصلصة الرانش",en:"Tortilla wrap filled with buffalo shrimp, fresh lettuce and ranch sauce"},price:39,priceLabel:null,allergens:["gluten","seafood","dairy"],ingredients:{ar:["روبيان مقلي","صوص بافلو","خس","رانش","تورتيلا"],en:["Fried Shrimp","Buffalo Sauce","Lettuce","Ranch","Tortilla Wrap"]},macros:{cal:490,protein:28,carbs:40,fat:22},available:true,order:4},
+    {id:"shrimp-salad",category:"salad",cookType:"grill",image:"https://framerusercontent.com/images/1CBOvCxHhCc5juK5z4RZNDlFY.jpg?width=800",name:{ar:"سلطة الروبيان",en:"Shrimp Light Salad"},description:{ar:"روبيان مشوي، خس، خيار، زيتون أسود، عصير ليمون",en:"Grilled shrimp, lettuce, cucumber, black olives, lemon juice"},price:34,priceLabel:null,allergens:["seafood"],ingredients:{ar:["روبيان مشوي","خس","خيار","زيتون أسود","عصير ليمون"],en:["Grilled Shrimp","Lettuce","Cucumber","Black Olives","Lemon Juice"]},macros:{cal:280,protein:30,carbs:12,fat:14},available:true,order:1},
+    {id:"crab-salad",category:"salad",cookType:"fry",image:"https://framerusercontent.com/images/sg7bdIMauqfFy37xckDgnrt3YM.jpg?width=800",name:{ar:"سلطة كرانش كراب",en:"Crab Crunch Salad"},description:{ar:"سلطة كراب كرانش بطبقات من خس مقرمش وخضار مبشورة ومزيج كراب كريمي ولمسة سيراتشا",en:"Fresh crab crunch salad with crisp lettuce, shredded veggies, creamy crab mix, and a hint of spicy sriracha"},price:32,priceLabel:null,allergens:["seafood","eggs"],ingredients:{ar:["كراب","خس","ملفوف","شمندر","جزر","خبز مقرمش","سيراتشا","مايونيز ياباني"],en:["Crab","Lettuce","Cabbage","Beetroot","Carrot","Crispy Bread","Sriracha","Japanese Mayo"]},macros:{cal:320,protein:22,carbs:18,fat:18},available:true,order:2}
+  ]
+};
+
+function getData() {
+  try {
+    if (fs.existsSync(TMP_FILE)) {
+      return JSON.parse(fs.readFileSync(TMP_FILE, 'utf8'));
+    }
+  } catch(e) {}
+  return DEFAULT;
+}
+
+function saveData(d) {
+  fs.writeFileSync(TMP_FILE, JSON.stringify(d));
+}
+
+module.exports = function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type,x-pin');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  try {
-    if (req.method === 'GET') {
-      // جلب البيانات
-      const { blobs } = await list({ prefix: BLOB_KEY });
-      if (!blobs.length) return res.json({ categories: [], allergens: {}, items: [] });
-
-      const response = await fetch(blobs[0].url);
-      const data = await response.json();
-
-      const isAdmin = req.headers['x-pin'] === PIN;
-      if (isAdmin) return res.json(data);
-
-      // عام — فلتر المخفي
-      return res.json({
-        categories: data.categories,
-        allergens: data.allergens,
-        items: (data.items || []).filter(i => i.available !== false)
-      });
-    }
-
-    if (req.method === 'PUT') {
-      if (req.headers['x-pin'] !== PIN) return res.status(403).json({ error: 'denied' });
-
-      const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
-      await put(BLOB_KEY, JSON.stringify(body), {
-        access: 'public',
-        contentType: 'application/json',
-        addRandomSuffix: false
-      });
-      return res.json({ ok: true });
-    }
-
-    res.status(405).end();
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: e.message });
+  if (req.method === 'GET') {
+    const data = getData();
+    const isAdmin = req.headers['x-pin'] === PIN;
+    if (isAdmin) return res.json(data);
+    return res.json({
+      categories: data.categories,
+      allergens: data.allergens,
+      items: (data.items || []).filter(i => i.available !== false)
+    });
   }
+
+  if (req.method === 'PUT') {
+    if (req.headers['x-pin'] !== PIN) return res.status(403).json({error:'denied'});
+    const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    saveData(body);
+    return res.json({ok:true});
+  }
+
+  res.status(405).end();
 };
