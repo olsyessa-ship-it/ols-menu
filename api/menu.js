@@ -1,10 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const PIN = process.env.OWNER_PIN || '126019';
+const PIN = '126019';
 const TMP_FILE = path.join('/tmp', 'ols-menu.json');
 
-// البيانات الأولية — تظهر أول مرة
 const DEFAULT = {
   categories: [
     {id:"poke",ar:"بوكي بول",en:"Poke Bowls",order:1},
@@ -13,14 +12,10 @@ const DEFAULT = {
     {id:"salad",ar:"سلطات وأكثر",en:"Salads & More",order:4}
   ],
   allergens: {
-    gluten:{icon:"🌾",ar:"جلوتين",en:"Gluten"},
-    dairy:{icon:"🥛",ar:"ألبان",en:"Dairy"},
-    seafood:{icon:"🦐",ar:"مأكولات بحرية",en:"Seafood"},
-    soy:{icon:"🫘",ar:"صويا",en:"Soy"},
-    eggs:{icon:"🥚",ar:"بيض",en:"Eggs"},
-    nuts:{icon:"🥜",ar:"مكسرات",en:"Nuts"},
-    mushroom:{icon:"🍄",ar:"فطر",en:"Mushroom"},
-    fish:{icon:"🐟",ar:"سمك",en:"Fish"}
+    gluten:{icon:"🌾",ar:"جلوتين",en:"Gluten"},dairy:{icon:"🥛",ar:"ألبان",en:"Dairy"},
+    seafood:{icon:"🦐",ar:"مأكولات بحرية",en:"Seafood"},soy:{icon:"🫘",ar:"صويا",en:"Soy"},
+    eggs:{icon:"🥚",ar:"بيض",en:"Eggs"},nuts:{icon:"🥜",ar:"مكسرات",en:"Nuts"},
+    mushroom:{icon:"🍄",ar:"فطر",en:"Mushroom"},fish:{icon:"🐟",ar:"سمك",en:"Fish"}
   },
   items: [
     {id:"zaatar",category:"poke",cookType:"grill",image:"https://framerusercontent.com/images/6jeapKAyTYG2MGHqv9WC80Rsc.jpg?width=800",name:{ar:"زعتر كرانش",en:"Crunchy Za'atar Bowl"},description:{ar:"مكعبات البطاطس المقرمشة، دجاج مشوي، وأرز أبيض، مغطاة بخلطة الزعتر العطرية وزيت الزيتون الغني",en:"Crispy potato cubes, grilled chicken, and white rice topped with aromatic za'atar blend and rich olive oil"},price:29,priceLabel:null,allergens:["gluten"],ingredients:{ar:["أرز أبيض","دجاج مشوي","بطاطس مقرمشة","زعتر","زيت زيتون"],en:["White Rice","Grilled Chicken","Crispy Potato","Za'atar","Olive Oil"]},macros:{cal:520,protein:32,carbs:58,fat:18},available:true,order:1},
@@ -43,17 +38,11 @@ const DEFAULT = {
 };
 
 function getData() {
-  try {
-    if (fs.existsSync(TMP_FILE)) {
-      return JSON.parse(fs.readFileSync(TMP_FILE, 'utf8'));
-    }
-  } catch(e) {}
+  try { if (fs.existsSync(TMP_FILE)) return JSON.parse(fs.readFileSync(TMP_FILE, 'utf8')); } catch(e) {}
   return DEFAULT;
 }
 
-function saveData(d) {
-  fs.writeFileSync(TMP_FILE, JSON.stringify(d));
-}
+function saveData(d) { fs.writeFileSync(TMP_FILE, JSON.stringify(d)); }
 
 module.exports = function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -61,10 +50,15 @@ module.exports = function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type,x-pin');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
+  const isAdmin = req.headers['x-pin'] === PIN;
+  const url = req.url || '';
+
   if (req.method === 'GET') {
     const data = getData();
-    const isAdmin = req.headers['x-pin'] === PIN;
-    if (isAdmin) return res.json(data);
+    if (isAdmin || url.includes('/all')) {
+      if (!isAdmin) return res.status(403).json({error:'denied'});
+      return res.json(data);
+    }
     return res.json({
       categories: data.categories,
       allergens: data.allergens,
@@ -73,7 +67,7 @@ module.exports = function handler(req, res) {
   }
 
   if (req.method === 'PUT') {
-    if (req.headers['x-pin'] !== PIN) return res.status(403).json({error:'denied'});
+    if (!isAdmin) return res.status(403).json({error:'denied'});
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
     saveData(body);
     return res.json({ok:true});
