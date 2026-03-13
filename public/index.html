@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>OLS — Menu</title>
+<meta name="description" content="OLS — Our Life Style. Clean food, real flavor.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root{--bk:#000;--wh:#FFF;--ch:#2A2625;--dg:#005240;--sg:#C8D796;--cr:#F5F3EE;--wg:#E8E4DC;--ls:#E8EDD4;--fa:'IBM Plex Sans Arabic',sans-serif;--fe:'DM Sans',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--cr);color:var(--ch);font-family:var(--fa);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body[dir="ltr"]{font-family:var(--fe)}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+.hdr{position:sticky;top:0;z-index:100;background:var(--bk);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--fe);font-weight:700;font-size:26px;color:var(--wh);letter-spacing:-1px;line-height:1}.logo span{display:block;font-size:8.5px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:var(--sg);margin-top:2px}
+.hdr-r{display:flex;gap:8px;align-items:center}
+.lbtn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:var(--wh);padding:7px 16px;border-radius:100px;font-size:13px;font-weight:500;cursor:pointer;transition:all .25s;font-family:var(--fe)}.lbtn:hover{background:rgba(255,255,255,.14)}
+.abtn{background:none;border:none;color:rgba(255,255,255,.25);font-size:18px;cursor:pointer;padding:4px 8px}.abtn:hover{color:var(--sg)}
+.hero{background:var(--bk);padding:32px 20px 48px;text-align:center;position:relative}.hero::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:36px;background:var(--cr);border-radius:36px 36px 0 0}
+.hero-l{font-size:11px;font-weight:500;color:var(--sg);letter-spacing:5px;text-transform:uppercase;margin-bottom:10px;font-family:var(--fe)}
+.hero-t{font-size:26px;font-weight:300;color:var(--wh);line-height:1.45;max-width:300px;margin:0 auto}body[dir="ltr"] .hero-t{font-family:var(--fe)}
+.tw{position:sticky;top:56px;z-index:90;background:var(--cr);padding:14px 0 0}.ts{display:flex;gap:8px;overflow-x:auto;padding:0 20px 14px;scrollbar-width:none}.ts::-webkit-scrollbar{display:none}
+.tb{flex-shrink:0;padding:9px 20px;border-radius:100px;border:1.5px solid rgba(42,38,37,.2);background:transparent;color:var(--ch);font-size:13.5px;font-weight:500;cursor:pointer;transition:all .25s;font-family:inherit;white-space:nowrap}
+.tb.on{background:var(--dg);border-color:var(--dg);color:var(--wh)}.tb:not(.on):hover{background:var(--ch);color:var(--wh)}
+.tl{height:1px;background:rgba(42,38,37,.08);margin:0 20px}
+.ms{padding:24px 16px 0;position:relative;z-index:1}.sl{font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--dg);margin-bottom:16px;padding:0 4px;font-family:var(--fe)}
+.mg{display:grid;grid-template-columns:1fr;gap:14px}
+.mc{background:var(--wh);border-radius:22px;overflow:hidden;cursor:pointer;transition:transform .3s;border:1px solid rgba(42,38,37,.04);animation:fu .5s both}.mc:nth-child(1){animation-delay:.04s}.mc:nth-child(2){animation-delay:.08s}.mc:nth-child(3){animation-delay:.12s}.mc:nth-child(4){animation-delay:.16s}.mc:nth-child(5){animation-delay:.2s}.mc:nth-child(6){animation-delay:.24s}
+.mc:active{transform:scale(.97)}
+.cw{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:var(--wg)}.ci{width:100%;height:100%;object-fit:cover;transition:transform .5s}.mc:hover .ci{transform:scale(1.04)}
+.ck{position:absolute;top:10px;left:10px;padding:4px 10px;border-radius:8px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;font-family:var(--fe);backdrop-filter:blur(8px)}body[dir="ltr"] .ck{left:auto;right:10px}
+.ck.grill{background:rgba(0,82,64,.85);color:var(--wh)}.ck.fry{background:rgba(200,215,150,.9);color:#3a4a10}
+.cb{padding:14px 16px 16px}.cn{font-size:16px;font-weight:600;color:var(--ch);line-height:1.3;margin-bottom:2px}
+.cs{font-size:12.5px;color:rgba(42,38,37,.4);font-family:var(--fe)}body[dir="ltr"] .cs{font-family:var(--fa)}
+.cd{font-size:12.5px;line-height:1.55;color:rgba(42,38,37,.55);margin-top:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cf{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:1px solid rgba(42,38,37,.05)}
+.ca{display:flex;gap:4px}.ad{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;background:var(--cr);position:relative}
+.ad[data-t]:hover::after{content:attr(data-t);position:absolute;bottom:115%;left:50%;transform:translateX(-50%);background:var(--ch);color:var(--wh);padding:3px 10px;border-radius:8px;font-size:10.5px;white-space:nowrap;z-index:5}
+.cp{font-family:var(--fe);font-size:18px;font-weight:700;color:var(--dg);white-space:nowrap}.cp small{font-size:11px;font-weight:400;color:rgba(42,38,37,.35)}
+.mbg{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}.mbg.on{opacity:1;pointer-events:all}
+.msh{position:fixed;bottom:0;left:0;right:0;background:var(--wh);border-radius:28px 28px 0 0;z-index:201;transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);max-height:92vh;overflow-y:auto;overscroll-behavior:contain}.msh.on{transform:translateY(0)}
+.mha{width:38px;height:4px;border-radius:2px;background:rgba(42,38,37,.12);margin:12px auto 0}
+.mx{position:absolute;top:14px;left:14px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:17px;color:var(--ch);z-index:5}body[dir="ltr"] .mx{left:auto;right:14px}
+.miw{width:100%;aspect-ratio:16/10;overflow:hidden;background:var(--wg);border-radius:0 0 24px 24px}.mii{width:100%;height:100%;object-fit:cover}
+.mob{padding:20px 20px 32px}
+.mck{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;font-family:var(--fe);padding:4px 10px;border-radius:8px;margin-bottom:10px}.mck.grill{background:rgba(0,82,64,.08);color:var(--dg)}.mck.fry{background:rgba(200,215,150,.3);color:#5a6a1a}
+.mn{font-size:24px;font-weight:700;color:var(--ch);line-height:1.3}.msu{font-size:14px;color:rgba(42,38,37,.4);margin-top:3px;font-family:var(--fe)}body[dir="ltr"] .msu{font-family:var(--fa)}
+.mde{font-size:14px;line-height:1.7;color:rgba(42,38,37,.6);margin-top:12px}
+.mpr{display:flex;align-items:center;margin-top:16px;padding-top:16px;border-top:1px solid rgba(42,38,37,.06)}.mp{font-family:var(--fe);font-size:28px;font-weight:700;color:var(--dg)}.mp small{font-size:13px;font-weight:400;color:rgba(42,38,37,.35)}
+.st{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--dg);margin:24px 0 12px;font-family:var(--fe)}
+.nug{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.nub{background:var(--cr);border-radius:14px;padding:14px 8px;text-align:center}.nuv{font-family:var(--fe);font-size:21px;font-weight:700;color:var(--ch);line-height:1}.nuu{font-size:10px;color:rgba(42,38,37,.35);font-family:var(--fe)}.nul{font-size:10.5px;color:rgba(42,38,37,.45);margin-top:5px;font-weight:500}
+.al{display:flex;flex-wrap:wrap;gap:8px}.ab{display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--cr);border-radius:100px;font-size:13px;font-weight:500}
+.ic{display:flex;flex-wrap:wrap;gap:6px}.ip{padding:6px 14px;background:rgba(0,82,64,.05);border-radius:100px;font-size:12.5px;color:var(--dg);font-weight:500}
+.ft{background:var(--bk);padding:40px 20px;text-align:center;position:relative;z-index:1;margin-top:40px}.ft::before{content:'';position:absolute;top:-1px;left:0;right:0;height:36px;background:var(--cr);border-radius:0 0 36px 36px}
+.ftl{font-family:var(--fe);font-weight:700;font-size:22px;color:var(--wh);letter-spacing:-1px}.fts{font-size:10px;color:rgba(255,255,255,.35);margin-top:4px;letter-spacing:3px;text-transform:uppercase;font-family:var(--fe)}
+.ftk{display:flex;gap:20px;justify-content:center;margin-top:20px}.ftk a{color:var(--sg);text-decoration:none;font-size:13px;font-weight:500;font-family:var(--fe)}.ftc{font-size:11px;color:rgba(255,255,255,.2);margin-top:20px;font-family:var(--fe)}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(min-width:480px){.mg{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:768px){.mg{grid-template-columns:repeat(2,1fr);gap:16px}.ms{max-width:720px;margin:0 auto}.ts{justify-content:center}.msh{max-width:480px;left:50%;transform:translateX(-50%) translateY(100%)}.msh.on{transform:translateX(-50%) translateY(0)}}
+@media(min-width:1024px){.mg{grid-template-columns:repeat(3,1fr)}.ms{max-width:1000px}}
+
+/* ADMIN */
+.apx{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(12px);z-index:500;display:none;overflow-y:auto}.apx.on{display:block}
+.ap{max-width:500px;margin:0 auto;padding:20px;min-height:100vh}
+.aph{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:20px}
+.apt{color:var(--wh);font-size:18px;font-weight:700}.apclose{background:none;border:none;color:rgba(255,255,255,.4);font-size:22px;cursor:pointer}
+.aplogin{text-align:center;padding:80px 20px}
+.aplogin input{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:var(--wh);padding:14px 20px;border-radius:14px;font-size:20px;text-align:center;width:200px;letter-spacing:8px;font-family:var(--fe);outline:none}
+.aplogin input:focus{border-color:var(--sg)}.aplogin button{display:block;margin:16px auto 0;background:var(--dg);color:var(--wh);border:none;padding:12px 40px;border-radius:100px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit}
+.aperr{color:#f66;font-size:13px;margin-top:10px}
+.apc{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:14px;margin-bottom:10px}
+.apc-h{display:flex;align-items:center;gap:12px}.apc-img{width:52px;height:52px;border-radius:12px;object-fit:cover;background:rgba(255,255,255,.08)}
+.apc-n{color:var(--wh);font-size:14px;font-weight:600;flex:1;min-width:0}.apc-en{color:rgba(255,255,255,.3);font-size:11px;font-family:var(--fe)}
+.apc-p{color:var(--sg);font-family:var(--fe);font-weight:700;font-size:15px}
+.apc-f{display:flex;gap:8px;margin-top:10px}
+.apb{padding:7px 14px;border-radius:10px;border:none;font-size:11.5px;font-weight:600;cursor:pointer;font-family:inherit}
+.apb-e{background:rgba(200,215,150,.12);color:var(--sg)}.apb-h{background:rgba(255,80,80,.08);color:#f88}.apb-s{background:rgba(80,255,80,.08);color:#8f8}
+.apb-add{background:var(--dg);color:var(--wh);width:100%;padding:14px;border-radius:14px;border:none;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px}
+.av{display:inline-block;padding:2px 8px;border-radius:6px;font-size:9px;font-weight:700;margin-left:6px}.av.y{background:rgba(80,255,80,.08);color:#8f8}.av.n{background:rgba(255,80,80,.08);color:#f88}
+
+/* EDIT */
+.emx{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:600;display:none;overflow-y:auto}.emx.on{display:block}
+.em{max-width:500px;margin:20px auto;padding:20px;background:#1a1a1a;border-radius:20px;border:1px solid rgba(255,255,255,.06)}
+.emt{color:var(--wh);font-size:17px;font-weight:700;margin-bottom:16px}
+.er{margin-bottom:10px}.el{color:rgba(255,255,255,.4);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;font-family:var(--fe)}
+.ei{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:var(--wh);padding:10px 14px;border-radius:10px;font-size:14px;font-family:inherit;outline:none}.ei:focus{border-color:var(--sg)}
+textarea.ei{min-height:55px;resize:vertical}
+.er2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.er4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.emsave{background:var(--dg);color:var(--wh);border:none;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;width:100%;margin-top:14px;font-family:inherit}
+.emcancel{background:rgba(255,255,255,.05);color:rgba(255,255,255,.4);border:none;padding:12px;border-radius:14px;font-size:14px;cursor:pointer;width:100%;margin-top:8px;font-family:inherit}
+.eal{display:flex;flex-wrap:wrap;gap:5px;margin-top:3px}
+.ealb{padding:5px 11px;border-radius:100px;border:1px solid rgba(255,255,255,.08);background:transparent;color:rgba(255,255,255,.4);font-size:11px;cursor:pointer;font-family:inherit}.ealb.on{background:rgba(200,215,150,.15);border-color:var(--sg);color:var(--sg)}
+</style>
+</head>
+<body dir="rtl">
+<header class="hdr">
+  <div class="logo">OLS<span>Our Life Style</span></div>
+  <div class="hdr-r"><button class="lbtn" onclick="tgLang()">English</button><button class="abtn" onclick="openAP()">⚙</button></div>
+</header>
+<section class="hero"><div class="hero-l">MENU</div><h1 class="hero-t" id="ht">الأكل الصحي بطعم مختلف</h1></section>
+<nav class="tw"><div class="ts" id="tabs"></div><div class="tl"></div></nav>
+<main id="grid"></main>
+<div class="mbg" id="mbg" onclick="cM()"></div>
+<div class="msh" id="msh"><div class="mha"></div><button class="mx" onclick="cM()">✕</button><div id="mbody"></div></div>
+<footer class="ft"><div class="ftl">OLS</div><div class="fts">Rightly Delicious</div><div class="ftk"><a href="https://www.instagram.com/olsyes/" target="_blank">Instagram</a><a href="https://www.ols.sa">Website</a><a href="https://share.google/WuZBnUt12gPBpYM0S" target="_blank">Location</a></div><div class="ftc">© OLS 2025</div></footer>
+<div class="apx" id="apx"><div class="ap" id="apc"></div></div>
+<div class="emx" id="emx"><div class="em" id="emc"></div></div>
+<script>
+let L='ar',PIN=null,cats=[],alMap={},items=[],raw=[];
+const API='/api/menu';
+function T(o){return o?L==='ar'?o.ar:o.en:''}
+function M(i){return{id:i.id,cat:i.category,cook:i.cookType,img:i.image,ar:{name:i.name.ar,desc:i.description.ar},en:{name:i.name.en,desc:i.description.en},price:i.price,pl:i.priceLabel,al:i.allergens||[],ing:i.ingredients||{ar:[],en:[]},mac:i.macros||{cal:0,protein:0,carbs:0,fat:0},avail:i.available!==false}}
+
+async function load(){
+  try{const r=await fetch(API);const d=await r.json();cats=[{id:'all',ar:'الكل',en:'All'},...d.categories];alMap=d.allergens||{};items=d.items.sort((a,b)=>(a.order||0)-(b.order||0)).map(M);rTabs();rMenu()}
+  catch(e){document.getElementById('grid').innerHTML='<div style="text-align:center;padding:60px 20px;color:rgba(42,38,37,.4)">جاري التحميل...</div>'}
+}
+
+function rTabs(){document.getElementById('tabs').innerHTML=cats.map(c=>`<button class="tb${c.id==='all'?' on':''}" data-c="${c.id}" onclick="fC('${c.id}')">${T(c)}</button>`).join('')}
+
+function rMenu(f='all'){
+  const fl=f==='all'?items:items.filter(i=>i.cat===f);const g={};fl.forEach(i=>{(g[i.cat]=g[i.cat]||[]).push(i)});
+  let h='';cats.filter(c=>c.id!=='all').forEach(c=>{if(!g[c.id])return;h+=`<section class="ms">`;if(f==='all')h+=`<div class="sl">${T(c)}</div>`;h+=`<div class="mg">`;
+  g[c.id].forEach(i=>{const d=T(i),s=L==='ar'?i.en.name:i.ar.name,u=L==='ar'?'ر.س':'SAR',p=i.pl?T(i.pl)+' ':'';
+  h+=`<div class="mc" onclick="oM('${i.id}')"><div class="cw"><img class="ci" src="${i.img}" alt="${d.name}" loading="lazy"><span class="ck ${i.cook}">${i.cook==='grill'?'🔥':'🍳'} ${i.cook.toUpperCase()}</span></div><div class="cb"><div class="cn">${d.name}</div><div class="cs">${s}</div><div class="cd">${d.desc}</div><div class="cf"><div class="ca">${i.al.map(a=>alMap[a]?`<div class="ad" data-t="${T(alMap[a])}">${alMap[a].icon}</div>`:'').join('')}</div><div class="cp">${p}${i.price} <small>${u}</small></div></div></div></div>`});
+  h+=`</div></section>`});document.getElementById('grid').innerHTML=h}
+
+function oM(id){const i=items.find(x=>x.id===id);if(!i)return;const d=T(i),s=L==='ar'?i.en.name:i.ar.name,u=L==='ar'?'ر.س':'SAR',p=i.pl?T(i.pl)+' ':'',ig=T(i.ing);
+const K={c:L==='ar'?'سعرات':'Cal',p:L==='ar'?'بروتين':'Protein',cb:L==='ar'?'كربوهيدرات':'Carbs',f:L==='ar'?'دهون':'Fat',n:L==='ar'?'القيم الغذائية (تقديرية)':'NUTRITION (EST.)',a:L==='ar'?'الحساسيات':'ALLERGENS',g:L==='ar'?'المكونات':'INGREDIENTS'};
+let h=`<div class="miw"><img class="mii" src="${i.img}" alt="${d.name}"></div><div class="mob"><span class="mck ${i.cook}">${i.cook==='grill'?'🔥':'🍳'} ${i.cook.toUpperCase()}</span><div class="mn">${d.name}</div><div class="msu">${s}</div><div class="mde">${d.desc}</div><div class="mpr"><div class="mp">${p}${i.price} <small>${u}</small></div></div><div class="st">${K.n}</div><div class="nug"><div class="nub"><div class="nuv">${i.mac.cal}</div><div class="nuu">kcal</div><div class="nul">${K.c}</div></div><div class="nub"><div class="nuv">${i.mac.protein}<span class="nuu">g</span></div><div class="nul">${K.p}</div></div><div class="nub"><div class="nuv">${i.mac.carbs}<span class="nuu">g</span></div><div class="nul">${K.cb}</div></div><div class="nub"><div class="nuv">${i.mac.fat}<span class="nuu">g</span></div><div class="nul">${K.f}</div></div></div>`;
+if(i.al.length)h+=`<div class="st">${K.a}</div><div class="al">${i.al.map(a=>alMap[a]?`<div class="ab"><span>${alMap[a].icon}</span> ${T(alMap[a])}</div>`:'').join('')}</div>`;
+h+=`<div class="st">${K.g}</div><div class="ic">${ig.map(x=>`<div class="ip">${x}</div>`).join('')}</div></div>`;
+document.getElementById('mbody').innerHTML=h;document.getElementById('mbg').classList.add('on');document.getElementById('msh').classList.add('on');document.body.style.overflow='hidden'}
+
+function cM(){document.getElementById('mbg').classList.remove('on');document.getElementById('msh').classList.remove('on');document.body.style.overflow=''}
+function fC(c){document.querySelectorAll('.tb').forEach(b=>b.classList.toggle('on',b.dataset.c===c));rMenu(c)}
+function tgLang(){L=L==='ar'?'en':'ar';const d=L==='ar'?'rtl':'ltr';document.documentElement.lang=L;document.documentElement.dir=d;document.body.dir=d;document.querySelector('.lbtn').textContent=L==='ar'?'English':'عربي';document.getElementById('ht').textContent=L==='ar'?'الأكل الصحي بطعم مختلف':'Clean food, real flavor';rTabs();rMenu();cM()}
+
+let sy=0;const sh=document.getElementById('msh');
+sh.addEventListener('touchstart',e=>{sy=e.touches[0].clientY},{passive:true});
+sh.addEventListener('touchmove',e=>{if(e.touches[0].clientY-sy>80)cM()},{passive:true});
+
+// ════════════ ADMIN ════════════
+function openAP(){document.getElementById('apx').classList.add('on');document.body.style.overflow='hidden';rAP()}
+function closeAP(){document.getElementById('apx').classList.remove('on');document.body.style.overflow=''}
+
+async function loadAll(){
+  try{const r=await fetch(API+'/all',{headers:{'x-pin':PIN}});if(!r.ok)throw 0;return await r.json()}catch(e){PIN=null;rAP();return null}}
+
+async function saveAll(d){
+  await fetch(API,{method:'PUT',headers:{'Content-Type':'application/json','x-pin':PIN},body:JSON.stringify(d)});
+  await load()}
+
+function rAP(){
+  const el=document.getElementById('apc');
+  if(!PIN){el.innerHTML=`<div class="aph"><div class="apt">🔐 إدارة المنيو</div><button class="apclose" onclick="closeAP()">✕</button></div><div class="aplogin"><div style="color:var(--sg);font-size:14px;margin-bottom:20px">ادخل PIN المالك</div><input type="password" id="pini" maxlength="6" inputmode="numeric" placeholder="••••••"><button onclick="doPin()">دخول</button><div class="aperr" id="perr"></div></div>`;setTimeout(()=>{const i=document.getElementById('pini');if(i)i.focus()},100);return}
+  loadAll().then(d=>{if(!d)return;raw=d.items||[];
+  let h=`<div class="aph"><div class="apt">📋 المنيو (${raw.length})</div><button class="apclose" onclick="closeAP()">✕</button></div>`;
+  raw.forEach((it,i)=>{const av=it.available!==false;
+  h+=`<div class="apc"><div class="apc-h"><img class="apc-img" src="${it.image||''}" alt=""><div style="flex:1;min-width:0"><span class="av ${av?'y':'n'}">${av?'ظاهر':'مخفي'}</span><div class="apc-n">${it.name.ar}</div><div class="apc-en">${it.name.en}</div></div><div class="apc-p">${it.price} ر.س</div></div><div class="apc-f"><button class="apb apb-e" onclick="eItem(${i})">✏️ تعديل</button>${av?`<button class="apb apb-h" onclick="tgAv(${i},false)">🙈 إخفاء</button>`:`<button class="apb apb-s" onclick="tgAv(${i},true)">👁 إظهار</button>`}</div></div>`});
+  h+=`<button class="apb-add" onclick="eItem(-1)">+ إضافة صنف جديد</button>`;
+  el.innerHTML=h})}
+
+async function doPin(){const p=document.getElementById('pini').value;try{const r=await fetch(API+'/all',{headers:{'x-pin':p}});if(!r.ok)throw 0;PIN=p;rAP()}catch(e){document.getElementById('perr').textContent='PIN غلط'}}
+
+async function tgAv(i,v){const d=await loadAll();if(!d)return;d.items[i].available=v;await saveAll(d);rAP()}
+
+const AK=['gluten','dairy','seafood','soy','eggs','nuts','mushroom','fish'];
+let eIdx=-1;
+
+function eItem(i){
+  eIdx=i;
+  const it=i>=0?JSON.parse(JSON.stringify(raw[i])):{id:'i'+Date.now(),category:'poke',cookType:'grill',image:'',name:{ar:'',en:''},description:{ar:'',en:''},price:0,priceLabel:null,allergens:[],ingredients:{ar:[],en:[]},macros:{cal:0,protein:0,carbs:0,fat:0},available:true,order:raw.length+1};
+  const cs=cats.filter(c=>c.id!=='all');
+  let h=`<div class="emt">${i>=0?'✏️ تعديل':'➕ جديد'}</div>
+  <div class="er2"><div class="er"><div class="el">الاسم عربي</div><input class="ei" id="na" value="${it.name.ar}"></div><div class="er"><div class="el">Name EN</div><input class="ei" id="ne" value="${it.name.en}"></div></div>
+  <div class="er"><div class="el">الوصف عربي</div><textarea class="ei" id="da">${it.description.ar}</textarea></div>
+  <div class="er"><div class="el">Description EN</div><textarea class="ei" id="de">${it.description.en}</textarea></div>
+  <div class="er"><div class="el">رابط الصورة</div><input class="ei" id="eimg" value="${it.image}" placeholder="https://..."></div>
+  <div class="er2"><div class="er"><div class="el">السعر SAR</div><input class="ei" id="epr" type="number" value="${it.price}"></div><div class="er"><div class="el">الفئة</div><select class="ei" id="eca">${cs.map(c=>`<option value="${c.id}"${it.category===c.id?' selected':''}>${c.ar}</option>`).join('')}</select></div></div>
+  <div class="er2"><div class="er"><div class="el">الطبخ</div><select class="ei" id="eco"><option value="grill"${it.cookType==='grill'?' selected':''}>🔥 Grill</option><option value="fry"${it.cookType==='fry'?' selected':''}>🍳 Fry</option></select></div><div class="er"><div class="el">بادئة (اختياري)</div><input class="ei" id="epl" value="${it.priceLabel?it.priceLabel.ar:''}" placeholder="يبدأ من"></div></div>
+  <div class="er"><div class="el">الحساسيات</div><div class="eal">${AK.map(a=>`<button class="ealb${it.allergens.includes(a)?' on':''}" data-a="${a}" onclick="this.classList.toggle('on')">${alMap[a]?alMap[a].icon:''} ${a}</button>`).join('')}</div></div>
+  <div class="er"><div class="el">Macros</div><div class="er4"><div><div class="el">Cal</div><input class="ei" id="ecal" type="number" value="${it.macros.cal}"></div><div><div class="el">Pro</div><input class="ei" id="epro" type="number" value="${it.macros.protein}"></div><div><div class="el">Carb</div><input class="ei" id="ecrb" type="number" value="${it.macros.carbs}"></div><div><div class="el">Fat</div><input class="ei" id="efat" type="number" value="${it.macros.fat}"></div></div></div>
+  <div class="er"><div class="el">المكونات عربي (فاصلة)</div><input class="ei" id="eia" value="${(it.ingredients.ar||[]).join('، ')}"></div>
+  <div class="er"><div class="el">Ingredients EN (comma)</div><input class="ei" id="eie" value="${(it.ingredients.en||[]).join(', ')}"></div>
+  <button class="emsave" onclick="saveE()">💾 حفظ</button><button class="emcancel" onclick="closeE()">إلغاء</button>`;
+  document.getElementById('emc').innerHTML=h;document.getElementById('emx').classList.add('on')}
+
+function closeE(){document.getElementById('emx').classList.remove('on')}
+
+async function saveE(){
+  const d=await loadAll();if(!d)return;
+  const pl=document.getElementById('epl').value.trim();
+  const als=Array.from(document.querySelectorAll('.ealb.on')).map(b=>b.dataset.a);
+  const it={id:eIdx>=0?raw[eIdx].id:'i'+Date.now(),category:document.getElementById('eca').value,cookType:document.getElementById('eco').value,image:document.getElementById('eimg').value.trim(),
+    name:{ar:document.getElementById('na').value.trim(),en:document.getElementById('ne').value.trim()},
+    description:{ar:document.getElementById('da').value.trim(),en:document.getElementById('de').value.trim()},
+    price:parseFloat(document.getElementById('epr').value)||0,priceLabel:pl?{ar:pl,en:pl}:null,allergens:als,
+    ingredients:{ar:document.getElementById('eia').value.split(/[،,]/).map(s=>s.trim()).filter(Boolean),en:document.getElementById('eie').value.split(',').map(s=>s.trim()).filter(Boolean)},
+    macros:{cal:+document.getElementById('ecal').value||0,protein:+document.getElementById('epro').value||0,carbs:+document.getElementById('ecrb').value||0,fat:+document.getElementById('efat').value||0},
+    available:true,order:eIdx>=0?(raw[eIdx].order||eIdx+1):d.items.length+1};
+  if(eIdx>=0)d.items[eIdx]=it;else d.items.push(it);
+  await saveAll(d);closeE();rAP()}
+
+load();
+</script>
+</body>
+</html>
