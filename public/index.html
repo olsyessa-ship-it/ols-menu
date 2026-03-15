@@ -276,18 +276,22 @@ async function checkHidden(){
 
 // ═══ ImgBB UPLOAD ═══
 async function uploadImg(file,cb){
+  console.log('uploadImg called, IMGBB_KEY:', IMGBB_KEY ? 'SET ('+IMGBB_KEY.substring(0,4)+'...)' : 'EMPTY');
   if(!IMGBB_KEY){
     alert('⚠️ مفتاح ImgBB غير موجود — حط IMGBB_KEY بالكود');
     cb('');return}
   // Compress image before upload
   const compressed = await compressImg(file, 1200, 0.8);
+  console.log('Compressed:', (compressed.size/1024).toFixed(0)+'KB');
   const form=new FormData();form.append('image',compressed);form.append('key',IMGBB_KEY);
   try{
+    console.log('Uploading to ImgBB...');
     const res=await fetch('https://api.imgbb.com/1/upload',{method:'POST',body:form});
     const j=await res.json();
-    if(j.success){cb(j.data.display_url)}
-    else{console.error('ImgBB error:',j);alert('خطأ في رفع الصورة: '+(j.error?.message||'unknown'));cb('')}
-  }catch(e){console.error('Upload failed:',e);alert('فشل الاتصال بـ ImgBB');cb('')}}
+    console.log('ImgBB response:', j);
+    if(j.success){console.log('✅ URL:', j.data.display_url);cb(j.data.display_url)}
+    else{console.error('ImgBB error:', j);alert('خطأ ImgBB: '+(j.error?.message||JSON.stringify(j)));cb('')}
+  }catch(e){console.error('Upload failed:', e);alert('فشل الاتصال بـ ImgBB: '+e.message);cb('')}}
 
 function compressImg(file, maxW, quality){
   return new Promise(resolve=>{
@@ -310,13 +314,22 @@ function handleImgFile(inp){
   const img=wrap.querySelector('img');
   const ph=wrap.querySelector('.iph');
   const uping=wrap.querySelector('.uping');
+  const status=document.getElementById('imgStatus');
+  if(status)status.textContent='📷 جاري تجهيز الصورة...';
+  if(status)status.style.color='var(--sg)';
   // Preview immediately
   const r=new FileReader();r.onload=e=>{img.src=e.target.result;img.classList.add('on');if(ph)ph.style.display='none';wrap.classList.add('has')};r.readAsDataURL(f);
   // Upload
   if(uping)uping.classList.add('on');
+  if(status)status.textContent='⬆️ جاري الرفع على ImgBB...';
   uploadImg(f,url=>{
     document.getElementById('eimg').value=url;
-    if(uping)uping.classList.remove('on')})}
+    if(uping)uping.classList.remove('on');
+    if(status){
+      if(url&&url.startsWith('http')){status.textContent='✅ تم الرفع بنجاح';status.style.color='#8f8'}
+      else{status.textContent='❌ فشل الرفع';status.style.color='#f66'}
+    }
+  })}
 
 const AK=['gluten','dairy','seafood','soy','eggs','nuts','mushroom','fish'];
 let eIdx=-1;
@@ -331,13 +344,14 @@ function eItem(i){
   <div class="er"><div class="el">الوصف عربي</div><textarea class="ei" id="da">${it.description.ar}</textarea></div>
   <div class="er"><div class="el">Description EN</div><textarea class="ei" id="de">${it.description.en}</textarea></div>
   <div class="er"><div class="el">صورة الصنف${IMGBB_KEY?' (ImgBB)':''}</div>
-    <div class="img-up${hasImg?' has':''}" onclick="this.querySelector('input[type=file]').click()">
+    <div class="img-up${hasImg?' has':''}">
       <div class="iph"${hasImg?' style="display:none"':''}><div class="ico">📷</div><div>اضغط لرفع صورة</div></div>
       <img src="${it.image||''}"${hasImg?' class="on"':''}>
-      <input type="file" accept="image/*" onchange="handleImgFile(this)">
+      <input type="file" accept="image/*" capture="environment" onchange="handleImgFile(this)">
       <div class="uping">جاري الرفع...</div>
     </div>
     <input type="hidden" id="eimg" value="${it.image||''}">
+    <div id="imgStatus" style="font-size:11px;margin-top:4px;color:rgba(255,255,255,.3)"></div>
   </div>
   <div class="er2"><div class="er"><div class="el">السعر SAR</div><input class="ei" id="epr" type="number" value="${it.price}"></div><div class="er"><div class="el">الفئة</div><select class="ei" id="eca">${cs.map(c=>`<option value="${c.id}"${it.category===c.id?' selected':''}>${T(c)}</option>`).join('')}</select></div></div>
   <div class="er2"><div class="er"><div class="el">الطبخ</div><select class="ei" id="eco"><option value="grill"${it.cookType==='grill'?' selected':''}>🔥 Grill</option><option value="fry"${it.cookType==='fry'?' selected':''}>🍳 Fry</option></select></div><div class="er"><div class="el">بادئة (اختياري)</div><input class="ei" id="epl" value="${it.priceLabel?it.priceLabel.ar:''}" placeholder="يبدأ من"></div></div>
