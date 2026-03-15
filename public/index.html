@@ -56,19 +56,27 @@ body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xm
 .ft{background:var(--bk);padding:40px 20px;text-align:center;position:relative;z-index:1;margin-top:40px}.ft::before{content:'';position:absolute;top:-1px;left:0;right:0;height:36px;background:var(--cr);border-radius:0 0 36px 36px}
 .ftl{display:flex;justify-content:center}.ftl img{height:38px;filter:brightness(0) invert(1)}.fts{font-size:10px;color:rgba(255,255,255,.35);margin-top:4px;letter-spacing:3px;text-transform:uppercase;font-family:var(--fe)}
 .ftk{display:flex;gap:20px;justify-content:center;margin-top:20px}.ftk a{color:var(--sg);text-decoration:none;font-size:13px;font-weight:500;font-family:var(--fe)}.ftc{font-size:11px;color:rgba(255,255,255,.2);margin-top:20px;font-family:var(--fe)}
-/* Weight Options */
+/* Weight Options V2 */
 .wo-wrap{margin-top:14px;padding-top:14px;border-top:1px solid rgba(42,38,37,.06)}
-.wo-sec{margin-bottom:14px}
-.wo-hdr{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.wo-type{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--dg);font-family:var(--fe)}
-.wo-lbl{font-size:11.5px;color:rgba(42,38,37,.4);font-weight:500}
-.wo-chips{display:flex;gap:8px;flex-wrap:wrap}
-.wo-chip{flex:1;min-width:80px;padding:10px 8px;border-radius:14px;background:var(--cr);border:1.5px solid rgba(42,38,37,.08);text-align:center;transition:all .2s}
+.wo-sec{margin-bottom:16px}
+.wo-type{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--dg);font-family:var(--fe);margin-bottom:8px}
+.wo-sel{width:100%;padding:10px 14px;border-radius:12px;background:var(--cr);border:1.5px solid rgba(42,38,37,.08);color:var(--ch);font-size:14px;font-weight:500;font-family:inherit;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232A2625' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer;outline:none;margin-bottom:8px}
+.wo-sel:focus{border-color:var(--dg)}
+.wo-chips{display:flex;gap:8px}
+.wo-chip{flex:1;padding:10px 8px;border-radius:14px;background:var(--cr);border:1.5px solid rgba(42,38,37,.08);text-align:center;cursor:pointer;transition:all .2s;user-select:none}
+.wo-chip:active{transform:scale(.96)}
+.wo-chip.on{background:var(--dg);border-color:var(--dg)}
+.wo-chip.on .wo-g{color:var(--wh)}.wo-chip.on .wo-g small{color:rgba(255,255,255,.5)}
+.wo-chip.on .wo-p{color:var(--sg)}.wo-chip.on .wo-p small{color:rgba(255,255,255,.4)}
 .wo-g{font-family:var(--fe);font-size:15px;font-weight:700;color:var(--ch);line-height:1}
 .wo-g small{font-size:10px;font-weight:400;color:rgba(42,38,37,.35)}
 .wo-p{font-family:var(--fe);font-size:12px;color:var(--dg);font-weight:600;margin-top:4px}
 .wo-p small{font-size:9px;font-weight:400;color:rgba(42,38,37,.35)}
-.wo-extras{margin-top:12px;padding:10px 14px;background:rgba(0,82,64,.04);border-radius:12px;border:1px dashed rgba(0,82,64,.12);display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.wo-total{margin-top:14px;padding:14px;background:var(--dg);border-radius:14px;display:flex;align-items:center;justify-content:space-between}
+.wo-total-l{font-size:11px;font-weight:500;color:rgba(255,255,255,.6);font-family:var(--fe)}
+.wo-total-v{font-family:var(--fe);font-size:26px;font-weight:700;color:var(--wh)}
+.wo-total-v small{font-size:11px;font-weight:400;color:rgba(255,255,255,.5)}
+.wo-extras{margin-top:10px;padding:10px 14px;background:rgba(0,82,64,.04);border-radius:12px;border:1px dashed rgba(0,82,64,.12);display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
 .wo-ext-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--dg);font-weight:500}
 .wo-ext-price{font-family:var(--fe);font-weight:700}
 /* Admin Weight Options */
@@ -78,11 +86,11 @@ body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xm
 .awo-toggle span{color:var(--sg);font-size:13px;font-weight:600}
 .awo-sec{margin-top:10px;padding:10px;background:rgba(0,0,0,.15);border-radius:10px}
 .awo-sec-t{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--sg);margin-bottom:8px;font-family:var(--fe)}
-.awo-row{display:flex;gap:6px;align-items:center;margin-bottom:6px}
-.awo-row input{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:var(--wh);padding:8px 10px;border-radius:8px;font-size:13px;font-family:var(--fe);outline:none;text-align:center}
-.awo-row input:focus{border-color:var(--sg)}
-.awo-del{background:rgba(239,68,68,.1);color:#f66;border:none;width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:13px;flex-shrink:0}
-.awo-add{background:rgba(200,215,150,.1);color:var(--sg);border:1px dashed rgba(200,215,150,.3);padding:7px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;width:100%;font-family:inherit;margin-top:2px}
+.awo-grid{display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:4px 6px;align-items:center;font-size:12px}
+.awo-grid .awo-lbl{color:rgba(255,255,255,.35);font-size:10px;font-weight:600;font-family:var(--fe)}
+.awo-grid input{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:var(--wh);padding:8px 6px;border-radius:8px;font-size:13px;font-family:var(--fe);outline:none;text-align:center;width:100%}
+.awo-grid input:focus{border-color:var(--sg)}
+.awo-ptype{color:rgba(255,255,255,.5);font-size:11px;font-weight:600;padding:4px 0}
 @keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @media(min-width:480px){.mg{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:768px){.mg{grid-template-columns:repeat(2,1fr);gap:16px}.ms{max-width:720px;margin:0 auto}.ts{justify-content:center}.msh{max-width:480px;left:50%;transform:translateX(-50%) translateY(100%)}.msh.on{transform:translateX(-50%) translateY(0)}}
@@ -173,6 +181,10 @@ textarea.ei{min-height:55px;resize:vertical}
 <script>
 let L='en',PIN=null,cats=[],alMap={},items=[],raw=[];
 const API='/api/menu';
+const WO_CARBS=[{id:'white-rice',ar:'أرز أبيض',en:'White Rice'},{id:'brown-rice',ar:'أرز بني',en:'Brown Rice'},{id:'potato',ar:'بطاطس',en:'Potato'},{id:'sweet-wedges',ar:'ويجز حلوة',en:'Sweet Wedges'},{id:'regular-wedges',ar:'ويجز عادية',en:'Regular Wedges'}];
+const WO_PROTEINS=[{id:'chicken',ar:'دجاج',en:'Chicken'},{id:'shrimp',ar:'روبيان',en:'Shrimp'},{id:'beef',ar:'لحم',en:'Beef'}];
+const WO_GRAMS=[100,150,200];
+let woData=null,woState={carbGrams:100,proType:'chicken',proGrams:100};
 function T(o){return o?L==='ar'?o.ar:o.en:''}
 function M(i){return{id:i.id,cat:i.category,cook:i.cookType,img:i.image,ar:{name:i.name.ar,desc:i.description.ar},en:{name:i.name.en,desc:i.description.en},price:i.price,pl:i.priceLabel,al:i.allergens||[],ing:i.ingredients||{ar:[],en:[]},mac:i.macros||{cal:0,protein:0,carbs:0,fat:0},avail:i.available!==false,wo:i.weightOptions||null}}
 
@@ -192,29 +204,25 @@ function rMenu(f='all'){
 
 function oM(id){const i=items.find(x=>x.id===id);if(!i)return;const d=T(i),s=L==='ar'?i.en.name:i.ar.name,u=L==='ar'?'ر.س':'SAR',p=i.pl?T(i.pl)+' ':'',ig=T(i.ing);
 const K={c:L==='ar'?'سعرات':'Cal',p:L==='ar'?'بروتين':'Protein',cb:L==='ar'?'كربوهيدرات':'Carbs',f:L==='ar'?'دهون':'Fat',n:L==='ar'?'القيم الغذائية (تقديرية)':'NUTRITION (EST.)',a:L==='ar'?'الحساسيات':'ALLERGENS',g:L==='ar'?'المكونات':'INGREDIENTS'};
-const hasWo=i.wo&&i.wo.enabled;
+const hasWo=i.wo&&i.wo.enabled&&i.wo.carb&&i.wo.protein;
 let h=`<div class="miw"><img class="mii" src="${i.img}" alt="${d.name}"></div><div class="mob"><span class="mck ${i.cook}">${i.cook==='grill'?'🔥':'🍳'} ${i.cook.toUpperCase()}</span><div class="mn">${d.name}</div><div class="msu">${s}</div><div class="mde">${d.desc}</div>`;
 if(hasWo){
+  woData=i.wo;woState={carbGrams:100,proType:'chicken',proGrams:100};
   const woU=L==='ar'?'ر.س':'SAR';
-  const carbL=i.wo.carb&&i.wo.carb.label?T(i.wo.carb.label):'';
-  const proL=i.wo.protein&&i.wo.protein.label?T(i.wo.protein.label):'';
+  const cOpts=WO_CARBS.map(c=>`<option value="${c.id}">${T(c)}</option>`).join('');
+  const pOpts=WO_PROTEINS.map(p=>`<option value="${p.id}">${T(p)}</option>`).join('');
+  const defCarbP=i.wo.carb[100]||0;const defProP=(i.wo.protein.chicken||{})[100]||0;const defTotal=defCarbP+defProP;
   h+=`<div class="wo-wrap">`;
-  if(i.wo.carb&&i.wo.carb.options&&i.wo.carb.options.length){
-    h+=`<div class="wo-sec"><div class="wo-hdr"><span class="wo-type">${L==='ar'?'كارب':'CARB'}</span><span class="wo-lbl">${carbL}</span></div><div class="wo-chips">`;
-    i.wo.carb.options.forEach(o=>{h+=`<div class="wo-chip"><div class="wo-g">${o.grams}<small>g</small></div><div class="wo-p">${o.price} <small>${woU}</small></div></div>`});
-    h+=`</div></div>`;
-  }
-  if(i.wo.protein&&i.wo.protein.options&&i.wo.protein.options.length){
-    h+=`<div class="wo-sec"><div class="wo-hdr"><span class="wo-type">${L==='ar'?'بروتين':'PROTEIN'}</span><span class="wo-lbl">${proL}</span></div><div class="wo-chips">`;
-    i.wo.protein.options.forEach(o=>{h+=`<div class="wo-chip"><div class="wo-g">${o.grams}<small>g</small></div><div class="wo-p">${o.price} <small>${woU}</small></div></div>`});
-    h+=`</div></div>`;
-  }
-  const extVeg=L==='ar'?'خضار':'Vegetables';
-  const extSauce=L==='ar'?'صوص':'Sauce';
-  const extPer=L==='ar'?'لكل إضافة':'per extra';
+  h+=`<div class="wo-sec"><div class="wo-type">🍚 ${L==='ar'?'كارب':'CARB'}</div><select class="wo-sel" onchange="woSelType(this,'carb')">${cOpts}</select><div class="wo-chips">`;
+  WO_GRAMS.forEach(g=>{const pr=i.wo.carb[g]||0;h+=`<div class="wo-chip${g===100?' on':''}" data-sec="carb" data-g="${g}" onclick="woSel('carb',${g})"><div class="wo-g">${g}<small>g</small></div><div class="wo-p">${pr} <small>${woU}</small></div></div>`});
+  h+=`</div></div>`;
+  h+=`<div class="wo-sec"><div class="wo-type">🥩 ${L==='ar'?'بروتين':'PROTEIN'}</div><select class="wo-sel" id="woProSel" onchange="woSelType(this,'pro')">${pOpts}</select><div class="wo-chips">`;
+  WO_GRAMS.forEach(g=>{const pr=(i.wo.protein.chicken||{})[g]||0;h+=`<div class="wo-chip${g===100?' on':''}" data-sec="pro" data-g="${g}" onclick="woSel('pro',${g})"><div class="wo-g">${g}<small>g</small></div><div class="wo-p" id="woProP${g}">${pr} <small>${woU}</small></div></div>`});
+  h+=`</div></div>`;
+  h+=`<div class="wo-total"><div class="wo-total-l">${L==='ar'?'المجموع':'TOTAL'}</div><div class="wo-total-v" id="woTotalV">${defTotal} <small>${woU}</small></div></div>`;
+  const extVeg=L==='ar'?'خضار':'Vegetables';const extSauce=L==='ar'?'صوص':'Sauce';const extPer=L==='ar'?'لكل إضافة':'per extra';
   h+=`<div class="wo-extras"><div class="wo-ext-item">🥬 ${extVeg} <span class="wo-ext-price">+3 ${woU}</span> <span style="font-size:10px;color:rgba(42,38,37,.35)">${extPer}</span></div><div class="wo-ext-item">🫙 ${extSauce} <span class="wo-ext-price">+3 ${woU}</span> <span style="font-size:10px;color:rgba(42,38,37,.35)">${extPer}</span></div></div>`;
   h+=`</div>`;
-  h+=`<div class="mpr"><div class="mp">${p}${i.price} <small>${u}</small></div></div>`;
 } else {
   h+=`<div class="mpr"><div class="mp">${p}${i.price} <small>${u}</small></div></div>`;
 }
@@ -226,6 +234,23 @@ document.getElementById('mbody').innerHTML=h;document.getElementById('mbg').clas
 function cM(){document.getElementById('mbg').classList.remove('on');document.getElementById('msh').classList.remove('on');document.body.style.overflow=''}
 function fC(c){document.querySelectorAll('.tb').forEach(b=>b.classList.toggle('on',b.dataset.c===c));rMenu(c)}
 function tgLang(){L=L==='ar'?'en':'ar';const d=L==='ar'?'rtl':'ltr';document.documentElement.lang=L;document.documentElement.dir=d;document.body.dir=d;document.querySelector('.lbtn').textContent=L==='ar'?'EN':'عربي';document.getElementById('ht').textContent=L==='ar'?'أكل نظيف وطعم مختلف':'Clean food, real flavor';rTabs();rMenu();cM()}
+
+function woSel(sec,g){
+  if(sec==='carb')woState.carbGrams=g;else woState.proGrams=g;
+  document.querySelectorAll(`.wo-chip[data-sec="${sec}"]`).forEach(c=>{c.classList.toggle('on',+c.dataset.g===g)});
+  woCalc()}
+function woSelType(sel,sec){
+  if(sec==='pro'){
+    woState.proType=sel.value;
+    const u=L==='ar'?'ر.س':'SAR';
+    WO_GRAMS.forEach(g=>{const el=document.getElementById('woProP'+g);if(el){const pr=(woData.protein[sel.value]||{})[g]||0;el.innerHTML=pr+' <small>'+u+'</small>'}});
+    woCalc()}}
+function woCalc(){
+  if(!woData)return;
+  const cP=woData.carb[woState.carbGrams]||0;
+  const pP=(woData.protein[woState.proType]||{})[woState.proGrams]||0;
+  const t=cP+pP;const u=L==='ar'?'ر.س':'SAR';
+  const el=document.getElementById('woTotalV');if(el)el.innerHTML=t+' <small>'+u+'</small>'}
 
 let sy=0;const sh=document.getElementById('msh');
 sh.addEventListener('touchstart',e=>{sy=e.touches[0].clientY},{passive:true});
@@ -385,26 +410,8 @@ function handleImgFile(inp){
   })}
 
 const AK=['gluten','dairy','seafood','soy','eggs','nuts','mushroom','fish'];
-let eIdx=-1,eWoCarb=[],eWoPro=[];
+let eIdx=-1;
 
-function rWoRows(type){
-  const arr=type==='carb'?eWoCarb:eWoPro;
-  const el=document.getElementById(type==='carb'?'woCarbRows':'woProRows');
-  if(!el)return;
-  el.innerHTML=arr.map((o,i)=>`<div class="awo-row"><input type="number" value="${o.grams}" placeholder="جرام" onchange="uWoRow('${type}',${i},'grams',this.value)"><input type="number" value="${o.price}" placeholder="سعر" onchange="uWoRow('${type}',${i},'price',this.value)"><button class="awo-del" onclick="dWoRow('${type}',${i})">✕</button></div>`).join('');
-}
-function addWoRow(type){
-  const arr=type==='carb'?eWoCarb:eWoPro;
-  arr.push({grams:0,price:0});rWoRows(type);
-}
-function dWoRow(type,i){
-  const arr=type==='carb'?eWoCarb:eWoPro;
-  arr.splice(i,1);rWoRows(type);
-}
-function uWoRow(type,i,k,v){
-  const arr=type==='carb'?eWoCarb:eWoPro;
-  arr[i][k]=parseFloat(v)||0;
-}
 function tgWo(){
   const sec=document.getElementById('woFields');
   const chk=document.getElementById('woEnabled');
@@ -416,9 +423,7 @@ function eItem(i){
   const it=i>=0?JSON.parse(JSON.stringify(raw[i])):{id:'i'+Date.now(),category:cats.length>1?cats[1].id:'poke',cookType:'grill',image:'',name:{ar:'',en:''},description:{ar:'',en:''},price:0,priceLabel:null,allergens:[],ingredients:{ar:[],en:[]},macros:{cal:0,protein:0,carbs:0,fat:0},available:true,order:raw.length+1,weightOptions:null};
   const cs=cats.filter(c=>c.id!=='all');
   const hasImg=!!it.image;
-  const wo=it.weightOptions||{enabled:false,carb:{label:{ar:'',en:''},options:[]},protein:{label:{ar:'',en:''},options:[]}};
-  eWoCarb=JSON.parse(JSON.stringify(wo.carb.options||[]));
-  eWoPro=JSON.parse(JSON.stringify(wo.protein.options||[]));
+  const wo=it.weightOptions||{enabled:false,carb:{100:0,150:0,200:0},protein:{chicken:{100:0,150:0,200:0},shrimp:{100:0,150:0,200:0},beef:{100:0,150:0,200:0}}};
   let h=`<div class="emt">${i>=0?'✏️ تعديل':'➕ جديد'}</div>
   <div class="er2"><div class="er"><div class="el">الاسم عربي</div><input class="ei" id="na" value="${it.name.ar}"></div><div class="er"><div class="el">Name EN</div><input class="ei" id="ne" value="${it.name.en}"></div></div>
   <div class="er"><div class="el">الوصف عربي</div><textarea class="ei" id="da">${it.description.ar}</textarea></div>
@@ -444,24 +449,19 @@ function eItem(i){
     <label class="awo-toggle"><input type="checkbox" id="woEnabled" ${wo.enabled?'checked':''} onchange="tgWo()"><span>⚖️ خيارات الأوزان</span></label>
     <div id="woFields" style="${wo.enabled?'':'display:none'}">
       <div class="awo-sec">
-        <div class="awo-sec-t">🍚 ${L==='ar'?'كارب':'CARB'}</div>
-        <div class="er2" style="margin-bottom:8px"><div class="er"><div class="el">النوع عربي</div><input class="ei" id="woCarbAr" value="${wo.carb.label.ar}"></div><div class="er"><div class="el">Type EN</div><input class="ei" id="woCarbEn" value="${wo.carb.label.en}"></div></div>
-        <div class="el" style="margin-bottom:4px">جرام | سعر</div>
-        <div id="woCarbRows"></div>
-        <button type="button" class="awo-add" onclick="addWoRow('carb')">+ وزن كارب</button>
+        <div class="awo-sec-t">🍚 CARB PRICES</div>
+        <div class="awo-grid"><div class="awo-lbl"></div>${WO_GRAMS.map(g=>`<div class="awo-lbl" style="text-align:center">${g}g</div>`).join('')}
+        <div class="awo-ptype">كارب</div>${WO_GRAMS.map(g=>`<input id="woC${g}" type="number" value="${(wo.carb||{})[g]||0}" placeholder="0">`).join('')}</div>
       </div>
       <div class="awo-sec">
-        <div class="awo-sec-t">🥩 ${L==='ar'?'بروتين':'PROTEIN'}</div>
-        <div class="er2" style="margin-bottom:8px"><div class="er"><div class="el">النوع عربي</div><input class="ei" id="woProAr" value="${wo.protein.label.ar}"></div><div class="er"><div class="el">Type EN</div><input class="ei" id="woProEn" value="${wo.protein.label.en}"></div></div>
-        <div class="el" style="margin-bottom:4px">جرام | سعر</div>
-        <div id="woProRows"></div>
-        <button type="button" class="awo-add" onclick="addWoRow('protein')">+ وزن بروتين</button>
+        <div class="awo-sec-t">🥩 PROTEIN PRICES</div>
+        <div class="awo-grid"><div class="awo-lbl"></div>${WO_GRAMS.map(g=>`<div class="awo-lbl" style="text-align:center">${g}g</div>`).join('')}
+        ${WO_PROTEINS.map(p=>`<div class="awo-ptype">${p.ar}</div>${WO_GRAMS.map(g=>`<input id="woP_${p.id}_${g}" type="number" value="${((wo.protein||{})[p.id]||{})[g]||0}" placeholder="0">`).join('')}`).join('')}</div>
       </div>
     </div>
   </div>
   <button class="emsave" onclick="saveE()">💾 حفظ</button><button class="emcancel" onclick="closeE()">إلغاء</button>`;
-  document.getElementById('emc').innerHTML=h;document.getElementById('emx').classList.add('on');
-  rWoRows('carb');rWoRows('protein')}
+  document.getElementById('emc').innerHTML=h;document.getElementById('emx').classList.add('on')}
 
 function closeE(){document.getElementById('emx').classList.remove('on')}
 
@@ -478,9 +478,9 @@ async function saveE(){
     available:eIdx>=0?(raw[eIdx].available!==false):true,order:eIdx>=0?(raw[eIdx].order||eIdx+1):d.items.length+1};
   const woOn=document.getElementById('woEnabled')&&document.getElementById('woEnabled').checked;
   if(woOn){
-    it.weightOptions={enabled:true,
-      carb:{label:{ar:(document.getElementById('woCarbAr')?document.getElementById('woCarbAr').value.trim():''),en:(document.getElementById('woCarbEn')?document.getElementById('woCarbEn').value.trim():'')},options:eWoCarb.filter(o=>o.grams>0)},
-      protein:{label:{ar:(document.getElementById('woProAr')?document.getElementById('woProAr').value.trim():''),en:(document.getElementById('woProEn')?document.getElementById('woProEn').value.trim():'')},options:eWoPro.filter(o=>o.grams>0)}};
+    const carb={};WO_GRAMS.forEach(g=>{const el=document.getElementById('woC'+g);carb[g]=el?parseFloat(el.value)||0:0});
+    const protein={};WO_PROTEINS.forEach(p=>{protein[p.id]={};WO_GRAMS.forEach(g=>{const el=document.getElementById('woP_'+p.id+'_'+g);protein[p.id][g]=el?parseFloat(el.value)||0:0})});
+    it.weightOptions={enabled:true,carb,protein};
   } else {
     it.weightOptions=eIdx>=0&&raw[eIdx].weightOptions?{...raw[eIdx].weightOptions,enabled:false}:null;
   }
