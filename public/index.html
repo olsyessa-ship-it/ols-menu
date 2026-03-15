@@ -104,9 +104,10 @@ body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xm
 .img-up img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:12px;display:none}
 .img-up img.on{display:block}
 .img-up .iph{color:rgba(255,255,255,.3);font-size:11px}.img-up .iph .ico{font-size:22px;margin-bottom:4px}
-.img-up input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
 .img-up .uping{position:absolute;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;color:var(--sg);font-size:12px;font-weight:600;border-radius:12px}
 .img-up .uping.on{display:flex}
+.img-btn{display:inline-block;margin-top:8px;padding:10px 24px;background:rgba(200,215,150,.12);border:1px solid rgba(200,215,150,.25);color:var(--sg);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.img-btn:active{transform:scale(.96)}
 
 /* EDIT */
 .emx{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:600;display:none;overflow-y:auto}.emx.on{display:block}
@@ -280,45 +281,43 @@ async function uploadImg(file,cb){
   if(!IMGBB_KEY){
     alert('⚠️ مفتاح ImgBB غير موجود — حط IMGBB_KEY بالكود');
     cb('');return}
-  // Compress image before upload
-  const compressed = await compressImg(file, 1200, 0.8);
-  console.log('Compressed:', (compressed.size/1024).toFixed(0)+'KB');
-  const form=new FormData();form.append('image',compressed);form.append('key',IMGBB_KEY);
+  // Convert to base64 first
+  const toBase64 = f => new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(f)});
   try{
+    const b64 = await toBase64(file);
+    console.log('Base64 ready, length:', b64.length);
+    const form = new FormData();
+    form.append('key', IMGBB_KEY);
+    form.append('image', b64);
     console.log('Uploading to ImgBB...');
-    const res=await fetch('https://api.imgbb.com/1/upload',{method:'POST',body:form});
-    const j=await res.json();
+    const res = await fetch('https://api.imgbb.com/1/upload', {method:'POST', body:form});
+    const j = await res.json();
     console.log('ImgBB response:', j);
-    if(j.success){console.log('✅ URL:', j.data.display_url);cb(j.data.display_url)}
-    else{console.error('ImgBB error:', j);alert('خطأ ImgBB: '+(j.error?.message||JSON.stringify(j)));cb('')}
-  }catch(e){console.error('Upload failed:', e);alert('فشل الاتصال بـ ImgBB: '+e.message);cb('')}}
-
-function compressImg(file, maxW, quality){
-  return new Promise(resolve=>{
-    const img=new Image();
-    img.onload=()=>{
-      const c=document.createElement('canvas');
-      let w=img.width,h=img.height;
-      if(w>maxW){h=h*(maxW/w);w=maxW}
-      c.width=w;c.height=h;
-      c.getContext('2d').drawImage(img,0,0,w,h);
-      c.toBlob(b=>resolve(b||file),'image/jpeg',quality);
-    };
-    img.onerror=()=>resolve(file);
-    img.src=URL.createObjectURL(file);
-  })}
+    if(j.data && j.data.display_url){
+      console.log('✅ URL:', j.data.display_url);
+      cb(j.data.display_url);
+    } else {
+      console.error('ImgBB error:', j);
+      alert('خطأ ImgBB: ' + (j.error ? j.error.message : JSON.stringify(j)));
+      cb('');
+    }
+  }catch(e){
+    console.error('Upload failed:', e);
+    alert('فشل الاتصال بـ ImgBB: ' + e.message);
+    cb('');
+  }}
 
 function handleImgFile(inp){
   const f=inp.files?.[0];if(!f)return;
-  const wrap=inp.closest('.img-up');
-  const img=wrap.querySelector('img');
-  const ph=wrap.querySelector('.iph');
-  const uping=wrap.querySelector('.uping');
+  console.log('File selected:', f.name, (f.size/1024).toFixed(0)+'KB');
+  const img=document.getElementById('imgPrev');
+  const ph=document.getElementById('imgPH');
+  const uping=document.getElementById('imgUping');
+  const wrap=document.getElementById('imgWrap');
   const status=document.getElementById('imgStatus');
-  if(status)status.textContent='📷 جاري تجهيز الصورة...';
-  if(status)status.style.color='var(--sg)';
+  if(status){status.textContent='📷 جاري تجهيز الصورة...';status.style.color='var(--sg)'}
   // Preview immediately
-  const r=new FileReader();r.onload=e=>{img.src=e.target.result;img.classList.add('on');if(ph)ph.style.display='none';wrap.classList.add('has')};r.readAsDataURL(f);
+  const r=new FileReader();r.onload=e=>{img.src=e.target.result;img.classList.add('on');if(ph)ph.style.display='none';if(wrap)wrap.classList.add('has')};r.readAsDataURL(f);
   // Upload
   if(uping)uping.classList.add('on');
   if(status)status.textContent='⬆️ جاري الرفع على ImgBB...';
@@ -326,8 +325,8 @@ function handleImgFile(inp){
     document.getElementById('eimg').value=url;
     if(uping)uping.classList.remove('on');
     if(status){
-      if(url&&url.startsWith('http')){status.textContent='✅ تم الرفع بنجاح';status.style.color='#8f8'}
-      else{status.textContent='❌ فشل الرفع';status.style.color='#f66'}
+      if(url&&url.startsWith('http')){status.textContent='✅ تم الرفع: '+url.substring(0,40)+'...';status.style.color='#8f8'}
+      else{status.textContent='❌ فشل الرفع — شيك الكونسول';status.style.color='#f66'}
     }
   })}
 
@@ -344,12 +343,13 @@ function eItem(i){
   <div class="er"><div class="el">الوصف عربي</div><textarea class="ei" id="da">${it.description.ar}</textarea></div>
   <div class="er"><div class="el">Description EN</div><textarea class="ei" id="de">${it.description.en}</textarea></div>
   <div class="er"><div class="el">صورة الصنف${IMGBB_KEY?' (ImgBB)':''}</div>
-    <div class="img-up${hasImg?' has':''}">
-      <div class="iph"${hasImg?' style="display:none"':''}><div class="ico">📷</div><div>اضغط لرفع صورة</div></div>
-      <img src="${it.image||''}"${hasImg?' class="on"':''}>
-      <input type="file" accept="image/*" capture="environment" onchange="handleImgFile(this)">
-      <div class="uping">جاري الرفع...</div>
+    <div class="img-up" id="imgWrap">
+      <img src="${it.image||''}"${hasImg?' class="on"':''} id="imgPrev">
+      <div class="iph" id="imgPH"${hasImg?' style="display:none"':''}><div class="ico">📷</div><div>لا توجد صورة</div></div>
+      <div class="uping" id="imgUping">جاري الرفع...</div>
     </div>
+    <button type="button" class="img-btn" onclick="document.getElementById('imgFileInput').click()">📷 اختر صورة</button>
+    <input type="file" id="imgFileInput" accept="image/*" style="display:none" onchange="handleImgFile(this)">
     <input type="hidden" id="eimg" value="${it.image||''}">
     <div id="imgStatus" style="font-size:11px;margin-top:4px;color:rgba(255,255,255,.3)"></div>
   </div>
