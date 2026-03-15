@@ -277,12 +277,32 @@ async function checkHidden(){
 // ═══ ImgBB UPLOAD ═══
 async function uploadImg(file,cb){
   if(!IMGBB_KEY){
-    // Fallback: base64
-    const r=new FileReader();r.onload=e=>cb(e.target.result);r.readAsDataURL(file);return}
-  const form=new FormData();form.append('image',file);form.append('key',IMGBB_KEY);
-  try{const res=await fetch('https://api.imgbb.com/1/upload',{method:'POST',body:form});const j=await res.json();
-    if(j.success)cb(j.data.display_url);else{const r=new FileReader();r.onload=e=>cb(e.target.result);r.readAsDataURL(file)}}
-  catch(e){const r=new FileReader();r.onload=e=>cb(e.target.result);r.readAsDataURL(file)}}
+    alert('⚠️ مفتاح ImgBB غير موجود — حط IMGBB_KEY بالكود');
+    cb('');return}
+  // Compress image before upload
+  const compressed = await compressImg(file, 1200, 0.8);
+  const form=new FormData();form.append('image',compressed);form.append('key',IMGBB_KEY);
+  try{
+    const res=await fetch('https://api.imgbb.com/1/upload',{method:'POST',body:form});
+    const j=await res.json();
+    if(j.success){cb(j.data.display_url)}
+    else{console.error('ImgBB error:',j);alert('خطأ في رفع الصورة: '+(j.error?.message||'unknown'));cb('')}
+  }catch(e){console.error('Upload failed:',e);alert('فشل الاتصال بـ ImgBB');cb('')}}
+
+function compressImg(file, maxW, quality){
+  return new Promise(resolve=>{
+    const img=new Image();
+    img.onload=()=>{
+      const c=document.createElement('canvas');
+      let w=img.width,h=img.height;
+      if(w>maxW){h=h*(maxW/w);w=maxW}
+      c.width=w;c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      c.toBlob(b=>resolve(b||file),'image/jpeg',quality);
+    };
+    img.onerror=()=>resolve(file);
+    img.src=URL.createObjectURL(file);
+  })}
 
 function handleImgFile(inp){
   const f=inp.files?.[0];if(!f)return;
