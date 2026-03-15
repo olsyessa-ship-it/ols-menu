@@ -179,7 +179,7 @@ sh.addEventListener('touchstart',e=>{sy=e.touches[0].clientY},{passive:true});
 sh.addEventListener('touchmove',e=>{if(e.touches[0].clientY-sy>80)cM()},{passive:true});
 
 // ════════════ ADMIN ════════════
-const IMGBB_KEY = ''; // Set your ImgBB API key here
+const IMGBB_KEY = 'cc97af44708a9fa53da105d22fafd3fd';
 function openAP(){document.getElementById('apx').classList.add('on');document.body.style.overflow='hidden';rAP()}
 function closeAP(){document.getElementById('apx').classList.remove('on');document.body.style.overflow=''}
 function showCfm(t,m,cb){document.getElementById('cfmT').textContent=t;document.getElementById('cfmM').textContent=m;document.getElementById('cfmY').onclick=()=>{cb();closeCfm()};document.getElementById('cfmBg').classList.add('on')}
