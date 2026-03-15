@@ -1,6 +1,6 @@
-const { put, get } = require('@vercel/blob');
+const { put, list, del } = require('@vercel/blob');
 const PIN = '126019';
-const BLOB_PATH = 'ols-menu-data.json';
+const BLOB_KEY = 'ols-menu-data.json';
 
 const DEF={categories:[{id:"poke",ar:"بوكي بول",en:"Poke Bowls",order:1},{id:"protein",ar:"بروتين بولز",en:"Protein Bowls",order:2},{id:"tortilla",ar:"تورتيلا",en:"Tortilla",order:3},{id:"salad",ar:"سلطات وأكثر",en:"Salads & More",order:4}],allergens:{gluten:{icon:"🌾",ar:"جلوتين",en:"Gluten"},dairy:{icon:"🥛",ar:"ألبان",en:"Dairy"},seafood:{icon:"🦐",ar:"مأكولات بحرية",en:"Seafood"},soy:{icon:"🫘",ar:"صويا",en:"Soy"},eggs:{icon:"🥚",ar:"بيض",en:"Eggs"},nuts:{icon:"🥜",ar:"مكسرات",en:"Nuts"},mushroom:{icon:"🍄",ar:"فطر",en:"Mushroom"},fish:{icon:"🐟",ar:"سمك",en:"Fish"}},items:[
 {id:"zaatar",category:"poke",cookType:"grill",image:"/images/zaatar.jpg",name:{ar:"زعتر كرانش",en:"Crunchy Za'atar Bowl"},description:{ar:"مكعبات البطاطس المقرمشة، دجاج مشوي، وأرز أبيض، مغطاة بخلطة الزعتر العطرية وزيت الزيتون الغني",en:"Crispy potato cubes, grilled chicken, and white rice topped with aromatic za'atar blend and rich olive oil"},price:29,priceLabel:null,allergens:["gluten"],ingredients:{ar:["أرز أبيض","دجاج مشوي","بطاطس مقرمشة","زعتر","زيت زيتون"],en:["White Rice","Grilled Chicken","Crispy Potato","Za'atar","Olive Oil"]},macros:{cal:520,protein:32,carbs:58,fat:18},available:true,hiddenUntil:null,order:1},
@@ -21,46 +21,60 @@ const DEF={categories:[{id:"poke",ar:"بوكي بول",en:"Poke Bowls",order:1},
 {id:"crab-salad",category:"salad",cookType:"fry",image:"/images/crab-salad.jpg",name:{ar:"سلطة كرانش كراب",en:"Crab Crunch Salad"},description:{ar:"سلطة كراب كرانش بطبقات من خس مقرمش وخضار مبشورة ومزيج كراب كريمي ولمسة سيراتشا",en:"Fresh crab crunch salad with crisp lettuce, shredded veggies, creamy crab mix, and a hint of spicy sriracha"},price:32,priceLabel:null,allergens:["seafood","eggs"],ingredients:{ar:["كراب","خس","ملفوف","شمندر","جزر","خبز مقرمش","سيراتشا","مايونيز ياباني"],en:["Crab","Lettuce","Cabbage","Beetroot","Carrot","Crispy Bread","Sriracha","Japanese Mayo"]},macros:{cal:320,protein:22,carbs:18,fat:18},available:true,hiddenUntil:null,order:2}
 ]};
 
+// ═══ WRITE to Vercel Blob ═══
+async function saveData(d) {
+  try {
+    const blob = await put(BLOB_KEY, JSON.stringify(d), {
+      access: 'public',
+      addRandomSuffix: false,
+      contentType: 'application/json'
+    });
+    console.log('✅ Saved to blob:', blob.url);
+    return blob;
+  } catch(e) {
+    console.error('❌ Blob save error:', e.message);
+    throw e;
+  }
+}
+
 // ═══ READ from Vercel Blob ═══
 async function getData() {
   try {
-    const result = await get(BLOB_PATH, { access: 'public' });
-    if (result && result.stream) {
-      const chunks = [];
-      const reader = result.stream.getReader();
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        chunks.push(value);
+    // List blobs to find our file
+    const { blobs } = await list({ prefix: BLOB_KEY });
+    console.log('Blob list:', blobs.length, 'found');
+    
+    if (blobs.length > 0) {
+      // Found it — fetch the URL directly
+      const blobUrl = blobs[0].url;
+      console.log('Reading from:', blobUrl);
+      const res = await fetch(blobUrl);
+      if (res.ok) {
+        const d = await res.json();
+        // Auto-unhide expired items
+        const now = Date.now();
+        let changed = false;
+        (d.items || []).forEach(i => {
+          if (i.hiddenUntil && now > i.hiddenUntil) {
+            i.available = true;
+            i.hiddenUntil = null;
+            changed = true;
+          }
+        });
+        if (changed) await saveData(d);
+        return d;
       }
-      const text = Buffer.concat(chunks).toString('utf8');
-      const d = JSON.parse(text);
-      // Auto-unhide expired items
-      const now = Date.now();
-      let changed = false;
-      (d.items || []).forEach(i => {
-        if (i.hiddenUntil && now > i.hiddenUntil) {
-          i.available = true;
-          i.hiddenUntil = null;
-          changed = true;
-        }
-      });
-      if (changed) await saveData(d);
-      return d;
     }
+    
+    // No blob found — first run, seed the defaults
+    console.log('No blob found, seeding defaults...');
+    await saveData(DEF);
+    return JSON.parse(JSON.stringify(DEF));
+    
   } catch (e) {
-    console.log('Blob read failed, using defaults:', e.message);
+    console.error('❌ Blob read error:', e.message);
+    return JSON.parse(JSON.stringify(DEF));
   }
-  return JSON.parse(JSON.stringify(DEF));
-}
-
-// ═══ WRITE to Vercel Blob ═══
-async function saveData(d) {
-  await put(BLOB_PATH, JSON.stringify(d), {
-    access: 'public',
-    addRandomSuffix: false,
-    contentType: 'application/json'
-  });
 }
 
 // ═══ API Handler ═══
@@ -73,24 +87,29 @@ module.exports = async function(req, res) {
   const admin = req.headers['x-pin'] === PIN;
   const url = req.url || '';
 
-  if (req.method === 'GET') {
-    const d = await getData();
-    if (url.includes('/all')) {
-      if (!admin) return res.status(403).json({ error: 'denied' });
-      return res.json(d);
+  try {
+    if (req.method === 'GET') {
+      const d = await getData();
+      if (url.includes('/all')) {
+        if (!admin) return res.status(403).json({ error: 'denied' });
+        return res.json(d);
+      }
+      return res.json({
+        categories: d.categories,
+        allergens: d.allergens,
+        items: (d.items || []).filter(i => i.available !== false)
+      });
     }
-    return res.json({
-      categories: d.categories,
-      allergens: d.allergens,
-      items: (d.items || []).filter(i => i.available !== false)
-    });
-  }
 
-  if (req.method === 'PUT') {
-    if (!admin) return res.status(403).json({ error: 'denied' });
-    const b = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
-    await saveData(b);
-    return res.json({ ok: true });
+    if (req.method === 'PUT') {
+      if (!admin) return res.status(403).json({ error: 'denied' });
+      const b = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+      await saveData(b);
+      return res.json({ ok: true });
+    }
+  } catch(e) {
+    console.error('API error:', e);
+    return res.status(500).json({ error: e.message });
   }
 
   res.status(405).end();
