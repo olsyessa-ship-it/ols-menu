@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -129,12 +129,12 @@ textarea.ei{min-height:55px;resize:vertical}
 .cfm-y{background:rgba(239,68,68,.15);color:#f66}.cfm-n{background:rgba(255,255,255,.05);color:rgba(255,255,255,.4)}
 </style>
 </head>
-<body dir="rtl">
+<body dir="ltr">
 <header class="hdr">
   <div class="logo"><img src="/ols-logo.png" alt="OLS"></div>
-  <div class="hdr-r"><button class="lbtn" onclick="tgLang()">EN</button><button class="abtn" onclick="openAP()">⚙</button></div>
+  <div class="hdr-r"><button class="lbtn" onclick="tgLang()">عر</button><button class="abtn" onclick="openAP()">⚙</button></div>
 </header>
-<section class="hero"><div class="hero-l">MENU</div><h1 class="hero-t" id="ht">أكل نظيف وطعم مختلف</h1></section>
+<section class="hero"><div class="hero-l">MENU</div><h1 class="hero-t" id="ht">Clean food, real flavor</h1></section>
 <nav class="tw"><div class="ts" id="tabs"></div><div class="tl"></div></nav>
 <main id="grid"></main>
 <div class="mbg" id="mbg" onclick="cM()"></div>
@@ -144,7 +144,7 @@ textarea.ei{min-height:55px;resize:vertical}
 <div class="emx" id="emx"><div class="em" id="emc"></div></div>
 <div class="cfm-bg" id="cfmBg"><div class="cfm-box"><h3 id="cfmT"></h3><p id="cfmM"></p><div class="cfm-btns"><button class="cfm-y" id="cfmY">تأكيد</button><button class="cfm-n" onclick="closeCfm()">إلغاء</button></div></div></div>
 <script>
-let L='ar',PIN=null,cats=[],alMap={},items=[],raw=[];
+let L='en',PIN=null,cats=[],alMap={},items=[],raw=[];
 const API='/api/menu';
 function T(o){return o?L==='ar'?o.ar:o.en:''}
 function M(i){return{id:i.id,cat:i.category,cook:i.cookType,img:i.image,ar:{name:i.name.ar,desc:i.description.ar},en:{name:i.name.en,desc:i.description.en},price:i.price,pl:i.priceLabel,al:i.allergens||[],ing:i.ingredients||{ar:[],en:[]},mac:i.macros||{cal:0,protein:0,carbs:0,fat:0},avail:i.available!==false}}
