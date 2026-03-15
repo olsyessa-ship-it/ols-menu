@@ -1,5 +1,9 @@
 const fs=require('fs'),path=require('path');
-const PIN='126019',TMP=path.join('/tmp','ols-menu.json');
+const PIN='126019';
+
+// Persistent storage — tries /data first, falls back to same directory as this file
+const DATA_DIR = fs.existsSync('/data') ? '/data' : __dirname;
+const TMP = path.join(DATA_DIR, 'ols-menu.json');
 
 const DEF={categories:[{id:"poke",ar:"بوكي بول",en:"Poke Bowls",order:1},{id:"protein",ar:"بروتين بولز",en:"Protein Bowls",order:2},{id:"tortilla",ar:"تورتيلا",en:"Tortilla",order:3},{id:"salad",ar:"سلطات وأكثر",en:"Salads & More",order:4}],allergens:{gluten:{icon:"🌾",ar:"جلوتين",en:"Gluten"},dairy:{icon:"🥛",ar:"ألبان",en:"Dairy"},seafood:{icon:"🦐",ar:"مأكولات بحرية",en:"Seafood"},soy:{icon:"🫘",ar:"صويا",en:"Soy"},eggs:{icon:"🥚",ar:"بيض",en:"Eggs"},nuts:{icon:"🥜",ar:"مكسرات",en:"Nuts"},mushroom:{icon:"🍄",ar:"فطر",en:"Mushroom"},fish:{icon:"🐟",ar:"سمك",en:"Fish"}},items:[
 {id:"zaatar",category:"poke",cookType:"grill",image:"/images/zaatar.jpg",name:{ar:"زعتر كرانش",en:"Crunchy Za'atar Bowl"},description:{ar:"مكعبات البطاطس المقرمشة، دجاج مشوي، وأرز أبيض، مغطاة بخلطة الزعتر العطرية وزيت الزيتون الغني",en:"Crispy potato cubes, grilled chicken, and white rice topped with aromatic za'atar blend and rich olive oil"},price:29,priceLabel:null,allergens:["gluten"],ingredients:{ar:["أرز أبيض","دجاج مشوي","بطاطس مقرمشة","زعتر","زيت زيتون"],en:["White Rice","Grilled Chicken","Crispy Potato","Za'atar","Olive Oil"]},macros:{cal:520,protein:32,carbs:58,fat:18},available:true,hiddenUntil:null,order:1},
