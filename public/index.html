@@ -132,7 +132,7 @@ textarea.ei{min-height:55px;resize:vertical}
 <body dir="ltr">
 <header class="hdr">
   <div class="logo"><img src="/ols-logo.png" alt="OLS"></div>
-  <div class="hdr-r"><button class="lbtn" onclick="tgLang()">عر</button><button class="abtn" onclick="openAP()">⚙</button></div>
+  <div class="hdr-r"><button class="lbtn" onclick="tgLang()">عربي</button><button class="abtn" onclick="openAP()">⚙</button></div>
 </header>
 <section class="hero"><div class="hero-l">MENU</div><h1 class="hero-t" id="ht">Clean food, real flavor</h1></section>
 <nav class="tw"><div class="ts" id="tabs"></div><div class="tl"></div></nav>
@@ -172,7 +172,7 @@ document.getElementById('mbody').innerHTML=h;document.getElementById('mbg').clas
 
 function cM(){document.getElementById('mbg').classList.remove('on');document.getElementById('msh').classList.remove('on');document.body.style.overflow=''}
 function fC(c){document.querySelectorAll('.tb').forEach(b=>b.classList.toggle('on',b.dataset.c===c));rMenu(c)}
-function tgLang(){L=L==='ar'?'en':'ar';const d=L==='ar'?'rtl':'ltr';document.documentElement.lang=L;document.documentElement.dir=d;document.body.dir=d;document.querySelector('.lbtn').textContent=L==='ar'?'EN':'عر';document.getElementById('ht').textContent=L==='ar'?'أكل نظيف وطعم مختلف':'Clean food, real flavor';rTabs();rMenu();cM()}
+function tgLang(){L=L==='ar'?'en':'ar';const d=L==='ar'?'rtl':'ltr';document.documentElement.lang=L;document.documentElement.dir=d;document.body.dir=d;document.querySelector('.lbtn').textContent=L==='ar'?'EN':'عربي';document.getElementById('ht').textContent=L==='ar'?'أكل نظيف وطعم مختلف':'Clean food, real flavor';rTabs();rMenu();cM()}
 
 let sy=0;const sh=document.getElementById('msh');
 sh.addEventListener('touchstart',e=>{sy=e.touches[0].clientY},{passive:true});
