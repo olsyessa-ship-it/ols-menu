@@ -96,6 +96,56 @@ body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xm
 @media(min-width:768px){.mg{grid-template-columns:repeat(2,1fr);gap:16px}.ms{max-width:720px;margin:0 auto}.ts{justify-content:center}.msh{max-width:480px;left:50%;transform:translateX(-50%) translateY(100%)}.msh.on{transform:translateX(-50%) translateY(0)}}
 @media(min-width:1024px){.mg{grid-template-columns:repeat(3,1fr)}.ms{max-width:1000px}}
 
+/* Build Your Bowl */
+.byb-fab{position:fixed;bottom:24px;right:20px;z-index:150;display:flex;align-items:center;gap:10px;background:var(--dg);color:var(--wh);border:none;padding:12px 22px;border-radius:100px;font-size:13px;font-weight:600;font-family:var(--fe);cursor:pointer;box-shadow:0 4px 20px rgba(0,82,64,.35);transition:all .3s;animation:fabPulse 3s ease-in-out infinite}
+body[dir="rtl"] .byb-fab{right:auto;left:20px}
+.byb-fab:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(0,82,64,.45)}
+.byb-fab:active{transform:scale(.96)}
+.byb-fab .fab-icon{font-size:18px}
+.byb-fab .fab-text{display:flex;flex-direction:column;line-height:1.2;text-align:left}
+body[dir="rtl"] .byb-fab .fab-text{text-align:right}
+.byb-fab .fab-en{font-size:12px;font-weight:700;letter-spacing:.5px}
+.byb-fab .fab-ar{font-size:10px;font-weight:400;opacity:.7}
+@keyframes fabPulse{0%,100%{box-shadow:0 4px 20px rgba(0,82,64,.35)}50%{box-shadow:0 4px 28px rgba(0,82,64,.55),0 0 0 6px rgba(0,82,64,.08)}}
+
+.byb-page{position:fixed;inset:0;background:var(--cr);z-index:300;display:none;overflow-y:auto;overscroll-behavior:contain}
+.byb-page.on{display:block;animation:fu .3s both}
+.byb-hdr{position:sticky;top:0;z-index:10;background:var(--cr);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(42,38,37,.06)}
+.byb-hdr-t{font-size:16px;font-weight:700;color:var(--ch)}
+.byb-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--ch);padding:4px 8px}
+.byb-body{padding:16px;max-width:520px;margin:0 auto}
+.byb-step{margin-bottom:24px}
+.byb-step-t{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dg);margin-bottom:10px;font-family:var(--fe);display:flex;align-items:center;gap:6px}
+.byb-step-t .step-num{width:20px;height:20px;border-radius:50%;background:var(--dg);color:var(--wh);display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.byb-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.byb-opt{background:var(--wh);border:2px solid rgba(42,38,37,.06);border-radius:16px;padding:14px 8px;text-align:center;cursor:pointer;transition:all .2s;user-select:none}
+.byb-opt:active{transform:scale(.96)}
+.byb-opt.on{border-color:var(--dg);background:rgba(0,82,64,.04)}
+.byb-opt .opt-icon{font-size:22px;margin-bottom:4px}
+.byb-opt .opt-name{font-size:12px;font-weight:600;color:var(--ch);line-height:1.3}
+.byb-opt .opt-price{font-size:11px;color:var(--dg);font-weight:700;font-family:var(--fe);margin-top:2px}
+.byb-opts.veg{grid-template-columns:repeat(5,1fr);gap:6px}
+.byb-opts.veg .byb-opt{padding:10px 4px}
+.byb-opts.veg .opt-icon{font-size:18px}
+.byb-opts.veg .opt-name{font-size:10px}
+.byb-veg-ct{font-size:11px;color:rgba(42,38,37,.4);font-family:var(--fe);margin-top:6px;text-align:center}
+.byb-note{font-size:11px;color:rgba(42,38,37,.4);text-align:center;margin-top:4px;font-style:italic}
+.byb-total-bar{position:sticky;bottom:0;background:var(--dg);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;margin:0 -16px;border-radius:20px 20px 0 0}
+.byb-total-bar .btl{font-size:12px;color:rgba(255,255,255,.6);font-family:var(--fe)}
+.byb-total-bar .btv{font-size:28px;font-weight:700;color:var(--wh);font-family:var(--fe)}
+.byb-total-bar .btv small{font-size:12px;font-weight:400;opacity:.5}
+.byb-extras-row{display:flex;gap:8px;margin-top:8px}
+.byb-ext-btn{flex:1;background:var(--wh);border:1.5px dashed rgba(0,82,64,.15);border-radius:12px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .2s}
+.byb-ext-btn.on{border-style:solid;border-color:var(--dg);background:rgba(0,82,64,.04)}
+.byb-ext-btn .ext-name{font-size:11px;font-weight:600;color:var(--ch)}
+.byb-ext-btn .ext-price{font-size:10px;color:var(--dg);font-weight:700;font-family:var(--fe)}
+
+/* Badge */
+.mc-badge{position:absolute;top:10px;right:10px;padding:4px 10px;border-radius:8px;font-size:9px;font-weight:700;letter-spacing:.5px;font-family:var(--fe);background:rgba(200,215,150,.92);color:var(--dg);backdrop-filter:blur(8px);z-index:2;text-transform:uppercase}
+body[dir="rtl"] .mc-badge{right:auto;left:10px}
+.mc-badge-glow{animation:badgeGlow 2s ease-in-out infinite}
+@keyframes badgeGlow{0%,100%{box-shadow:0 0 0 0 rgba(200,215,150,0)}50%{box-shadow:0 0 0 4px rgba(200,215,150,.25)}}
+
 /* ADMIN */
 .apx{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(12px);z-index:500;display:none;overflow-y:auto}.apx.on{display:block}
 .ap{max-width:500px;margin:0 auto;padding:20px;min-height:100vh}
@@ -175,6 +225,11 @@ textarea.ei{min-height:55px;resize:vertical}
 <div class="mbg" id="mbg" onclick="cM()"></div>
 <div class="msh" id="msh"><div class="mha"></div><button class="mx" onclick="cM()">✕</button><div id="mbody"></div></div>
 <footer class="ft"><div class="ftl"><img src="/ols-logo.png" alt="OLS"></div><div class="fts">أكل نظيف وطعم مختلف</div><div class="ftk"><a href="https://www.instagram.com/olsyes/" target="_blank">Instagram</a><a href="https://share.google/WuZBnUt12gPBpYM0S" target="_blank">Location</a></div><div class="ftc">© OLS 2025 — Developed by Mohammed Al-Hasoon</div></footer>
+<button class="byb-fab" id="bybFab" onclick="openBYB()"><span class="fab-icon">🥣</span><span class="fab-text"><span class="fab-en">Build Your Bowl</span><span class="fab-ar">اصنع طبقك</span></span></button>
+<div class="byb-page" id="bybPage">
+  <div class="byb-hdr"><div class="byb-hdr-t" id="bybTitle">Build Your Bowl</div><button class="byb-close" onclick="closeBYB()">✕</button></div>
+  <div class="byb-body" id="bybBody"></div>
+</div>
 <div class="apx" id="apx"><div class="ap" id="apc"></div></div>
 <div class="emx" id="emx"><div class="em" id="emc"></div></div>
 <div class="cfm-bg" id="cfmBg"><div class="cfm-box"><h3 id="cfmT"></h3><p id="cfmM"></p><div class="cfm-btns"><button class="cfm-y" id="cfmY">تأكيد</button><button class="cfm-n" onclick="closeCfm()">إلغاء</button></div></div></div>
@@ -184,10 +239,10 @@ const API='/api/menu';
 const WO_GRAMS=[100,150,200];
 let woData=null,woState={carbIdx:0,carbGrams:100,proIdx:0,proGrams:100};
 function T(o){return o?L==='ar'?o.ar:o.en:''}
-function M(i){return{id:i.id,cat:i.category,cook:i.cookType,img:i.image,ar:{name:i.name.ar,desc:i.description.ar},en:{name:i.name.en,desc:i.description.en},price:i.price,pl:i.priceLabel,al:i.allergens||[],ing:i.ingredients||{ar:[],en:[]},mac:i.macros||{cal:0,protein:0,carbs:0,fat:0},avail:i.available!==false,wo:i.weightOptions||null}}
+function M(i){return{id:i.id,cat:i.category,cook:i.cookType,img:i.image,ar:{name:i.name.ar,desc:i.description.ar},en:{name:i.name.en,desc:i.description.en},price:i.price,pl:i.priceLabel,al:i.allergens||[],ing:i.ingredients||{ar:[],en:[]},mac:i.macros||{cal:0,protein:0,carbs:0,fat:0},avail:i.available!==false,wo:i.weightOptions||null,sauce:i.sauce||null,badge:i.badge||null}}
 
 async function load(){
-  try{const r=await fetch(API);const d=await r.json();cats=[{id:'all',ar:'الكل',en:'All'},...d.categories];alMap=d.allergens||{};items=d.items.sort((a,b)=>(a.order||0)-(b.order||0)).map(M);rTabs();rMenu()}
+  try{const r=await fetch(API);const d=await r.json();cats=[{id:'all',ar:'الكل',en:'All'},...d.categories];alMap=d.allergens||{};items=d.items.sort((a,b)=>(a.order||0)-(b.order||0)).map(M);bybData=d.byb||null;if(bybData&&d.sauces)bybData._sauces=d.sauces;if(!d.byb||!d.byb.enabled){const fab=document.getElementById('bybFab');if(fab)fab.style.display='none'}rTabs();rMenu()}
   catch(e){document.getElementById('grid').innerHTML='<div style="text-align:center;padding:60px 20px;color:rgba(42,38,37,.4)">جاري التحميل...</div>'}
 }
 
@@ -197,13 +252,26 @@ function rMenu(f='all'){
   const fl=f==='all'?items:items.filter(i=>i.cat===f);const g={};fl.forEach(i=>{(g[i.cat]=g[i.cat]||[]).push(i)});
   let h='';cats.filter(c=>c.id!=='all').forEach(c=>{if(!g[c.id])return;h+=`<section class="ms">`;if(f==='all')h+=`<div class="sl">${T(c)}</div>`;h+=`<div class="mg">`;
   g[c.id].forEach(i=>{const d=T(i),s=L==='ar'?i.en.name:i.ar.name,u=L==='ar'?'ر.س':'SAR',p=i.pl?T(i.pl)+' ':'';
-  h+=`<div class="mc" onclick="oM('${i.id}')"><div class="cw"><img class="ci" src="${i.img}" alt="${d.name}" loading="lazy"><span class="ck ${i.cook}">${i.cook==='grill'?'🔥':'🍳'} ${i.cook.toUpperCase()}</span></div><div class="cb"><div class="cn">${d.name}</div><div class="cs">${s}</div><div class="cd">${d.desc}</div><div class="cf"><div class="ca">${i.al.map(a=>alMap[a]?`<div class="ad" data-t="${T(alMap[a])}">${alMap[a].icon}</div>`:'').join('')}</div><div class="cp">${p}${i.price} <small>${u}</small></div></div></div></div>`});
+  h+=`<div class="mc" onclick="oM('${i.id}')"><div class="cw">${i.badge?`<div class="mc-badge mc-badge-glow">${T(i.badge)}</div>`:''}<img class="ci" src="${i.img}" alt="${d.name}" loading="lazy"><span class="ck ${i.cook}">${i.cook==='grill'?'🔥':'🍳'} ${i.cook.toUpperCase()}</span></div><div class="cb"><div class="cn">${d.name}</div><div class="cs">${s}</div><div class="cd">${d.desc}</div><div class="cf"><div class="ca">${i.al.map(a=>alMap[a]?`<div class="ad" data-t="${T(alMap[a])}">${alMap[a].icon}</div>`:'').join('')}</div><div class="cp">${p}${i.price} <small>${u}</small></div></div></div></div>`});
   h+=`</div></section>`});document.getElementById('grid').innerHTML=h}
 
 function oM(id){const i=items.find(x=>x.id===id);if(!i)return;const d=T(i),s=L==='ar'?i.en.name:i.ar.name,u=L==='ar'?'ر.س':'SAR',p=i.pl?T(i.pl)+' ':'',ig=T(i.ing);
 const K={c:L==='ar'?'سعرات':'Cal',p:L==='ar'?'بروتين':'Protein',cb:L==='ar'?'كربوهيدرات':'Carbs',f:L==='ar'?'دهون':'Fat',n:L==='ar'?'القيم الغذائية (تقديرية)':'NUTRITION (EST.)',a:L==='ar'?'الحساسيات':'ALLERGENS',g:L==='ar'?'المكونات':'INGREDIENTS'};
 const hasWo=i.wo&&i.wo.enabled&&i.wo.carbs&&i.wo.carbs.length&&i.wo.proteins&&i.wo.proteins.length;
 let h=`<div class="miw"><img class="mii" src="${i.img}" alt="${d.name}"></div><div class="mob"><span class="mck ${i.cook}">${i.cook==='grill'?'🔥':'🍳'} ${i.cook.toUpperCase()}</span><div class="mn">${d.name}</div><div class="msu">${s}</div><div class="mde">${d.desc}</div>`;
+// Sauce info
+const sauceMap=bybData&&bybData._sauces?bybData._sauces:{};
+if(i.sauce){
+  const parts=[];
+  const raw=i.sauce;
+  if(raw.startsWith('spicy'))parts.push('spicy');
+  const letters=raw.replace('spicy-','').replace('spicy','');
+  for(const ch of letters){parts.push('sauce-'+ch)}
+  const sNames=parts.map(sid=>{const sc=sauceMap[sid];return sc?T(sc):sid}).filter(Boolean);
+  if(sNames.length){
+    h+=`<div style="display:flex;align-items:center;gap:6px;margin-top:8px;padding:8px 12px;background:rgba(0,82,64,.04);border-radius:10px;font-size:12px;color:var(--dg);font-weight:500"><span>🫙</span><span>${sNames.join(' + ')}</span></div>`;
+  }
+}
 if(hasWo){
   woData=i.wo;woState={carbIdx:0,carbGrams:100,proIdx:0,proGrams:100};
   const woU=L==='ar'?'ر.س':'SAR';
@@ -233,6 +301,86 @@ document.getElementById('mbody').innerHTML=h;document.getElementById('mbg').clas
 function cM(){document.getElementById('mbg').classList.remove('on');document.getElementById('msh').classList.remove('on');document.body.style.overflow=''}
 function fC(c){document.querySelectorAll('.tb').forEach(b=>b.classList.toggle('on',b.dataset.c===c));rMenu(c)}
 function tgLang(){L=L==='ar'?'en':'ar';const d=L==='ar'?'rtl':'ltr';document.documentElement.lang=L;document.documentElement.dir=d;document.body.dir=d;document.querySelector('.lbtn').textContent=L==='ar'?'EN':'عربي';document.getElementById('ht').textContent=L==='ar'?'أكل نظيف وطعم مختلف':'Clean food, real flavor';rTabs();rMenu();cM()}
+
+// ═══ BUILD YOUR BOWL ═══
+let bybData=null,bybState={protein:null,carb:null,veggies:[],cheese:'none',sauce:null,garnish:[],extraCarb:false,extraProtein:false};
+function openBYB(){
+  if(!bybData)return;
+  bybState={protein:null,carb:null,veggies:[],cheese:'none',sauce:null,garnish:[],extraCarb:false,extraProtein:false};
+  document.getElementById('bybPage').classList.add('on');document.getElementById('bybFab').style.display='none';document.body.style.overflow='hidden';
+  document.getElementById('bybTitle').textContent=L==='ar'?'اصنع طبقك بنفسك':'Build Your Bowl';
+  rBYB();
+}
+function closeBYB(){document.getElementById('bybPage').classList.remove('on');document.getElementById('bybFab').style.display='';document.body.style.overflow=''}
+function bybSel(type,id){
+  if(type==='protein')bybState.protein=id;
+  else if(type==='carb')bybState.carb=id;
+  else if(type==='veggie'){
+    const i=bybState.veggies.indexOf(id);
+    if(i>=0)bybState.veggies.splice(i,1);
+    else if(bybState.veggies.length<(bybData.maxVeggies||5))bybState.veggies.push(id);
+  }
+  else if(type==='cheese')bybState.cheese=id;
+  else if(type==='sauce')bybState.sauce=bybState.sauce===id?null:id;
+  else if(type==='garnish'){
+    const i=bybState.garnish.indexOf(id);if(i>=0)bybState.garnish.splice(i,1);else bybState.garnish.push(id);
+  }
+  rBYB();
+}
+function bybExtra(type){
+  if(type==='carb')bybState.extraCarb=!bybState.extraCarb;
+  else bybState.extraProtein=!bybState.extraProtein;
+  rBYB();
+}
+function bybPrice(){
+  if(!bybState.protein||!bybData)return 0;
+  const p=bybData.proteins.find(x=>x.id===bybState.protein);
+  let t=p?p.price:0;
+  if(bybState.extraCarb)t+=(bybData.extras.carb.price||5);
+  if(bybState.extraProtein)t+=(bybData.extras.protein.price||15);
+  return t;
+}
+function rBYB(){
+  if(!bybData)return;
+  const u=L==='ar'?'ر.س':'SAR';const b=bybData;const s=bybState;
+  let h='';
+  // Step 1: Protein
+  h+=`<div class="byb-step"><div class="byb-step-t"><span class="step-num">1</span>${L==='ar'?'اختر البروتين':'CHOOSE PROTEIN'}</div><div class="byb-opts">`;
+  b.proteins.forEach(p=>{h+=`<div class="byb-opt${s.protein===p.id?' on':''}" onclick="bybSel('protein','${p.id}')"><div class="opt-icon">${p.icon}</div><div class="opt-name">${T(p)}</div><div class="opt-price">${p.price} ${u}</div></div>`});
+  h+=`</div></div>`;
+  // Step 2: Carb
+  h+=`<div class="byb-step"><div class="byb-step-t"><span class="step-num">2</span>${L==='ar'?'اختر الكارب':'CHOOSE CARB'}</div><div class="byb-opts">`;
+  b.carbs.forEach(c=>{h+=`<div class="byb-opt${s.carb===c.id?' on':''}" onclick="bybSel('carb','${c.id}')"><div class="opt-icon">${c.icon}</div><div class="opt-name">${T(c)}</div></div>`});
+  h+=`</div></div>`;
+  // Step 3: Veggies
+  const maxV=b.maxVeggies||5;
+  h+=`<div class="byb-step"><div class="byb-step-t"><span class="step-num">3</span>${L==='ar'?'اختر الخضار':'CHOOSE VEGGIES'} <span style="font-weight:400;opacity:.5">(${maxV})</span></div><div class="byb-opts veg">`;
+  b.veggies.forEach(v=>{h+=`<div class="byb-opt${s.veggies.includes(v.id)?' on':''}" onclick="bybSel('veggie','${v.id}')"><div class="opt-icon">${v.icon}</div><div class="opt-name">${T(v)}</div></div>`});
+  h+=`</div><div class="byb-veg-ct">${s.veggies.length}/${maxV}</div></div>`;
+  // Step 4: Cheese
+  h+=`<div class="byb-step"><div class="byb-step-t"><span class="step-num">4</span>${L==='ar'?'الجبن':'CHEESE'}</div><div class="byb-opts">`;
+  b.cheese.forEach(c=>{h+=`<div class="byb-opt${s.cheese===c.id?' on':''}" onclick="bybSel('cheese','${c.id}')"><div class="opt-icon">${c.icon}</div><div class="opt-name">${T(c)}</div></div>`});
+  h+=`</div></div>`;
+  // Step 5: Sauce
+  h+=`<div class="byb-step"><div class="byb-step-t"><span class="step-num">5</span>${L==='ar'?'اختر الصوص':'CHOOSE SAUCE'}</div><div class="byb-opts">`;
+  const sauceMap=bybData._sauces||{};
+  b.sauces.forEach(sid=>{const sc=sauceMap[sid];if(!sc)return;h+=`<div class="byb-opt${s.sauce===sid?' on':''}" onclick="bybSel('sauce','${sid}')"><div class="opt-icon">${sc.icon||'🫙'}</div><div class="opt-name">${T(sc)}</div></div>`});
+  h+=`</div></div>`;
+  // Step 6: Garnish
+  h+=`<div class="byb-step"><div class="byb-step-t"><span class="step-num">6</span>${L==='ar'?'القارنش':'GARNISH'}</div><div class="byb-opts">`;
+  b.garnish.forEach(g=>{h+=`<div class="byb-opt${s.garnish.includes(g.id)?' on':''}" onclick="bybSel('garnish','${g.id}')"><div class="opt-icon">${g.icon}</div><div class="opt-name">${T(g)}</div></div>`});
+  h+=`</div></div>`;
+  // Extras
+  const extC=b.extras.carb,extP=b.extras.protein;
+  h+=`<div class="byb-step"><div class="byb-step-t"><span class="step-num">+</span>${L==='ar'?'إضافات':'EXTRAS'}</div><div class="byb-extras-row">`;
+  h+=`<div class="byb-ext-btn${s.extraCarb?' on':''}" onclick="bybExtra('carb')"><div class="ext-name">${T(extC)}</div><div class="ext-price">+${extC.price} ${u}</div></div>`;
+  h+=`<div class="byb-ext-btn${s.extraProtein?' on':''}" onclick="bybExtra('protein')"><div class="ext-name">${T(extP)}</div><div class="ext-price">+${extP.price} ${u}</div></div>`;
+  h+=`</div><div class="byb-note">${T(b.scoopNote)}</div></div>`;
+  // Total
+  const total=bybPrice();
+  h+=`<div class="byb-total-bar"><div class="btl">${L==='ar'?'المجموع':'TOTAL'}</div><div class="btv">${total} <small>${u}</small></div></div>`;
+  document.getElementById('bybBody').innerHTML=h;
+}
 
 function woSel(sec,g){
   if(sec==='carb')woState.carbGrams=g;else woState.proGrams=g;
@@ -471,6 +619,7 @@ function eItem(i){
   <div class="er2"><div class="er"><div class="el">السعر SAR</div><input class="ei" id="epr" type="number" value="${it.price}"></div><div class="er"><div class="el">الفئة</div><select class="ei" id="eca">${cs.map(c=>`<option value="${c.id}"${it.category===c.id?' selected':''}>${T(c)}</option>`).join('')}</select></div></div>
   <div class="er2"><div class="er"><div class="el">الطبخ</div><select class="ei" id="eco"><option value="grill"${it.cookType==='grill'?' selected':''}>🔥 Grill</option><option value="fry"${it.cookType==='fry'?' selected':''}>🍳 Fry</option></select></div><div class="er"><div class="el">بادئة (اختياري)</div><input class="ei" id="epl" value="${it.priceLabel?it.priceLabel.ar:''}" placeholder="يبدأ من"></div></div>
   <div class="er"><div class="el">الحساسيات</div><div class="eal">${AK.map(a=>`<button class="ealb${it.allergens.includes(a)?' on':''}" data-a="${a}" onclick="this.classList.toggle('on')">${alMap[a]?alMap[a].icon:''} ${a}</button>`).join('')}</div></div>
+  <div class="er"><div class="el">Badge (عربي | EN)</div><div class="er2"><input class="ei" id="ebdgAr" value="${it.badge?it.badge.ar:''}" placeholder="طبق الأسبوع"><input class="ei" id="ebdgEn" value="${it.badge?it.badge.en:''}" placeholder="Bowl of the Week"></div></div>
   <div class="er"><div class="el">Macros</div><div class="er4"><div><div class="el">Cal</div><input class="ei" id="ecal" type="number" value="${it.macros.cal}"></div><div><div class="el">Pro</div><input class="ei" id="epro" type="number" value="${it.macros.protein}"></div><div><div class="el">Carb</div><input class="ei" id="ecrb" type="number" value="${it.macros.carbs}"></div><div><div class="el">Fat</div><input class="ei" id="efat" type="number" value="${it.macros.fat}"></div></div></div>
   <div class="er"><div class="el">المكونات عربي (فاصلة)</div><input class="ei" id="eia" value="${(it.ingredients.ar||[]).join('، ')}"></div>
   <div class="er"><div class="el">Ingredients EN (comma)</div><input class="ei" id="eie" value="${(it.ingredients.en||[]).join(', ')}"></div>
@@ -498,6 +647,9 @@ async function saveE(){
     ingredients:{ar:document.getElementById('eia').value.split(/[،,]/).map(s=>s.trim()).filter(Boolean),en:document.getElementById('eie').value.split(',').map(s=>s.trim()).filter(Boolean)},
     macros:{cal:+document.getElementById('ecal').value||0,protein:+document.getElementById('epro').value||0,carbs:+document.getElementById('ecrb').value||0,fat:+document.getElementById('efat').value||0},
     available:eIdx>=0?(raw[eIdx].available!==false):true,order:eIdx>=0?(raw[eIdx].order||eIdx+1):d.items.length+1};
+  const bdgAr=(document.getElementById('ebdgAr')?document.getElementById('ebdgAr').value.trim():'');
+  const bdgEn=(document.getElementById('ebdgEn')?document.getElementById('ebdgEn').value.trim():'');
+  it.badge=bdgAr||bdgEn?{ar:bdgAr,en:bdgEn}:null;
   const woOn=document.getElementById('woEnabled')&&document.getElementById('woEnabled').checked;
   if(woOn){
     const carbs=eWoCarbs.filter(c=>c.ar||c.en);
