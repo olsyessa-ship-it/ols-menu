@@ -242,7 +242,7 @@ function T(o){return o?L==='ar'?o.ar:o.en:''}
 function M(i){return{id:i.id,cat:i.category,cook:i.cookType,img:i.image,ar:{name:i.name.ar,desc:i.description.ar},en:{name:i.name.en,desc:i.description.en},price:i.price,pl:i.priceLabel,al:i.allergens||[],ing:i.ingredients||{ar:[],en:[]},mac:i.macros||{cal:0,protein:0,carbs:0,fat:0},avail:i.available!==false,wo:i.weightOptions||null,sauce:i.sauce||null,badge:i.badge||null}}
 
 async function load(){
-  try{const r=await fetch(API);const d=await r.json();cats=[{id:'all',ar:'الكل',en:'All'},...d.categories];alMap=d.allergens||{};items=d.items.sort((a,b)=>(a.order||0)-(b.order||0)).map(M);bybData=d.byb||null;if(bybData&&d.sauces)bybData._sauces=d.sauces;if(!d.byb||!d.byb.enabled){const fab=document.getElementById('bybFab');if(fab)fab.style.display='none'}rTabs();rMenu()}
+  try{const r=await fetch(API);const d=await r.json();cats=[{id:'all',ar:'الكل',en:'All'},...d.categories];alMap=d.allergens||{};items=d.items.sort((a,b)=>(a.order||0)-(b.order||0)).map(M);const apiSauces=d.sauces||DEF_SAUCES;bybData=d.byb||JSON.parse(JSON.stringify(DEF_BYB));bybData._sauces=apiSauces;rTabs();rMenu()}
   catch(e){document.getElementById('grid').innerHTML='<div style="text-align:center;padding:60px 20px;color:rgba(42,38,37,.4)">جاري التحميل...</div>'}
 }
 
@@ -260,7 +260,7 @@ const K={c:L==='ar'?'سعرات':'Cal',p:L==='ar'?'بروتين':'Protein',cb:L=
 const hasWo=i.wo&&i.wo.enabled&&i.wo.carbs&&i.wo.carbs.length&&i.wo.proteins&&i.wo.proteins.length;
 let h=`<div class="miw"><img class="mii" src="${i.img}" alt="${d.name}"></div><div class="mob"><span class="mck ${i.cook}">${i.cook==='grill'?'🔥':'🍳'} ${i.cook.toUpperCase()}</span><div class="mn">${d.name}</div><div class="msu">${s}</div><div class="mde">${d.desc}</div>`;
 // Sauce info
-const sauceMap=bybData&&bybData._sauces?bybData._sauces:{};
+const sauceMap=(bybData&&bybData._sauces)?bybData._sauces:DEF_SAUCES;
 if(i.sauce){
   const parts=[];
   const raw=i.sauce;
@@ -303,6 +303,30 @@ function fC(c){document.querySelectorAll('.tb').forEach(b=>b.classList.toggle('o
 function tgLang(){L=L==='ar'?'en':'ar';const d=L==='ar'?'rtl':'ltr';document.documentElement.lang=L;document.documentElement.dir=d;document.body.dir=d;document.querySelector('.lbtn').textContent=L==='ar'?'EN':'عربي';document.getElementById('ht').textContent=L==='ar'?'أكل نظيف وطعم مختلف':'Clean food, real flavor';rTabs();rMenu();cM()}
 
 // ═══ BUILD YOUR BOWL ═══
+const DEF_SAUCES={
+"spicy":{ar:"سبايسي",en:"Spicy",icon:"🌶️",allergens:["soy"]},
+"sauce-a":{ar:"صوص A",en:"Sauce A",icon:"🫙",allergens:["fish","eggs","nuts"]},
+"sauce-b":{ar:"صوص B",en:"Sauce B",icon:"🫙",allergens:["fish","soy"]},
+"sauce-c":{ar:"صوص C",en:"Sauce C",icon:"🫙",allergens:["dairy"]},
+"sauce-d":{ar:"صوص D",en:"Sauce D",icon:"🫙",allergens:["eggs"]},
+"thousand-island":{ar:"ثاوزند آيلاند",en:"Thousand Island",icon:"🫙",allergens:["eggs"]},
+"pomegranate-molasses":{ar:"دبس رمان",en:"Pomegranate Molasses",icon:"🫙",allergens:[]},
+"ranch":{ar:"رانش",en:"Ranch",icon:"🫙",allergens:["dairy","eggs"]},
+"diet-ranch":{ar:"رانش دايت",en:"Diet Ranch",icon:"🫙",allergens:["dairy"]}
+};
+const DEF_BYB={
+enabled:true,
+proteins:[{id:"chicken",ar:"دجاج",en:"Chicken",price:35,icon:"🍗"},{id:"beef",ar:"لحم",en:"Beef",price:43,icon:"🥩"},{id:"shrimp",ar:"روبيان",en:"Shrimp",price:59,icon:"🦐"}],
+carbs:[{id:"sushi-rice",ar:"رز سوشي",en:"Sushi Rice",icon:"🍚"},{id:"brown-rice",ar:"رز بني",en:"Brown Rice",icon:"🍚"},{id:"white-rice",ar:"رز أبيض",en:"White Rice",icon:"🍚"}],
+veggies:[{id:"lettuce",ar:"خس",en:"Lettuce",icon:"🥬"},{id:"cucumber",ar:"خيار",en:"Cucumber",icon:"🥒"},{id:"corn",ar:"ذرة",en:"Corn",icon:"🌽"},{id:"broccoli",ar:"بروكلي",en:"Broccoli",icon:"🥦"},{id:"carrot",ar:"جزر",en:"Carrot",icon:"🥕"},{id:"cabbage",ar:"ملفوف",en:"Cabbage",icon:"🥗"},{id:"pomegranate",ar:"رمان",en:"Pomegranate",icon:"💎"},{id:"cherry-tomato",ar:"طماطم شيري",en:"Cherry Tomato",icon:"🍅"},{id:"edamame",ar:"إدامامي",en:"Edamame",icon:"🫛"},{id:"beetroot",ar:"شمندر",en:"Beetroot",icon:"🟣"}],
+maxVeggies:5,
+extras:{carb:{ar:"سكوب كارب إضافي",en:"Extra Carb Scoop",price:5},protein:{ar:"سكوب بروتين إضافي",en:"Extra Protein Scoop",price:15}},
+cheese:[{id:"none",ar:"بدون",en:"None",icon:"—"},{id:"cheddar",ar:"شيدر",en:"Cheddar",icon:"🧀"},{id:"mozzarella",ar:"موزاريلا",en:"Mozzarella",icon:"🧀"}],
+sauces:["spicy","sauce-a","sauce-b","sauce-c","sauce-d","thousand-island","pomegranate-molasses","ranch","diet-ranch"],
+garnish:[{id:"sesame",ar:"سمسم",en:"Sesame Seeds",icon:"⚪"},{id:"nuts",ar:"مكسرات",en:"Nuts",icon:"🥜"},{id:"spring-onion",ar:"بصل أخضر",en:"Spring Onion",icon:"🧅"}],
+scoopNote:{ar:"السكوب الواحد يتراوح بين ١٠٠-١٢٠ جرام",en:"Each scoop is approximately 100-120g"},
+_sauces:null
+};
 let bybData=null,bybState={protein:null,carb:null,veggies:[],cheese:'none',sauce:null,garnish:[],extraCarb:false,extraProtein:false};
 function openBYB(){
   if(!bybData)return;
@@ -430,7 +454,7 @@ function rAP(){
   loadAll().then(d=>{if(!d)return;raw=d.items||[];
   let h=`<div class="aph"><div class="apt">📋 لوحة التحكم</div><button class="apclose" onclick="closeAP()">✕</button></div>`;
   // Tabs
-  h+=`<div class="atabs"><button class="atab ${adminTab==='items'?'on':''}" data-t="items" onclick="switchATab('items')">الأصناف (${raw.length})</button><button class="atab ${adminTab==='cats'?'on':''}" data-t="cats" onclick="switchATab('cats')">المجموعات</button></div>`;
+  h+=`<div class="atabs"><button class="atab ${adminTab==='items'?'on':''}" data-t="items" onclick="switchATab('items')">الأصناف (${raw.length})</button><button class="atab ${adminTab==='cats'?'on':''}" data-t="cats" onclick="switchATab('cats')">المجموعات</button><button class="atab ${adminTab==='byb'?'on':''}" data-t="byb" onclick="switchATab('byb')">🥣 اصنع طبقك</button></div>`;
 
   // ═══ ITEMS TAB ═══
   h+=`<div class="asec ${adminTab==='items'?'on':''}" data-t="items">`;
@@ -450,6 +474,20 @@ function rAP(){
   });
   h+=`</div>`;
 
+  // ═══ BYB TAB ═══
+  h+=`<div class="asec ${adminTab==='byb'?'on':''}" data-t="byb">`;
+  h+=`<div style="color:var(--sg);font-size:13px;font-weight:600;margin-bottom:12px">⚙️ أسعار البروتين</div>`;
+  const bybP=bybData?bybData.proteins:DEF_BYB.proteins;
+  bybP.forEach((p,i)=>{
+  h+=`<div class="apc" style="padding:10px 14px;margin-bottom:6px"><div style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--wh);font-size:14px">${p.icon} ${p.ar} / ${p.en}</span><div style="display:flex;align-items:center;gap:6px"><input class="ei" type="number" id="bybPr${i}" value="${p.price}" style="width:80px;text-align:center;font-size:16px;font-weight:700"><span style="color:rgba(255,255,255,.3);font-size:11px">ر.س</span></div></div></div>`;
+  });
+  h+=`<div style="color:var(--sg);font-size:13px;font-weight:600;margin:16px 0 12px">⚙️ أسعار الإكسترا</div>`;
+  const bybE=bybData?bybData.extras:DEF_BYB.extras;
+  h+=`<div class="apc" style="padding:10px 14px;margin-bottom:6px"><div style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--wh);font-size:13px">سكوب كارب إضافي</span><div style="display:flex;align-items:center;gap:6px"><input class="ei" type="number" id="bybExCarb" value="${bybE.carb.price}" style="width:80px;text-align:center;font-size:16px;font-weight:700"><span style="color:rgba(255,255,255,.3);font-size:11px">ر.س</span></div></div></div>`;
+  h+=`<div class="apc" style="padding:10px 14px;margin-bottom:6px"><div style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--wh);font-size:13px">سكوب بروتين إضافي</span><div style="display:flex;align-items:center;gap:6px"><input class="ei" type="number" id="bybExPro" value="${bybE.protein.price}" style="width:80px;text-align:center;font-size:16px;font-weight:700"><span style="color:rgba(255,255,255,.3);font-size:11px">ر.س</span></div></div></div>`;
+  h+=`<button class="apb-add" onclick="saveBYB()" style="margin-top:12px">💾 حفظ أسعار اصنع طبقك</button>`;
+  h+=`</div>`;
+
   el.innerHTML=h})}
 
 async function doPin(){const p=document.getElementById('pini').value;try{const r=await fetch(API+'/all',{headers:{'x-pin':p}});if(!r.ok)throw 0;PIN=p;rAP()}catch(e){document.getElementById('perr').textContent='PIN غلط'}}
@@ -462,6 +500,22 @@ async function hide24(i){
   await saveAll(d);rAP()}
 
 async function tgAv(i,v){const d=await loadAll();if(!d)return;d.items[i].available=v;d.items[i].hiddenUntil=null;await saveAll(d);rAP()}
+
+// ═══ SAVE BYB PRICES ═══
+async function saveBYB(){
+  const d=await loadAll();if(!d)return;
+  if(!d.byb)d.byb=JSON.parse(JSON.stringify(DEF_BYB));
+  const bP=bybData?bybData.proteins:DEF_BYB.proteins;
+  bP.forEach((p,i)=>{const el=document.getElementById('bybPr'+i);if(el)d.byb.proteins[i].price=parseFloat(el.value)||0});
+  const ecEl=document.getElementById('bybExCarb');
+  const epEl=document.getElementById('bybExPro');
+  if(ecEl)d.byb.extras.carb.price=parseFloat(ecEl.value)||0;
+  if(epEl)d.byb.extras.protein.price=parseFloat(epEl.value)||0;
+  if(!d.sauces)d.sauces=DEF_SAUCES;
+  await saveAll(d);
+  bybData=d.byb;bybData._sauces=d.sauces;
+  rAP();
+}
 
 // ═══ DELETE PERMANENTLY ═══
 function delItem(i){
