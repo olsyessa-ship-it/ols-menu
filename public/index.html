@@ -146,6 +146,17 @@ body[dir="rtl"] .mc-badge{right:auto;left:10px}
 .mc-badge-glow{animation:badgeGlow 2s ease-in-out infinite}
 @keyframes badgeGlow{0%,100%{box-shadow:0 0 0 0 rgba(200,215,150,0)}50%{box-shadow:0 0 0 4px rgba(200,215,150,.25)}}
 
+/* Sauces Section */
+.sauce-sec{padding:24px 16px 0;position:relative;z-index:1;max-width:1000px;margin:0 auto}
+.sauce-title{font-size:14px;font-weight:700;letter-spacing:1px;color:var(--dg);margin-bottom:12px;padding:0 4px}
+.sauce-scroll{display:flex;gap:10px;overflow-x:auto;padding:0 0 12px;scrollbar-width:none}.sauce-scroll::-webkit-scrollbar{display:none}
+.sauce-card{flex-shrink:0;width:130px;background:var(--wh);border-radius:16px;padding:14px 12px;text-align:center;border:1px solid rgba(42,38,37,.04)}
+.sauce-card .sc-icon{font-size:24px;margin-bottom:6px}
+.sauce-card .sc-name{font-size:12px;font-weight:600;color:var(--ch);line-height:1.3;margin-bottom:4px}
+.sauce-card .sc-cal{font-size:10px;color:rgba(42,38,37,.35);font-family:var(--fe)}
+.sauce-card .sc-al{display:flex;gap:3px;justify-content:center;margin-top:6px;flex-wrap:wrap}
+.sauce-card .sc-al span{font-size:14px}
+
 /* ADMIN */
 .apx{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(12px);z-index:500;display:none;overflow-y:auto}.apx.on{display:block}
 .ap{max-width:500px;margin:0 auto;padding:20px;min-height:100vh}
@@ -222,6 +233,7 @@ textarea.ei{min-height:55px;resize:vertical}
 <section class="hero"><div class="hero-l">MENU</div><h1 class="hero-t" id="ht">Clean food, real flavor</h1></section>
 <nav class="tw"><div class="ts" id="tabs"></div><div class="tl"></div></nav>
 <main id="grid"></main>
+<div id="sauceSec"></div>
 <div class="mbg" id="mbg" onclick="cM()"></div>
 <div class="msh" id="msh"><div class="mha"></div><button class="mx" onclick="cM()">✕</button><div id="mbody"></div></div>
 <footer class="ft"><div class="ftl"><img src="/ols-logo.png" alt="OLS"></div><div class="fts">أكل نظيف وطعم مختلف</div><div class="ftk"><a href="https://www.instagram.com/olsyes/" target="_blank">Instagram</a><a href="https://share.google/WuZBnUt12gPBpYM0S" target="_blank">Location</a></div><div class="ftc">© OLS 2025 — Developed by Mohammed Al-Hasoon</div></footer>
@@ -242,7 +254,7 @@ function T(o){return o?L==='ar'?o.ar:o.en:''}
 function M(i){return{id:i.id,cat:i.category,cook:i.cookType,img:i.image,ar:{name:i.name.ar,desc:i.description.ar},en:{name:i.name.en,desc:i.description.en},price:i.price,pl:i.priceLabel,al:i.allergens||[],ing:i.ingredients||{ar:[],en:[]},mac:i.macros||{cal:0,protein:0,carbs:0,fat:0},avail:i.available!==false,wo:i.weightOptions||null,sauce:i.sauce||null,badge:i.badge||null}}
 
 async function load(){
-  try{const r=await fetch(API);const d=await r.json();cats=[{id:'all',ar:'الكل',en:'All'},...d.categories];alMap=d.allergens||{};items=d.items.sort((a,b)=>(a.order||0)-(b.order||0)).map(M);const apiSauces=d.sauces||DEF_SAUCES;bybData=d.byb||JSON.parse(JSON.stringify(DEF_BYB));bybData._sauces=apiSauces;rTabs();rMenu()}
+  try{const r=await fetch(API);const d=await r.json();cats=[{id:'all',ar:'الكل',en:'All'},...d.categories];alMap=d.allergens||{};items=d.items.sort((a,b)=>(a.order||0)-(b.order||0)).map(M);const apiSauces=d.sauces||DEF_SAUCES;bybData=d.byb||JSON.parse(JSON.stringify(DEF_BYB));bybData._sauces=apiSauces;rTabs();rMenu();rSauces()}
   catch(e){document.getElementById('grid').innerHTML='<div style="text-align:center;padding:60px 20px;color:rgba(42,38,37,.4)">جاري التحميل...</div>'}
 }
 
@@ -255,6 +267,22 @@ function rMenu(f='all'){
   h+=`<div class="mc" onclick="oM('${i.id}')"><div class="cw">${i.badge?`<div class="mc-badge mc-badge-glow">${T(i.badge)}</div>`:''}<img class="ci" src="${i.img}" alt="${d.name}" loading="lazy"><span class="ck ${i.cook}">${i.cook==='grill'?'🔥':'🍳'} ${i.cook.toUpperCase()}</span></div><div class="cb"><div class="cn">${d.name}</div><div class="cs">${s}</div><div class="cd">${d.desc}</div><div class="cf"><div class="ca">${i.al.map(a=>alMap[a]?`<div class="ad" data-t="${T(alMap[a])}">${alMap[a].icon}</div>`:'').join('')}</div><div class="cp">${p}${i.price} <small>${u}</small></div></div></div></div>`});
   h+=`</div></section>`});document.getElementById('grid').innerHTML=h}
 
+function rSauces(){
+  const sMap=(bybData&&bybData._sauces)?bybData._sauces:DEF_SAUCES;
+  const el=document.getElementById('sauceSec');if(!el)return;
+  let h=`<div class="sauce-sec"><div class="sauce-title">${L==='ar'?'صوصاتنا':'OUR SAUCES'}</div><div class="sauce-scroll">`;
+  Object.keys(sMap).forEach(sk=>{
+    const sc=sMap[sk];
+    h+=`<div class="sauce-card"><div class="sc-icon">${sc.icon||'🫙'}</div><div class="sc-name">${T(sc)}</div>`;
+    if(sc.cal)h+=`<div class="sc-cal">${sc.cal} cal</div>`;
+    if(sc.allergens&&sc.allergens.length)h+=`<div class="sc-al">${sc.allergens.map(a=>{const al=alMap[a];return al?`<span title="${T(al)}">${al.icon}</span>`:''}).join('')}</div>`;
+    else h+=`<div class="sc-al"><span style="font-size:10px;color:rgba(42,38,37,.3)">✓</span></div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></div>`;
+  el.innerHTML=h;
+}
+
 function oM(id){const i=items.find(x=>x.id===id);if(!i)return;const d=T(i),s=L==='ar'?i.en.name:i.ar.name,u=L==='ar'?'ر.س':'SAR',p=i.pl?T(i.pl)+' ':'',ig=T(i.ing);
 const K={c:L==='ar'?'سعرات':'Cal',p:L==='ar'?'بروتين':'Protein',cb:L==='ar'?'كربوهيدرات':'Carbs',f:L==='ar'?'دهون':'Fat',n:L==='ar'?'القيم الغذائية (تقديرية)':'NUTRITION (EST.)',a:L==='ar'?'الحساسيات':'ALLERGENS',g:L==='ar'?'المكونات':'INGREDIENTS'};
 const hasWo=i.wo&&i.wo.enabled&&i.wo.carbs&&i.wo.carbs.length&&i.wo.proteins&&i.wo.proteins.length;
@@ -262,14 +290,19 @@ let h=`<div class="miw"><img class="mii" src="${i.img}" alt="${d.name}"></div><d
 // Sauce info
 const sauceMap=(bybData&&bybData._sauces)?bybData._sauces:DEF_SAUCES;
 if(i.sauce){
-  const parts=[];
-  const raw=i.sauce;
-  if(raw.startsWith('spicy'))parts.push('spicy');
-  const letters=raw.replace('spicy-','').replace('spicy','');
-  for(const ch of letters){parts.push('sauce-'+ch)}
-  const sNames=parts.map(sid=>{const sc=sauceMap[sid];return sc?T(sc):sid}).filter(Boolean);
+  // Normalize old format to new
+  let sauceStr=i.sauce||'';
+  if(sauceStr&&!sauceStr.includes(',')&&sauceStr.startsWith('spicy-')){
+    const letters=sauceStr.replace('spicy-','');
+    sauceStr='spicy,'+[...letters].map(c=>'sauce-'+c).join(',');
+  }
+  const sIds=sauceStr.split(',').map(s=>s.trim()).filter(Boolean);
+  const sNames=sIds.map(sid=>{const sc=sauceMap[sid];return sc?T(sc):sid}).filter(Boolean);
+  const sAllergens=[...new Set(sIds.flatMap(sid=>{const sc=sauceMap[sid];return sc&&sc.allergens?sc.allergens:[]}))];
   if(sNames.length){
-    h+=`<div style="display:flex;align-items:center;gap:6px;margin-top:8px;padding:8px 12px;background:rgba(0,82,64,.04);border-radius:10px;font-size:12px;color:var(--dg);font-weight:500"><span>🫙</span><span>${sNames.join(' + ')}</span></div>`;
+    h+=`<div style="margin-top:10px;padding:10px 14px;background:rgba(0,82,64,.04);border-radius:12px;border:1px solid rgba(0,82,64,.06)"><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--dg);font-weight:600"><span>🫙</span><span>${sNames.join(' + ')}</span></div>`;
+    if(sAllergens.length){h+=`<div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap">${sAllergens.map(a=>{const al=alMap[a];return al?`<span style="font-size:10px;padding:2px 8px;border-radius:6px;background:rgba(42,38,37,.06);color:rgba(42,38,37,.5)">${al.icon} ${T(al)}</span>`:''}).join('')}</div>`}
+    h+=`</div>`;
   }
 }
 if(hasWo){
@@ -300,19 +333,19 @@ document.getElementById('mbody').innerHTML=h;document.getElementById('mbg').clas
 
 function cM(){document.getElementById('mbg').classList.remove('on');document.getElementById('msh').classList.remove('on');document.body.style.overflow=''}
 function fC(c){document.querySelectorAll('.tb').forEach(b=>b.classList.toggle('on',b.dataset.c===c));rMenu(c)}
-function tgLang(){L=L==='ar'?'en':'ar';const d=L==='ar'?'rtl':'ltr';document.documentElement.lang=L;document.documentElement.dir=d;document.body.dir=d;document.querySelector('.lbtn').textContent=L==='ar'?'EN':'عربي';document.getElementById('ht').textContent=L==='ar'?'أكل نظيف وطعم مختلف':'Clean food, real flavor';rTabs();rMenu();cM()}
+function tgLang(){L=L==='ar'?'en':'ar';const d=L==='ar'?'rtl':'ltr';document.documentElement.lang=L;document.documentElement.dir=d;document.body.dir=d;document.querySelector('.lbtn').textContent=L==='ar'?'EN':'عربي';document.getElementById('ht').textContent=L==='ar'?'أكل نظيف وطعم مختلف':'Clean food, real flavor';rTabs();rMenu();rSauces();cM()}
 
 // ═══ BUILD YOUR BOWL ═══
 const DEF_SAUCES={
-"spicy":{ar:"سبايسي",en:"Spicy",icon:"🌶️",allergens:["soy"]},
-"sauce-a":{ar:"صوص A",en:"Sauce A",icon:"🫙",allergens:["fish","eggs","nuts"]},
-"sauce-b":{ar:"صوص B",en:"Sauce B",icon:"🫙",allergens:["fish","soy"]},
-"sauce-c":{ar:"صوص C",en:"Sauce C",icon:"🫙",allergens:["dairy"]},
-"sauce-d":{ar:"صوص D",en:"Sauce D",icon:"🫙",allergens:["eggs"]},
-"thousand-island":{ar:"ثاوزند آيلاند",en:"Thousand Island",icon:"🫙",allergens:["eggs"]},
-"pomegranate-molasses":{ar:"دبس رمان",en:"Pomegranate Molasses",icon:"🫙",allergens:[]},
-"ranch":{ar:"رانش",en:"Ranch",icon:"🫙",allergens:["dairy","eggs"]},
-"diet-ranch":{ar:"رانش دايت",en:"Diet Ranch",icon:"🫙",allergens:["dairy"]}
+"spicy":{ar:"سبايسي",en:"Spicy",icon:"🌶️",allergens:["soy"],cal:85},
+"sauce-a":{ar:"صوص A",en:"Sauce A",icon:"🫙",allergens:["fish","eggs","nuts"],cal:120},
+"sauce-b":{ar:"صوص B",en:"Sauce B",icon:"🫙",allergens:["fish","soy"],cal:95},
+"sauce-c":{ar:"صوص C",en:"Sauce C",icon:"🫙",allergens:["dairy"],cal:110},
+"sauce-d":{ar:"صوص D",en:"Sauce D",icon:"🫙",allergens:["eggs"],cal:90},
+"thousand-island":{ar:"ثاوزند آيلاند",en:"Thousand Island",icon:"🫙",allergens:["eggs"],cal:100},
+"pomegranate-molasses":{ar:"دبس رمان",en:"Pomegranate Molasses",icon:"🫙",allergens:[],cal:45},
+"ranch":{ar:"رانش",en:"Ranch",icon:"🫙",allergens:["dairy","eggs"],cal:130},
+"diet-ranch":{ar:"رانش دايت",en:"Diet Ranch",icon:"🫙",allergens:["dairy"],cal:60}
 };
 const DEF_BYB={
 enabled:true,
@@ -454,7 +487,7 @@ function rAP(){
   loadAll().then(d=>{if(!d)return;raw=d.items||[];
   let h=`<div class="aph"><div class="apt">📋 لوحة التحكم</div><button class="apclose" onclick="closeAP()">✕</button></div>`;
   // Tabs
-  h+=`<div class="atabs"><button class="atab ${adminTab==='items'?'on':''}" data-t="items" onclick="switchATab('items')">الأصناف (${raw.length})</button><button class="atab ${adminTab==='cats'?'on':''}" data-t="cats" onclick="switchATab('cats')">المجموعات</button><button class="atab ${adminTab==='byb'?'on':''}" data-t="byb" onclick="switchATab('byb')">🥣 اصنع طبقك</button></div>`;
+  h+=`<div class="atabs"><button class="atab ${adminTab==='items'?'on':''}" data-t="items" onclick="switchATab('items')">الأصناف (${raw.length})</button><button class="atab ${adminTab==='cats'?'on':''}" data-t="cats" onclick="switchATab('cats')">المجموعات</button><button class="atab ${adminTab==='byb'?'on':''}" data-t="byb" onclick="switchATab('byb')">🥣 اصنع طبقك</button><button class="atab ${adminTab==='sauces'?'on':''}" data-t="sauces" onclick="switchATab('sauces')">🫙 الصوصات</button></div>`;
 
   // ═══ ITEMS TAB ═══
   h+=`<div class="asec ${adminTab==='items'?'on':''}" data-t="items">`;
@@ -486,6 +519,23 @@ function rAP(){
   h+=`<div class="apc" style="padding:10px 14px;margin-bottom:6px"><div style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--wh);font-size:13px">سكوب كارب إضافي</span><div style="display:flex;align-items:center;gap:6px"><input class="ei" type="number" id="bybExCarb" value="${bybE.carb.price}" style="width:80px;text-align:center;font-size:16px;font-weight:700"><span style="color:rgba(255,255,255,.3);font-size:11px">ر.س</span></div></div></div>`;
   h+=`<div class="apc" style="padding:10px 14px;margin-bottom:6px"><div style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--wh);font-size:13px">سكوب بروتين إضافي</span><div style="display:flex;align-items:center;gap:6px"><input class="ei" type="number" id="bybExPro" value="${bybE.protein.price}" style="width:80px;text-align:center;font-size:16px;font-weight:700"><span style="color:rgba(255,255,255,.3);font-size:11px">ر.س</span></div></div></div>`;
   h+=`<button class="apb-add" onclick="saveBYB()" style="margin-top:12px">💾 حفظ أسعار اصنع طبقك</button>`;
+  h+=`</div>`;
+
+  // ═══ SAUCES TAB ═══
+  h+=`<div class="asec ${adminTab==='sauces'?'on':''}" data-t="sauces">`;
+  const sMap=(bybData&&bybData._sauces)?bybData._sauces:DEF_SAUCES;
+  const sKeys=Object.keys(sMap);
+  sKeys.forEach(sk=>{
+    const sc=sMap[sk];
+    h+=`<div class="apc" style="padding:12px 14px;margin-bottom:8px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><span style="color:var(--wh);font-size:14px;font-weight:600">${sc.icon} ${sc.ar} / ${sc.en}</span><span style="color:rgba(255,255,255,.3);font-size:11px;font-family:var(--fe)">${sk}</span></div>`;
+    h+=`<div style="display:flex;gap:6px;flex-wrap:wrap">`;
+    if(sc.allergens&&sc.allergens.length){sc.allergens.forEach(a=>{const al=alMap[a];h+=`<span style="padding:3px 8px;border-radius:6px;font-size:10px;background:rgba(239,68,68,.1);color:#f88">${al?al.icon:''} ${a}</span>`})}
+    else{h+=`<span style="padding:3px 8px;border-radius:6px;font-size:10px;background:rgba(80,255,80,.08);color:#8f8">✓ بدون حساسيات</span>`}
+    h+=`</div>`;
+    if(sc.cal)h+=`<div style="margin-top:4px;font-size:10px;color:rgba(255,255,255,.3);font-family:var(--fe)">${sc.cal} cal / 40g</div>`;
+    h+=`</div>`;
+  });
+  h+=`<div style="color:rgba(255,255,255,.3);font-size:11px;text-align:center;margin-top:12px">الصوصات تُدار من ملف البيانات — تواصل مع المطور لإضافة صوص جديد</div>`;
   h+=`</div>`;
 
   el.innerHTML=h})}
@@ -672,6 +722,7 @@ function eItem(i){
   </div>
   <div class="er2"><div class="er"><div class="el">السعر SAR</div><input class="ei" id="epr" type="number" value="${it.price}"></div><div class="er"><div class="el">الفئة</div><select class="ei" id="eca">${cs.map(c=>`<option value="${c.id}"${it.category===c.id?' selected':''}>${T(c)}</option>`).join('')}</select></div></div>
   <div class="er2"><div class="er"><div class="el">الطبخ</div><select class="ei" id="eco"><option value="grill"${it.cookType==='grill'?' selected':''}>🔥 Grill</option><option value="fry"${it.cookType==='fry'?' selected':''}>🍳 Fry</option></select></div><div class="er"><div class="el">بادئة (اختياري)</div><input class="ei" id="epl" value="${it.priceLabel?it.priceLabel.ar:''}" placeholder="يبدأ من"></div></div>
+  <div class="er"><div class="el">الصوص المستخدم</div><div class="eal">${Object.keys((bybData&&bybData._sauces)?bybData._sauces:DEF_SAUCES).map(sk=>{const sc=((bybData&&bybData._sauces)?bybData._sauces:DEF_SAUCES)[sk];const itemSauceIds=(it.sauce||'').split(',').map(s=>s.trim()).filter(Boolean);return `<button class="ealb${itemSauceIds.includes(sk)?' on':''}" data-s="${sk}" onclick="this.classList.toggle('on')">${sc?sc.icon:''} ${sc?sc.ar:sk}</button>`}).join('')}</div></div>
   <div class="er"><div class="el">الحساسيات</div><div class="eal">${AK.map(a=>`<button class="ealb${it.allergens.includes(a)?' on':''}" data-a="${a}" onclick="this.classList.toggle('on')">${alMap[a]?alMap[a].icon:''} ${a}</button>`).join('')}</div></div>
   <div class="er"><div class="el">Badge (عربي | EN)</div><div class="er2"><input class="ei" id="ebdgAr" value="${it.badge?it.badge.ar:''}" placeholder="طبق الأسبوع"><input class="ei" id="ebdgEn" value="${it.badge?it.badge.en:''}" placeholder="Bowl of the Week"></div></div>
   <div class="er"><div class="el">Macros</div><div class="er4"><div><div class="el">Cal</div><input class="ei" id="ecal" type="number" value="${it.macros.cal}"></div><div><div class="el">Pro</div><input class="ei" id="epro" type="number" value="${it.macros.protein}"></div><div><div class="el">Carb</div><input class="ei" id="ecrb" type="number" value="${it.macros.carbs}"></div><div><div class="el">Fat</div><input class="ei" id="efat" type="number" value="${it.macros.fat}"></div></div></div>
@@ -704,6 +755,8 @@ async function saveE(){
   const bdgAr=(document.getElementById('ebdgAr')?document.getElementById('ebdgAr').value.trim():'');
   const bdgEn=(document.getElementById('ebdgEn')?document.getElementById('ebdgEn').value.trim():'');
   it.badge=bdgAr||bdgEn?{ar:bdgAr,en:bdgEn}:null;
+  const selSauces=Array.from(document.querySelectorAll('.ealb[data-s].on')).map(b=>b.dataset.s);
+  it.sauce=selSauces.length?selSauces.join(','):null;
   const woOn=document.getElementById('woEnabled')&&document.getElementById('woEnabled').checked;
   if(woOn){
     const carbs=eWoCarbs.filter(c=>c.ar||c.en);
