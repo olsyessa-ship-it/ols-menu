@@ -400,20 +400,22 @@ function rBYB(){
   if(!bybData)return;
   const u=L==='ar'?'ر.س':'SAR';const b=bybData;const s=bybState;
   let h='';
-  // Step 1: Protein + Extras underneath
+  // Step 1: Protein + Extra Protein underneath
   h+=`<div class="byb-step"><div class="byb-step-t"><span class="step-num">1</span>${L==='ar'?'اختر البروتين':'CHOOSE PROTEIN'}</div><div class="byb-opts">`;
   b.proteins.forEach(p=>{h+=`<div class="byb-opt${s.protein===p.id?' on':''}" onclick="bybSel('protein','${p.id}')"><div class="opt-icon">${p.icon}</div><div class="opt-name">${T(p)}</div><div class="opt-price">${p.price} ${u}</div></div>`});
   h+=`</div>`;
-  // Extras right under protein
-  const extC=b.extras.carb,extP=b.extras.protein;
+  const extP=b.extras.protein;
   h+=`<div class="byb-extras-row" style="margin-top:12px">`;
-  h+=`<div class="byb-ext-btn${s.extraCarb?' on':''}" onclick="bybExtra('carb')"><div class="ext-name">${T(extC)}</div><div class="ext-price">+${extC.price} ${u}</div></div>`;
   h+=`<div class="byb-ext-btn${s.extraProtein?' on':''}" onclick="bybExtra('protein')"><div class="ext-name">${T(extP)}</div><div class="ext-price">+${extP.price} ${u}</div></div>`;
   h+=`</div><div class="byb-note">${T(b.scoopNote)}</div></div>`;
-  // Step 2: Carb
+  // Step 2: Carb + Extra Carb underneath
   h+=`<div class="byb-step"><div class="byb-step-t"><span class="step-num">2</span>${L==='ar'?'اختر الكارب':'CHOOSE CARB'}</div><div class="byb-opts">`;
   b.carbs.forEach(c=>{h+=`<div class="byb-opt${s.carb===c.id?' on':''}" onclick="bybSel('carb','${c.id}')"><div class="opt-icon">${c.icon}</div><div class="opt-name">${T(c)}</div></div>`});
-  h+=`</div></div>`;
+  h+=`</div>`;
+  const extC=b.extras.carb;
+  h+=`<div class="byb-extras-row" style="margin-top:12px">`;
+  h+=`<div class="byb-ext-btn${s.extraCarb?' on':''}" onclick="bybExtra('carb')"><div class="ext-name">${T(extC)}</div><div class="ext-price">+${extC.price} ${u}</div></div>`;
+  h+=`</div><div class="byb-note">${T(b.scoopNote)}</div></div>`;
   // Step 3: Veggies
   const maxV=b.maxVeggies||5;
   h+=`<div class="byb-step"><div class="byb-step-t"><span class="step-num">3</span>${L==='ar'?'اختر الخضار':'CHOOSE VEGGIES'} <span style="font-weight:400;opacity:.5">(${maxV})</span></div><div class="byb-opts veg">`;
@@ -665,7 +667,7 @@ function handleImgFile(inp){
 
 const AK=['gluten','dairy','seafood','soy','eggs','nuts','mushroom','fish','mustard','sesame','peanuts'];
 const AL_TEXT={gluten:{ar:'جلوتين',en:'Gluten'},dairy:{ar:'حليب ومشتقاته',en:'Dairy'},seafood:{ar:'قشريات',en:'Crustaceans'},soy:{ar:'فول الصويا',en:'Soybeans'},eggs:{ar:'بيض',en:'Eggs'},nuts:{ar:'مكسرات',en:'Tree Nuts'},mushroom:{ar:'فطر',en:'Mushroom'},fish:{ar:'أسماك',en:'Fish'},mustard:{ar:'خردل',en:'Mustard'},sesame:{ar:'سمسم',en:'Sesame'},peanuts:{ar:'فول سوداني',en:'Peanuts'}};
-function alName(a){const m=alMap[a];if(m)return T(m);const t=AL_TEXT[a];return t?(L==='ar'?t.ar:t.en):a;}
+function alName(a){const t=AL_TEXT[a];if(t)return L==='ar'?t.ar:t.en;const m=alMap[a];if(m){const n=T(m);if(n)return n;}return a;}
 let eIdx=-1,eWoCarbs=[],eWoProteins=[];
 
 function tgWo(){
