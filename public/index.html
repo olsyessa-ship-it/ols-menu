@@ -345,6 +345,8 @@ function rExtras(){
     h+=`</tr>`;
   });
   h+=`</table></div>`;
+  const noteText=L==='ar'?'بعض الأصناف المميزة قد يُضاف عليها ٢ ريال':'A premium surcharge of 2 SAR may apply on select items';
+  h+=`<div style="font-size:10px;color:rgba(42,38,37,.4);text-align:center;margin-top:12px;padding:0 8px;font-family:var(--fa)">${noteText}</div>`;
   h+=`</div></div>`;
   el.innerHTML=h;
 }
