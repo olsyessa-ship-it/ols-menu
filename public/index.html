@@ -279,7 +279,8 @@ async function load(){
   catch(e){document.getElementById('grid').innerHTML='<div style="text-align:center;padding:60px 20px;color:rgba(42,38,37,.4)">جاري التحميل...</div>'}
 }
 
-function rTabs(){document.getElementById('tabs').innerHTML=cats.map(c=>`<button class="tb${c.id==='all'?' on':''}" data-c="${c.id}" onclick="fC('${c.id}')">${T(c)}</button>`).join('')}
+function rTabs(){const wtLabel=L==='ar'?'بالوزن':'By Weight';document.getElementById('tabs').innerHTML=cats.map(c=>`<button class="tb${c.id==='all'?' on':''}" data-c="${c.id}" onclick="fC('${c.id}')">${T(c)}</button>`).join('')+`<button class="tb" data-c="weight" onclick="goWeight()">${wtLabel}</button>`}
+function goWeight(){document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));document.querySelector('.tb[data-c="weight"]').classList.add('on');document.getElementById('extrasSec').scrollIntoView({behavior:'smooth',block:'start'})}
 
 function rMenu(f='all'){
   const fl=f==='all'?items:items.filter(i=>i.cat===f);const g={};fl.forEach(i=>{(g[i.cat]=g[i.cat]||[]).push(i)});
