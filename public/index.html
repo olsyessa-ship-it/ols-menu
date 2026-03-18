@@ -38,6 +38,7 @@ body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xm
 .cf{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid rgba(42,38,37,.05)}
 .ca{display:flex;gap:4px;flex-wrap:wrap}.ad{padding:3px 8px;border-radius:6px;display:inline-flex;align-items:center;font-size:9px;font-weight:600;background:rgba(42,38,37,.06);color:rgba(42,38,37,.5);white-space:nowrap}
 .cp{font-family:var(--fe);font-size:16px;font-weight:700;color:var(--dg);white-space:nowrap}.cp small{font-size:10px;font-weight:400;color:rgba(42,38,37,.35)}
+.burn-note{font-size:11px;color:rgba(42,38,37,.5);text-align:center;margin-top:10px;padding:8px 12px;font-family:var(--fa)}
 .serve-note{font-size:10px;color:rgba(0,82,64,.6);font-family:var(--fe);margin:4px 0 6px;padding:3px 8px;background:rgba(0,82,64,.05);border-radius:6px;display:inline-block}
 .mbg{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s}.mbg.on{opacity:1;pointer-events:all}
 .msh{position:fixed;bottom:0;left:0;right:0;background:var(--wh);border-radius:20px 20px 0 0;z-index:201;transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);max-height:92vh;overflow-y:auto;overscroll-behavior:contain}.msh.on{transform:translateY(0)}
@@ -426,6 +427,7 @@ if(hasWo){
   h+=`<div class="mpr"><div class="mp">${p}${i.price} <small>${u}</small></div></div>`;
 }
 h+=`<div class="st">${K.n}</div><div class="nug"><div class="nub"><div class="nuv">${i.mac.cal}</div><div class="nuu">kcal</div><div class="nul">${K.c}</div></div><div class="nub"><div class="nuv">${i.mac.protein}<span class="nuu">g</span></div><div class="nul">${K.p}</div></div><div class="nub"><div class="nuv">${i.mac.carbs}<span class="nuu">g</span></div><div class="nul">${K.cb}</div></div><div class="nub"><div class="nuv">${i.mac.fat}<span class="nuu">g</span></div><div class="nul">${K.f}</div></div></div>`;
+if(i.mac.cal>0){const burnMin=Math.round(i.mac.cal/11);const burnLabel=L==='ar'?'المدة الزمنية لحرق الوجبة :':'Burn time :';const burnAct=L==='ar'?'جري':'Running';const burnUnit=L==='ar'?'دقيقة':'min';h+=`<div class="burn-note">${burnLabel} ${burnAct} ${burnMin} ${burnUnit}</div>`}
 if(i.al.length)h+=`<div class="st">${K.a}</div><div class="al">${i.al.map(a=>`<div class="ab">${alName(a)}</div>`).join('')}</div>`;
 h+=`<div class="st">${K.g}</div><div class="ic">${ig.map(x=>`<div class="ip">${x}</div>`).join('')}</div></div>`;
 document.getElementById('mbody').innerHTML=h;document.getElementById('mbg').classList.add('on');document.getElementById('msh').classList.add('on');document.body.style.overflow='hidden'}
