@@ -57,6 +57,9 @@ body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xm
 .ftk{display:flex;gap:20px;justify-content:center;margin-top:20px}.ftk a{color:var(--sg);text-decoration:none;font-size:13px;font-weight:500;font-family:var(--fe)}.ftc{font-size:11px;color:rgba(255,255,255,.2);margin-top:20px;font-family:var(--fe)}
 /* Weight Options V2 */
 .wo-wrap{margin-top:14px;padding-top:14px;border-top:1px solid rgba(42,38,37,.06)}
+.wo-base{text-align:center;padding:12px;margin-bottom:14px;background:rgba(0,82,64,.04);border-radius:14px}
+.wo-base-price{font-size:28px;font-weight:800;color:var(--dg);font-family:var(--fe)}
+.wo-base-note{font-size:11px;color:rgba(42,38,37,.45);margin-top:4px}
 .wo-sec{margin-bottom:16px}
 .wo-type{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--dg);font-family:var(--fe);margin-bottom:8px}
 .wo-sel{width:100%;padding:10px 14px;border-radius:12px;background:var(--cr);border:1.5px solid rgba(42,38,37,.08);color:var(--ch);font-size:14px;font-weight:500;font-family:inherit;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232A2625' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer;outline:none;margin-bottom:8px}
@@ -313,23 +316,53 @@ if(i.sauce){
   }
 }
 if(hasWo){
-  woData=i.wo;woState={carbIdx:0,carbGrams:100,proIdx:0,proGrams:100};
+  woData=i.wo;const isAddon=i.wo.mode==='addon';
   const woU=L==='ar'?'ر.س':'SAR';
-  const cOpts=i.wo.carbs.map((c,ci)=>`<option value="${ci}">${T(c)}</option>`).join('');
-  const pOpts=i.wo.proteins.map((p,pi)=>`<option value="${pi}">${T(p)}</option>`).join('');
-  const c0=i.wo.carbs[0];const p0=i.wo.proteins[0];
-  const defCarbP=c0[100]||0;const defProP=p0[100]||0;const defTotal=defCarbP+defProP;
-  h+=`<div class="wo-wrap">`;
-  h+=`<div class="wo-sec"><div class="wo-type">🍚 ${L==='ar'?'كارب':'CARB'}</div><select class="wo-sel" id="woCarbSel" onchange="woSelType(this,'carb')">${cOpts}</select><div class="wo-chips" id="woCarbChips">`;
-  WO_GRAMS.forEach(g=>{const pr=c0[g]||0;h+=`<div class="wo-chip${g===100?' on':''}" data-sec="carb" data-g="${g}" onclick="woSel('carb',${g})"><div class="wo-g">${g}<small>g</small></div><div class="wo-p" id="woCarbP${g}">${pr} <small>${woU}</small></div></div>`});
-  h+=`</div></div>`;
-  h+=`<div class="wo-sec"><div class="wo-type">🥩 ${L==='ar'?'بروتين':'PROTEIN'}</div><select class="wo-sel" id="woProSel" onchange="woSelType(this,'pro')">${pOpts}</select><div class="wo-chips" id="woProChips">`;
-  WO_GRAMS.forEach(g=>{const pr=p0[g]||0;h+=`<div class="wo-chip${g===100?' on':''}" data-sec="pro" data-g="${g}" onclick="woSel('pro',${g})"><div class="wo-g">${g}<small>g</small></div><div class="wo-p" id="woProP${g}">${pr} <small>${woU}</small></div></div>`});
-  h+=`</div></div>`;
-  h+=`<div class="wo-total"><div class="wo-total-l">${L==='ar'?'المجموع':'TOTAL'}</div><div class="wo-total-v" id="woTotalV">${defTotal} <small>${woU}</small></div></div>`;
-  const extVeg=L==='ar'?'خضار':'Vegetables';const extSauce=L==='ar'?'صوص':'Sauce';const extPer=L==='ar'?'لكل إضافة':'per extra';
-  h+=`<div class="wo-extras"><div class="wo-ext-item">🥬 ${extVeg} <span class="wo-ext-price">+3 ${woU}</span> <span style="font-size:10px;color:rgba(42,38,37,.35)">${extPer}</span></div><div class="wo-ext-item">🫙 ${extSauce} <span class="wo-ext-price">+3 ${woU}</span> <span style="font-size:10px;color:rgba(42,38,37,.35)">${extPer}</span></div></div>`;
-  h+=`</div>`;
+  if(isAddon){
+    // ADDON MODE: base price + optional extras
+    woState={carbIdx:0,carbGrams:0,proIdx:0,proGrams:0};
+    const baseP=i.price;
+    const bNote=i.wo.baseNote?T(i.wo.baseNote):'';
+    const cOpts=i.wo.carbs.map((c,ci)=>`<option value="${ci}">${T(c)}</option>`).join('');
+    const p0=i.wo.proteins[0];
+    const ADDON_G=[50,100];
+    h+=`<div class="wo-wrap">`;
+    h+=`<div class="wo-base"><div class="wo-base-price">${baseP} <small>${woU}</small></div><div class="wo-base-note">${bNote}</div></div>`;
+    // Carb type selector + extra grams
+    h+=`<div class="wo-sec"><div class="wo-type">🍚 ${L==='ar'?'نوع الكارب':'CARB TYPE'}</div><select class="wo-sel" id="woCarbSel" onchange="woSelType(this,'carb')">${cOpts}</select>`;
+    h+=`<div class="wo-type" style="margin-top:10px;font-size:11px">${L==='ar'?'إضافة كارب':'EXTRA CARB'}</div><div class="wo-chips" id="woCarbChips">`;
+    h+=`<div class="wo-chip on" data-sec="carb" data-g="0" onclick="woSel('carb',0)"><div class="wo-g">${L==='ar'?'بدون':'None'}</div><div class="wo-p" id="woCarbP0">0 <small>${woU}</small></div></div>`;
+    const c0=i.wo.carbs[0];
+    ADDON_G.forEach(g=>{const pr=c0[g]||0;h+=`<div class="wo-chip" data-sec="carb" data-g="${g}" onclick="woSel('carb',${g})"><div class="wo-g">+${g}<small>g</small></div><div class="wo-p" id="woCarbP${g}">+${pr} <small>${woU}</small></div></div>`});
+    h+=`</div></div>`;
+    // Protein extra (single type, no dropdown)
+    h+=`<div class="wo-sec"><div class="wo-type">🥩 ${L==='ar'?'إضافة '+T(p0):'EXTRA '+p0.en}</div><div class="wo-chips" id="woProChips">`;
+    h+=`<div class="wo-chip on" data-sec="pro" data-g="0" onclick="woSel('pro',0)"><div class="wo-g">${L==='ar'?'بدون':'None'}</div><div class="wo-p" id="woProP0">0 <small>${woU}</small></div></div>`;
+    ADDON_G.forEach(g=>{const pr=p0[g]||0;h+=`<div class="wo-chip" data-sec="pro" data-g="${g}" onclick="woSel('pro',${g})"><div class="wo-g">+${g}<small>g</small></div><div class="wo-p" id="woProP${g}">+${pr} <small>${woU}</small></div></div>`});
+    h+=`</div></div>`;
+    h+=`<div class="wo-total"><div class="wo-total-l">${L==='ar'?'المجموع':'TOTAL'}</div><div class="wo-total-v" id="woTotalV">${baseP} <small>${woU}</small></div></div>`;
+    const extVeg=L==='ar'?'خضار':'Vegetables';const extSauce=L==='ar'?'صوص':'Sauce';const extPer=L==='ar'?'لكل إضافة':'per extra';
+    h+=`<div class="wo-extras"><div class="wo-ext-item">🥬 ${extVeg} <span class="wo-ext-price">+3 ${woU}</span> <span style="font-size:10px;color:rgba(42,38,37,.35)">${extPer}</span></div><div class="wo-ext-item">🫙 ${extSauce} <span class="wo-ext-price">+3 ${woU}</span> <span style="font-size:10px;color:rgba(42,38,37,.35)">${extPer}</span></div></div>`;
+    h+=`</div>`;
+  } else {
+    // LEGACY MODE: weight-based pricing
+    woState={carbIdx:0,carbGrams:100,proIdx:0,proGrams:100};
+    const cOpts=i.wo.carbs.map((c,ci)=>`<option value="${ci}">${T(c)}</option>`).join('');
+    const pOpts=i.wo.proteins.map((p,pi)=>`<option value="${pi}">${T(p)}</option>`).join('');
+    const c0=i.wo.carbs[0];const p0=i.wo.proteins[0];
+    const defCarbP=c0[100]||0;const defProP=p0[100]||0;const defTotal=defCarbP+defProP;
+    h+=`<div class="wo-wrap">`;
+    h+=`<div class="wo-sec"><div class="wo-type">🍚 ${L==='ar'?'كارب':'CARB'}</div><select class="wo-sel" id="woCarbSel" onchange="woSelType(this,'carb')">${cOpts}</select><div class="wo-chips" id="woCarbChips">`;
+    WO_GRAMS.forEach(g=>{const pr=c0[g]||0;h+=`<div class="wo-chip${g===100?' on':''}" data-sec="carb" data-g="${g}" onclick="woSel('carb',${g})"><div class="wo-g">${g}<small>g</small></div><div class="wo-p" id="woCarbP${g}">${pr} <small>${woU}</small></div></div>`});
+    h+=`</div></div>`;
+    h+=`<div class="wo-sec"><div class="wo-type">🥩 ${L==='ar'?'بروتين':'PROTEIN'}</div><select class="wo-sel" id="woProSel" onchange="woSelType(this,'pro')">${pOpts}</select><div class="wo-chips" id="woProChips">`;
+    WO_GRAMS.forEach(g=>{const pr=p0[g]||0;h+=`<div class="wo-chip${g===100?' on':''}" data-sec="pro" data-g="${g}" onclick="woSel('pro',${g})"><div class="wo-g">${g}<small>g</small></div><div class="wo-p" id="woProP${g}">${pr} <small>${woU}</small></div></div>`});
+    h+=`</div></div>`;
+    h+=`<div class="wo-total"><div class="wo-total-l">${L==='ar'?'المجموع':'TOTAL'}</div><div class="wo-total-v" id="woTotalV">${defTotal} <small>${woU}</small></div></div>`;
+    const extVeg=L==='ar'?'خضار':'Vegetables';const extSauce=L==='ar'?'صوص':'Sauce';const extPer=L==='ar'?'لكل إضافة':'per extra';
+    h+=`<div class="wo-extras"><div class="wo-ext-item">🥬 ${extVeg} <span class="wo-ext-price">+3 ${woU}</span> <span style="font-size:10px;color:rgba(42,38,37,.35)">${extPer}</span></div><div class="wo-ext-item">🫙 ${extSauce} <span class="wo-ext-price">+3 ${woU}</span> <span style="font-size:10px;color:rgba(42,38,37,.35)">${extPer}</span></div></div>`;
+    h+=`</div>`;
+  }
 } else {
   h+=`<div class="mpr"><div class="mp">${p}${i.price} <small>${u}</small></div></div>`;
 }
@@ -456,19 +489,29 @@ function woSel(sec,g){
   woCalc()}
 function woSelType(sel,sec){
   const idx=parseInt(sel.value)||0;const u=L==='ar'?'ر.س':'SAR';
+  const isAddon=woData&&woData.mode==='addon';
+  const grams=isAddon?[0,50,100]:WO_GRAMS;
   if(sec==='carb'){
     woState.carbIdx=idx;const t=woData.carbs[idx];
-    WO_GRAMS.forEach(g=>{const el=document.getElementById('woCarbP'+g);if(el&&t){el.innerHTML=(t[g]||0)+' <small>'+u+'</small>'}});
+    grams.forEach(g=>{const el=document.getElementById('woCarbP'+g);if(el&&t){const pr=t[g]||0;el.innerHTML=(isAddon&&g>0?'+':'')+pr+' <small>'+u+'</small>'}});
   } else {
     woState.proIdx=idx;const t=woData.proteins[idx];
-    WO_GRAMS.forEach(g=>{const el=document.getElementById('woProP'+g);if(el&&t){el.innerHTML=(t[g]||0)+' <small>'+u+'</small>'}});
+    grams.forEach(g=>{const el=document.getElementById('woProP'+g);if(el&&t){const pr=t[g]||0;el.innerHTML=(isAddon&&g>0?'+':'')+pr+' <small>'+u+'</small>'}});
   }
   woCalc()}
 function woCalc(){
   if(!woData)return;
   const c=woData.carbs[woState.carbIdx];const p=woData.proteins[woState.proIdx];
   const cP=c?c[woState.carbGrams]||0:0;const pP=p?p[woState.proGrams]||0:0;
-  const t=cP+pP;const u=L==='ar'?'ر.س':'SAR';
+  const u=L==='ar'?'ر.س':'SAR';
+  let t;
+  if(woData.mode==='addon'){
+    const baseEl=document.querySelector('.wo-base-price');
+    const baseP=baseEl?parseFloat(baseEl.textContent):0;
+    t=baseP+cP+pP;
+  } else {
+    t=cP+pP;
+  }
   const el=document.getElementById('woTotalV');if(el)el.innerHTML=t+' <small>'+u+'</small>'}
 
 let sy=0;const sh=document.getElementById('msh');
