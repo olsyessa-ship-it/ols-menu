@@ -13,7 +13,9 @@
 body{background:var(--cr);color:var(--ch);font-family:var(--fa);overflow-x:hidden;-webkit-font-smoothing:antialiased}
 body[dir="ltr"]{font-family:var(--fe)}
 body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+.top-banner{background:var(--bk);color:var(--wh);text-align:center;padding:8px 16px;font-size:11px;font-weight:600;letter-spacing:1.5px;font-family:var(--fe);display:flex;align-items:center;justify-content:center;gap:6px}.tb-icon{font-size:13px}.tb-text{opacity:.85}
 .hdr{position:sticky;top:0;z-index:100;background:var(--bk);padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.prep-badge{position:absolute;bottom:10px;left:10px;padding:4px 10px;border-radius:8px;font-size:9px;font-weight:600;letter-spacing:.5px;font-family:var(--fe);background:rgba(0,0,0,.7);color:var(--wh);backdrop-filter:blur(6px);display:flex;align-items:center;gap:4px}body[dir="ltr"] .prep-badge{left:auto;right:10px}.prep-badge .pb-icon{font-size:11px}
 .logo{display:flex;align-items:center}.logo img{height:48px;width:auto;filter:brightness(0) invert(1)}
 .hdr-r{display:flex;gap:6px;align-items:center}
 .lbtn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);padding:4px 10px;border-radius:100px;font-size:10px;font-weight:500;cursor:pointer;transition:all .25s;font-family:var(--fe)}.lbtn:hover{background:rgba(255,255,255,.14)}
@@ -60,6 +62,890 @@ body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xm
 /* Weight Options V2 */
 .wo-wrap{margin-top:14px;padding-top:14px;border-top:1px solid rgba(42,38,37,.06)}
 .wo-base{text-align:center;padding:12px;margin-bottom:14px;background:rgba(0,82,64,.04);border-radius:14px}
+.wo-base-price{font-size:28px;font-weight:800;color:var(--dg);font-family:var(--fe)}
+.wo-base-note{font-size:11px;color:rgba(42,38,37,.45);margin-top:4px}
+.wo-sec{margin-bottom:16px}
+.wo-type{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--dg);font-family:var(--fe);margin-bottom:8px}
+.wo-sel{width:100%;padding:10px 14px;border-radius:12px;background:var(--cr);border:1.5px solid rgba(42,38,37,.08);color:var(--ch);font-size:14px;font-weight:500;font-family:inherit;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232A2625' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer;outline:none;margin-bottom:8px}
+.wo-sel:focus{border-color:var(--dg)}
+.wo-chips{display:flex;gap:8px}
+.wo-chip{flex:1;padding:10px 8px;border-radius:14px;background:var(--cr);border:1.5px solid rgba(42,38,37,.08);text-align:center;cursor:pointer;transition:all .2s;user-select:none}
+.wo-chip:active{transform:scale(.96)}
+.wo-chip.on{background:var(--dg);border-color:var(--dg)}
+.wo-chip.on .wo-g{color:var(--wh)}.wo-chip.on .wo-g small{color:rgba(255,255,255,.5)}
+.wo-chip.on .wo-p{color:var(--sg)}.wo-chip.on .wo-p small{color:rgba(255,255,255,.4)}
+.wo-g{font-family:var(--fe);font-size:15px;font-weight:700;color:var(--ch);line-height:1}
+.wo-g small{font-size:10px;font-weight:400;color:rgba(42,38,37,.35)}
+.wo-p{font-family:var(--fe);font-size:12px;color:var(--dg);font-weight:600;margin-top:4px}
+.wo-p small{font-size:9px;font-weight:400;color:rgba(42,38,37,.35)}
+.wo-total{margin-top:14px;padding:14px;background:var(--dg);border-radius:14px;display:flex;align-items:center;justify-content:space-between}
+.wo-total-l{font-size:11px;font-weight:500;color:rgba(255,255,255,.6);font-family:var(--fe)}
+.wo-total-v{font-family:var(--fe);font-size:26px;font-weight:700;color:var(--wh)}
+.wo-total-v small{font-size:11px;font-weight:400;color:rgba(255,255,255,.5)}
+.wo-extras{margin-top:10px;padding:10px 14px;background:rgba(0,82,64,.04);border-radius:12px;border:1px dashed rgba(0,82,64,.12);display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.wo-ext-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--dg);font-weight:500}
+.wo-ext-price{font-family:var(--fe);font-weight:700}
+/* Admin Weight Options */
+.awo-wrap{background:rgba(200,215,150,.06);border:1px solid rgba(200,215,150,.15);border-radius:14px;padding:14px;margin-top:10px}
+.awo-toggle{display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:10px}
+.awo-toggle input{width:18px;height:18px;accent-color:var(--dg)}
+.awo-toggle span{color:var(--sg);font-size:13px;font-weight:600}
+.awo-sec{margin-top:10px;padding:10px;background:rgba(0,0,0,.15);border-radius:10px}
+.awo-sec-t{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--sg);margin-bottom:8px;font-family:var(--fe)}
+.awo-grid{display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:4px 6px;align-items:center;font-size:12px}
+.awo-grid .awo-lbl{color:rgba(255,255,255,.35);font-size:10px;font-weight:600;font-family:var(--fe)}
+.awo-grid input{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:var(--wh);padding:8px 6px;border-radius:8px;font-size:13px;font-family:var(--fe);outline:none;text-align:center;width:100%}
+.awo-grid input:focus{border-color:var(--sg)}
+.awo-ptype{color:rgba(255,255,255,.5);font-size:11px;font-weight:600;padding:4px 0}
+@keyframes fu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(min-width:480px){.mg{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:768px){.mg{grid-template-columns:repeat(2,1fr);gap:16px}.ms{max-width:720px;margin:0 auto}.ts{justify-content:center}.msh{max-width:480px;left:50%;transform:translateX(-50%) translateY(100%)}.msh.on{transform:translateX(-50%) translateY(0)}}
+@media(min-width:1024px){.mg{grid-template-columns:repeat(3,1fr)}.ms{max-width:1000px}}
+
+/* Build Your Bowl */
+.byb-fab{position:fixed;bottom:24px;right:20px;z-index:150;display:flex;align-items:center;gap:10px;background:var(--dg);color:var(--wh);border:none;padding:12px 22px;border-radius:100px;font-size:13px;font-weight:600;font-family:var(--fe);cursor:pointer;box-shadow:0 4px 20px rgba(0,82,64,.35);transition:all .3s;animation:fabPulse 3s ease-in-out infinite}
+body[dir="rtl"] .byb-fab{right:auto;left:20px}
+.byb-fab:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(0,82,64,.45)}
+.byb-fab:active{transform:scale(.96)}
+.byb-fab .fab-icon{font-size:18px}
+.byb-fab .fab-text{display:flex;flex-direction:column;line-height:1.2;text-align:left}
+body[dir="rtl"] .byb-fab .fab-text{text-align:right}
+.byb-fab .fab-en{font-size:12px;font-weight:700;letter-spacing:.5px}
+.byb-fab .fab-ar{font-size:10px;font-weight:400;opacity:.7}
+@keyframes fabPulse{0%,100%{box-shadow:0 4px 20px rgba(0,82,64,.35)}50%{box-shadow:0 4px 28px rgba(0,82,64,.55),0 0 0 6px rgba(0,82,64,.08)}}
+
+.byb-page{position:fixed;inset:0;background:var(--cr);z-index:300;display:none;overflow-y:auto;overscroll-behavior:contain}
+.byb-page.on{display:block;animation:fu .3s both}
+.byb-hdr{position:sticky;top:0;z-index:10;background:var(--cr);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(42,38,37,.06)}
+.byb-hdr-t{font-size:16px;font-weight:700;color:var(--ch)}
+.byb-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--ch);padding:4px 8px}
+.byb-body{padding:16px;max-width:520px;margin:0 auto}
+.byb-step{margin-bottom:24px}
+.byb-step-t{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dg);margin-bottom:10px;font-family:var(--fe);display:flex;align-items:center;gap:6px}
+.byb-step-t .step-num{width:20px;height:20px;border-radius:50%;background:var(--dg);color:var(--wh);display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.byb-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.byb-opt{background:var(--wh);border:2px solid rgba(42,38,37,.06);border-radius:16px;padding:14px 8px;text-align:center;cursor:pointer;transition:all .2s;user-select:none}
+.byb-opt:active{transform:scale(.96)}
+.byb-opt.on{border-color:var(--dg);background:rgba(0,82,64,.04)}
+.byb-opt .opt-icon{font-size:22px;margin-bottom:4px}
+.byb-opt .opt-name{font-size:12px;font-weight:600;color:var(--ch);line-height:1.3}
+.byb-opt .opt-price{font-size:11px;color:var(--dg);font-weight:700;font-family:var(--fe);margin-top:2px}
+.byb-opts.veg{grid-template-columns:repeat(5,1fr);gap:6px}
+.byb-opts.veg .byb-opt{padding:10px 4px}
+.byb-opts.veg .opt-icon{font-size:18px}
+.byb-opts.veg .opt-name{font-size:10px}
+.byb-veg-ct{font-size:11px;color:rgba(42,38,37,.4);font-family:var(--fe);margin-top:6px;text-align:center}
+.byb-note{font-size:11px;color:rgba(42,38,37,.4);text-align:center;margin-top:4px;font-style:italic}
+.byb-total-bar{position:sticky;bottom:0;background:var(--dg);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;margin:0 -16px;border-radius:20px 20px 0 0}
+.byb-total-bar .btl{font-size:12px;color:rgba(255,255,255,.6);font-family:var(--fe)}
+.byb-total-bar .btv{font-size:28px;font-weight:700;color:var(--wh);font-family:var(--fe)}
+.byb-total-bar .btv small{font-size:12px;font-weight:400;opacity:.5}
+.byb-extras-row{display:flex;gap:8px;margin-top:8px}
+.byb-ext-btn{flex:1;background:var(--wh);border:1.5px dashed rgba(0,82,64,.15);border-radius:12px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .2s}
+.byb-ext-btn.on{border-style:solid;border-color:var(--dg);background:rgba(0,82,64,.04)}
+.byb-ext-btn .ext-name{font-size:11px;font-weight:600;color:var(--ch)}
+.byb-ext-btn .ext-price{font-size:10px;color:var(--dg);font-weight:700;font-family:var(--fe)}
+
+/* Badge */
+.mc-badge{position:absolute;top:10px;right:10px;padding:4px 10px;border-radius:8px;font-size:9px;font-weight:700;letter-spacing:.5px;font-family:var(--fe);background:rgba(200,215,150,.92);color:var(--dg);backdrop-filter:blur(8px);z-index:2;text-transform:uppercase}
+body[dir="rtl"] .mc-badge{right:auto;left:10px}
+.mc-badge-glow{animation:badgeGlow 2s ease-in-out infinite}
+@keyframes badgeGlow{0%,100%{box-shadow:0 0 0 0 rgba(200,215,150,0)}50%{box-shadow:0 0 0 4px rgba(200,215,150,.25)}}
+
+/* Sauces Section */
+.sauce-sec{padding:24px 16px 0;position:relative;z-index:1;max-width:1000px;margin:0 auto}
+.sauce-title{font-size:14px;font-weight:700;letter-spacing:1px;color:var(--dg);margin-bottom:12px;padding:0 4px}
+.sauce-scroll{display:flex;gap:10px;overflow-x:auto;padding:0 0 12px;scrollbar-width:none}.sauce-scroll::-webkit-scrollbar{display:none}
+.sauce-card{flex-shrink:0;width:130px;background:var(--wh);border-radius:16px;padding:14px 12px;text-align:center;border:1px solid rgba(42,38,37,.04)}
+.sauce-card .sc-icon{font-size:24px;margin-bottom:6px}
+.sauce-card .sc-name{font-size:12px;font-weight:600;color:var(--ch);line-height:1.3;margin-bottom:4px}
+.sauce-card .sc-cal{font-size:10px;color:rgba(42,38,37,.35);font-family:var(--fe)}
+.sauce-card .sc-al{display:flex;gap:3px;justify-content:center;margin-top:6px;flex-wrap:wrap}
+.sauce-card .sc-al span{font-size:8px}
+.extras-sec{padding:20px 16px 24px;margin-top:8px}
+.extras-title{font-size:14px;font-weight:700;letter-spacing:1px;color:var(--dg);margin-bottom:14px;padding:0 4px}
+.extras-grid{display:flex;flex-direction:column;gap:12px}
+.ext-cat{background:var(--wh);border-radius:16px;padding:14px 16px;border:1px solid rgba(42,38,37,.04)}
+.ext-cat-title{font-size:12px;font-weight:700;color:var(--dg);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.ext-table{width:100%;border-collapse:collapse}
+.ext-table th{font-size:9px;font-weight:600;letter-spacing:1px;color:rgba(42,38,37,.35);text-align:center;padding:4px 6px;font-family:var(--fe)}
+.ext-table th:first-child{text-align:start}
+.ext-table td{font-size:12px;text-align:center;padding:6px;color:var(--ch);font-family:var(--fe);border-top:1px solid rgba(42,38,37,.04)}
+.ext-table td:first-child{text-align:start;font-weight:600;font-family:var(--fa);color:var(--dg)}
+.ext-table td .ext-price{font-weight:700;color:var(--dg)}
+.sauce-card{cursor:pointer;transition:all .2s ease}
+.sauce-card .sc-desc{font-size:10px;color:rgba(42,38,37,.55);line-height:1.5;margin-top:6px;max-height:0;overflow:hidden;transition:max-height .3s ease,opacity .3s ease;opacity:0}
+.sauce-card.expanded .sc-desc{max-height:80px;opacity:1}
+.sauce-card.expanded{width:160px;background:var(--sg);border-color:var(--dg)}
+.byb-sauce-desc{font-size:10px;color:rgba(42,38,37,.5);line-height:1.4;margin-top:4px;text-align:center;max-height:0;overflow:hidden;transition:max-height .3s ease;opacity:0}
+.byb-sauce-desc.show{max-height:60px;opacity:1}
+
+/* ADMIN */
+.apx{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(12px);z-index:500;display:none;overflow-y:auto}.apx.on{display:block}
+.ap{max-width:500px;margin:0 auto;padding:20px;min-height:100vh}
+.aph{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:16px}
+.apt{color:var(--wh);font-size:18px;font-weight:700}.apclose{background:none;border:none;color:rgba(255,255,255,.4);font-size:22px;cursor:pointer}
+.aplogin{text-align:center;padding:80px 20px}
+.aplogin input{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:var(--wh);padding:14px 20px;border-radius:14px;font-size:20px;text-align:center;width:200px;letter-spacing:8px;font-family:var(--fm);outline:none}
+.aplogin input:focus{border-color:var(--sg)}.aplogin button{display:block;margin:16px auto 0;background:var(--dg);color:var(--wh);border:none;padding:12px 40px;border-radius:100px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit}
+.aperr{color:#f66;font-size:13px;margin-top:10px}
+/* Admin tabs */
+.atabs{display:flex;gap:4px;margin-bottom:16px;background:rgba(255,255,255,.04);border-radius:12px;padding:3px}
+.atab{flex:1;padding:9px;border:none;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;background:transparent;color:rgba(255,255,255,.35);transition:.15s}
+.atab.on{background:var(--dg);color:var(--wh)}
+.asec{display:none}.asec.on{display:block}
+.apc{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:14px;margin-bottom:10px}
+.apc.hid{opacity:.45;border-style:dashed}
+.apc-h{display:flex;align-items:center;gap:12px}.apc-img{width:52px;height:52px;border-radius:12px;object-fit:cover;background:rgba(255,255,255,.08)}
+.apc-n{color:var(--wh);font-size:14px;font-weight:600;flex:1;min-width:0}.apc-en{color:rgba(255,255,255,.3);font-size:11px;font-family:var(--fe)}
+.apc-p{color:var(--sg);font-family:var(--fe);font-weight:700;font-size:15px}
+.apc-f{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.apb{padding:7px 14px;border-radius:10px;border:none;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit}
+.apb-e{background:rgba(200,215,150,.12);color:var(--sg)}.apb-h{background:rgba(245,158,11,.1);color:#fb3}.apb-s{background:rgba(80,255,80,.08);color:#8f8}
+.apb-d{background:rgba(239,68,68,.1);color:#f66}
+.apb-add{background:var(--dg);color:var(--wh);width:100%;padding:14px;border-radius:14px;border:none;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px}
+.av{display:inline-block;padding:2px 8px;border-radius:6px;font-size:9px;font-weight:700;margin-left:6px}.av.y{background:rgba(80,255,80,.08);color:#8f8}.av.n{background:rgba(255,80,80,.08);color:#f88}
+.ahid-info{font-size:9px;color:#fb3;margin-top:4px}
+/* Category cards */
+.catc{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.catc-n{color:var(--wh);font-size:14px;font-weight:600}.catc-ct{font-size:10px;color:rgba(255,255,255,.3);margin-top:2px}
+.catc-a{display:flex;gap:6px}
+.catc-a button{padding:6px 10px;border-radius:8px;border:none;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit}
+.catc-ren{background:rgba(200,215,150,.12);color:var(--sg)}.catc-del{background:rgba(239,68,68,.1);color:#f66}
+.cat-add-row{display:flex;gap:8px;margin-bottom:16px}
+.cat-add-row input{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:var(--wh);padding:10px 14px;border-radius:10px;font-size:14px;font-family:inherit;outline:none}
+.cat-add-row input:focus{border-color:var(--sg)}
+.cat-add-row button{background:var(--dg);color:var(--wh);border:none;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+/* ImgBB upload */
+.img-up{border:2px dashed rgba(255,255,255,.12);border-radius:14px;padding:18px;text-align:center;cursor:pointer;position:relative;overflow:hidden;transition:.15s;margin-top:4px}
+.img-up:hover{border-color:var(--sg)}
+.img-up.has{border-style:solid;padding:0}
+.img-up img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:12px;display:none}
+.img-up img.on{display:block}
+.img-up .iph{color:rgba(255,255,255,.3);font-size:11px}.img-up .iph .ico{font-size:22px;margin-bottom:4px}
+.img-up .uping{position:absolute;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;color:var(--sg);font-size:12px;font-weight:600;border-radius:12px}
+.img-up .uping.on{display:flex}
+.img-btn{display:inline-block;margin-top:8px;padding:10px 24px;background:rgba(200,215,150,.12);border:1px solid rgba(200,215,150,.25);color:var(--sg);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.img-btn:active{transform:scale(.96)}
+
+/* EDIT */
+.emx{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:600;display:none;overflow-y:auto}.emx.on{display:block}
+.em{max-width:500px;margin:20px auto;padding:20px;background:#1a1a1a;border-radius:20px;border:1px solid rgba(255,255,255,.06)}
+.emt{color:var(--wh);font-size:17px;font-weight:700;margin-bottom:16px}
+.er{margin-bottom:10px}.el{color:rgba(255,255,255,.4);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;font-family:var(--fe)}
+.ei{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:var(--wh);padding:10px 14px;border-radius:10px;font-size:14px;font-family:inherit;outline:none}.ei:focus{border-color:var(--sg)}
+textarea.ei{min-height:55px;resize:vertical}
+.er2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.er4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.emsave{background:var(--dg);color:var(--wh);border:none;padding:14px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;width:100%;margin-top:14px;font-family:inherit}
+.emcancel{background:rgba(255,255,255,.05);color:rgba(255,255,255,.4);border:none;padding:12px;border-radius:14px;font-size:14px;cursor:pointer;width:100%;margin-top:8px;font-family:inherit}
+.eal{display:flex;flex-wrap:wrap;gap:5px;margin-top:3px}
+.ealb{padding:5px 11px;border-radius:100px;border:1px solid rgba(255,255,255,.08);background:transparent;color:rgba(255,255,255,.4);font-size:11px;cursor:pointer;font-family:inherit}.ealb.on{background:rgba(200,215,150,.15);border-color:var(--sg);color:var(--sg)}
+/* Confirm dialog */
+.cfm-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:700;display:none;align-items:center;justify-content:center;padding:20px}.cfm-bg.on{display:flex}
+.cfm-box{background:#1a1a1a;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:22px 18px;width:100%;max-width:340px;text-align:center}
+.cfm-box h3{color:var(--wh);font-size:16px;margin-bottom:6px}.cfm-box p{font-size:12px;color:rgba(255,255,255,.4);line-height:1.5;margin-bottom:14px}
+.cfm-btns{display:flex;gap:8px}.cfm-btns button{flex:1;padding:11px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.cfm-y{background:rgba(239,68,68,.15);color:#f66}.cfm-n{background:rgba(255,255,255,.05);color:rgba(255,255,255,.4)}
+</style>
+</head>
+<body dir="ltr">
+<div class="top-banner" id="topBanner"><span class="tb-icon">🔥</span> <span class="tb-text" id="tbText">BEST SELLER — CHOPPED CHICKEN CAESAR WRAP</span></div>
+<header class="hdr">
+  <div class="logo"><img src="/ols-logo.png" alt="OLS"></div>
+  <div class="hdr-r"><button class="lbtn" onclick="tgLang()">عربي</button><button class="abtn" onclick="openAP()">⚙</button></div>
+</header>
+<section class="hero"><div class="hero-l">MENU</div><h1 class="hero-t" id="ht">Real food for real people</h1></section>
+<nav class="tw"><div class="ts" id="tabs"></div><div class="tl"></div></nav>
+<main id="grid"></main>
+<div id="sauceSec"></div>
+<div id="extrasSec"></div>
+<div class="mbg" id="mbg" onclick="cM()"></div>
+<div class="msh" id="msh"><div class="mha"></div><button class="mx" onclick="cM()">✕</button><div id="mbody"></div></div>
+<footer class="ft"><div class="ftl"><img src="/ols-logo.png" alt="OLS"></div><div class="ftk"><a href="https://www.instagram.com/olsyes/" target="_blank">Instagram</a><a href="https://share.google/WuZBnUt12gPBpYM0S" target="_blank">Location</a></div><div class="ftc">© OLS 2025 — Developed by Mohammed Al-Hasoon</div></footer>
+<button class="byb-fab" id="bybFab" onclick="openBYB()"><span class="fab-icon">🥣</span><span class="fab-text"><span class="fab-en">Build Your Bowl</span><span class="fab-ar">اصنع طبقك</span></span></button>
+<div class="byb-page" id="bybPage">
+  <div class="byb-hdr"><div class="byb-hdr-t" id="bybTitle">Build Your Bowl</div><button class="byb-close" onclick="closeBYB()">✕</button></div>
+  <div class="byb-body" id="bybBody"></div>
+</div>
+<div class="apx" id="apx"><div class="ap" id="apc"></div></div>
+<div class="emx" id="emx"><div class="em" id="emc"></div></div>
+<div class="cfm-bg" id="cfmBg"><div class="cfm-box"><h3 id="cfmT"></h3><p id="cfmM"></p><div class="cfm-btns"><button class="cfm-y" id="cfmY">تأكيد</button><button class="cfm-n" onclick="closeCfm()">إلغاء</button></div></div></div>
+<script>
+let L='en',PIN=null,cats=[],alMap={},items=[],raw=[];
+const API='/api/menu';
+const WO_GRAMS=[100,150,200];
+let woData=null,woState={carbIdx:0,carbGrams:100,proIdx:0,proGrams:100};
+function T(o){return o?L==='ar'?o.ar:o.en:''}
+function M(i){return{id:i.id,cat:i.category,cook:i.cookType,img:i.image,ar:{name:i.name.ar,desc:i.description.ar},en:{name:i.name.en,desc:i.description.en},price:i.price,pl:i.priceLabel,al:i.allergens||[],ing:i.ingredients||{ar:[],en:[]},mac:i.macros||{cal:0,protein:0,carbs:0,fat:0},avail:i.available!==false,wo:i.weightOptions||null,sauce:i.sauce||null,badge:i.badge||null}}
+
+async function load(){
+  try{const r=await fetch(API);const d=await r.json();cats=[{id:'all',ar:'الكل',en:'All'},...d.categories];alMap=d.allergens||{};items=d.items.sort((a,b)=>(a.order||0)-(b.order||0)).map(M);const apiSauces=d.sauces||DEF_SAUCES;bybData=d.byb||JSON.parse(JSON.stringify(DEF_BYB));bybData._sauces=apiSauces;rTabs();rMenu();rSauces();rExtras()}
+  catch(e){document.getElementById('grid').innerHTML='<div style="text-align:center;padding:60px 20px;color:rgba(42,38,37,.4)">جاري التحميل...</div>'}
+}
+
+function rTabs(){const wtLabel=L==='ar'?'بالوزن':'By Weight';document.getElementById('tabs').innerHTML=cats.map(c=>`<button class="tb${c.id==='all'?' on':''}" data-c="${c.id}" onclick="fC('${c.id}')">${T(c)}</button>`).join('')+`<button class="tb" data-c="weight" onclick="goWeight()">${wtLabel}</button>`}
+function goWeight(){document.querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));document.querySelector('.tb[data-c="weight"]').classList.add('on');document.getElementById('extrasSec').scrollIntoView({behavior:'smooth',block:'start'})}
+
+function rMenu(f='all'){
+  const fl=f==='all'?items:items.filter(i=>i.cat===f);const g={};fl.forEach(i=>{(g[i.cat]=g[i.cat]||[]).push(i)});
+  let h='';cats.filter(c=>c.id!=='all').forEach(c=>{if(!g[c.id])return;h+=`<section class="ms">`;if(f==='all')h+=`<div class="sl">${T(c)}</div>`;h+=`<div class="mg">`;
+  const PREP_IDS=['salmon-flame','beef-bowl','caesar-wrap','caesar-wrap-lg'];
+  g[c.id].forEach(i=>{const d=T(i),s=L==='ar'?i.en.name:i.ar.name,u=L==='ar'?'ر.س':'SAR',p=i.pl?T(i.pl)+' ':'';
+  const woInfo=i.wo&&!i.wo.mode&&i.wo.enabled;const isProteinBowl=i.cat==='protein'&&!woInfo;
+  const servNote=isProteinBowl?(L==='ar'?'~١٢٠g بروتين + ١٢٠g كارب':'~120g protein + 120g carb'):'';
+  const prepBadge=PREP_IDS.includes(i.id)?`<div class="prep-badge"><span class="pb-icon">⏱</span>${L==='ar'?'قد يستغرق ٣٠ د بأوقات الذروة':'Up to 30 min at peak hours'}</div>`:'';
+  h+=`<div class="mc" onclick="oM('${i.id}')"><div class="cw">${i.badge?`<div class="mc-badge mc-badge-glow">${T(i.badge)}</div>`:''}<img class="ci" src="${i.img}" alt="${d.name}" loading="lazy"><span class="ck ${i.cook}">${i.cook==='grill'?'🔥':'🍳'} ${i.cook.toUpperCase()}</span>${prepBadge}</div><div class="cb"><div class="cn">${d.name}</div><div class="cs">${s}</div><div class="cd">${d.desc}</div>${servNote?`<div class="serve-note">${servNote}</div>`:''}<div class="cf"><div class="ca">${i.al.map(a=>`<div class="ad" title="${alName(a)}">${alName(a)}</div>`).join('')}</div><div class="cp">${p}${i.price} <small>${u}</small></div></div></div></div>`});
+  h+=`</div></section>`});document.getElementById('grid').innerHTML=h}
+
+function rSauces(){
+  const sMap=(bybData&&bybData._sauces)?bybData._sauces:DEF_SAUCES;
+  const el=document.getElementById('sauceSec');if(!el)return;
+  let h=`<div class="sauce-sec"><div class="sauce-title">${L==='ar'?'صوصاتنا':'OUR SAUCES'}</div><div class="sauce-scroll">`;
+  Object.keys(sMap).forEach(sk=>{
+    const sc=sMap[sk];
+    const descText=sc.desc?T(sc.desc):'';
+    h+=`<div class="sauce-card" onclick="this.classList.toggle('expanded')"><div class="sc-name">${T(sc)}</div>`;
+    if(sc.cal)h+=`<div class="sc-cal">${sc.cal} cal / ${sc.serve||50}g</div>`;
+    if(descText)h+=`<div class="sc-desc">${descText}</div>`;
+    if(sc.allergens&&sc.allergens.length)h+=`<div class="sc-al">${sc.allergens.map(a=>`<span style="font-size:8px;padding:2px 5px;border-radius:4px;background:rgba(42,38,37,.06);color:rgba(42,38,37,.45)">${alName(a)}</span>`).join('')}</div>`;
+    else h+=`<div class="sc-al"><span style="font-size:10px;color:rgba(42,38,37,.3)">✓</span></div>`;
+    h+=`</div>`;
+  });
+  h+=`</div></div>`;
+  el.innerHTML=h;
+}
+
+function rExtras(){
+  const el=document.getElementById('extrasSec');if(!el)return;
+  const u=L==='ar'?'ر.س':'SAR';
+  const title=L==='ar'?'إضافات بالوزن':'EXTRAS BY WEIGHT';
+  const proteins=[
+    {ar:'دجاج',en:'Chicken',prices:{50:9,100:16,150:24,200:31,250:39}},
+    {ar:'لحم',en:'Beef',prices:{50:14,100:23,150:34,200:47}},
+    {ar:'روبيان',en:'Shrimp',prices:{50:15,100:27,150:42,200:55}}
+  ];
+  const carbs=[
+    {ar:'أرز أبيض',en:'White Rice',prices:{50:3,100:6,150:9,200:12,250:15}},
+    {ar:'أرز بني',en:'Brown Rice',prices:{50:3.5,100:7,150:10.5,200:14,250:17.5}},
+    {ar:'بطاطس',en:'Potato',prices:{50:3.5,100:7,150:10.5,200:14,250:17.5}}
+  ];
+  const pGrams=[50,100,150,200,250];
+  const cGrams=[50,100,150,200,250];
+  let h=`<div class="extras-sec"><div class="extras-title">${title}</div><div class="extras-grid">`;
+  // Protein table
+  h+=`<div class="ext-cat"><div class="ext-cat-title">🥩 ${L==='ar'?'بروتين':'PROTEIN'}</div><table class="ext-table"><tr><th></th>`;
+  pGrams.forEach(g=>h+=`<th>${g}g</th>`);
+  h+=`</tr>`;
+  proteins.forEach(p=>{
+    h+=`<tr><td>${L==='ar'?p.ar:p.en}</td>`;
+    pGrams.forEach(g=>{const pr=p.prices[g];h+=`<td>${pr!==undefined?`<span class="ext-price">${pr}</span>`:'-'}</td>`});
+    h+=`</tr>`;
+  });
+  h+=`</table></div>`;
+  // Carb table
+  h+=`<div class="ext-cat"><div class="ext-cat-title">🍚 ${L==='ar'?'كارب':'CARB'}</div><table class="ext-table"><tr><th></th>`;
+  cGrams.forEach(g=>h+=`<th>${g}g</th>`);
+  h+=`</tr>`;
+  carbs.forEach(c=>{
+    h+=`<tr><td>${L==='ar'?c.ar:c.en}</td>`;
+    cGrams.forEach(g=>{const pr=c.prices[g];h+=`<td>${pr!==undefined?`<span class="ext-price">${pr}</span>`:'-'}</td>`});
+    h+=`</tr>`;
+  });
+  h+=`</table></div>`;
+  const noteText=L==='ar'?'بعض الأصناف المميزة قد يُضاف عليها ٢ ريال':'A premium surcharge of 2 SAR may apply on select items';
+  h+=`<div style="font-size:10px;color:rgba(42,38,37,.4);text-align:center;margin-top:12px;padding:0 8px;font-family:var(--fa)">${noteText}</div>`;
+  h+=`</div></div>`;
+  el.innerHTML=h;
+}
+
+function oM(id){const i=items.find(x=>x.id===id);if(!i)return;const d=T(i),s=L==='ar'?i.en.name:i.ar.name,u=L==='ar'?'ر.س':'SAR',p=i.pl?T(i.pl)+' ':'',ig=T(i.ing);
+const K={c:L==='ar'?'سعرات':'Cal',p:L==='ar'?'بروتين':'Protein',cb:L==='ar'?'كربوهيدرات':'Carbs',f:L==='ar'?'دهون':'Fat',n:L==='ar'?'القيم الغذائية (تقديرية)':'NUTRITION (EST.)',a:L==='ar'?'الحساسيات':'ALLERGENS',g:L==='ar'?'المكونات':'INGREDIENTS'};
+const hasWo=i.wo&&i.wo.enabled&&i.wo.carbs&&i.wo.carbs.length&&i.wo.proteins&&i.wo.proteins.length;
+let h=`<div class="miw"><img class="mii" src="${i.img}" alt="${d.name}"></div><div class="mob"><span class="mck ${i.cook}">${i.cook==='grill'?'🔥':'🍳'} ${i.cook.toUpperCase()}</span><div class="mn">${d.name}</div><div class="msu">${s}</div><div class="mde">${d.desc}</div>`;
+// Sauce info
+const sauceMap=(bybData&&bybData._sauces)?bybData._sauces:DEF_SAUCES;
+if(i.sauce){
+  // Normalize old format to new
+  let sauceStr=i.sauce||'';
+  if(sauceStr&&!sauceStr.includes(',')&&sauceStr.startsWith('spicy-')){
+    const letters=sauceStr.replace('spicy-','');
+    sauceStr='spicy,'+[...letters].map(c=>'sauce-'+c).join(',');
+  }
+  const sIds=sauceStr.split(',').map(s=>s.trim()).filter(Boolean);
+  const sNames=sIds.map(sid=>{const sc=sauceMap[sid];return sc?T(sc):sid}).filter(Boolean);
+  const sAllergens=[...new Set(sIds.flatMap(sid=>{const sc=sauceMap[sid];return sc&&sc.allergens?sc.allergens:[]}))];
+  if(sNames.length){
+    h+=`<div style="margin-top:10px;padding:10px 14px;background:rgba(0,82,64,.04);border-radius:12px;border:1px solid rgba(0,82,64,.06)"><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--dg);font-weight:600"><span>${sNames.join(' + ')}</span></div>`;
+    if(sAllergens.length){h+=`<div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap">${sAllergens.map(a=>`<span style="font-size:10px;padding:2px 8px;border-radius:6px;background:rgba(42,38,37,.06);color:rgba(42,38,37,.5)">${alName(a)}</span>`).join('')}</div>`}
+    h+=`</div>`;
+  }
+}
+if(hasWo){
+  woData=i.wo;const isAddon=i.wo.mode==='addon';
+  const woU=L==='ar'?'ر.س':'SAR';
+  if(isAddon){
+    // ADDON MODE: base price + optional extras
+    woState={carbIdx:0,carbGrams:0,proIdx:0,proGrams:0};
+    const baseP=i.price;
+    const bNote=i.wo.baseNote?T(i.wo.baseNote):'';
+    const cOpts=i.wo.carbs.map((c,ci)=>`<option value="${ci}">${T(c)}</option>`).join('');
+    const p0=i.wo.proteins[0];
+    const ADDON_G=[50,100];
+    h+=`<div class="wo-wrap">`;
+    h+=`<div class="wo-base"><div class="wo-base-price">${baseP} <small>${woU}</small></div><div class="wo-base-note">${bNote}</div></div>`;
+    // Carb type selector + extra grams
+    h+=`<div class="wo-sec"><div class="wo-type">🍚 ${L==='ar'?'نوع الكارب':'CARB TYPE'}</div><select class="wo-sel" id="woCarbSel" onchange="woSelType(this,'carb')">${cOpts}</select>`;
+    h+=`<div class="wo-type" style="margin-top:10px;font-size:11px">${L==='ar'?'إضافة كارب':'EXTRA CARB'}</div><div class="wo-chips" id="woCarbChips">`;
+    h+=`<div class="wo-chip on" data-sec="carb" data-g="0" onclick="woSel('carb',0)"><div class="wo-g">${L==='ar'?'بدون':'None'}</div><div class="wo-p" id="woCarbP0">0 <small>${woU}</small></div></div>`;
+    const c0=i.wo.carbs[0];
+    ADDON_G.forEach(g=>{const pr=c0[g]||0;h+=`<div class="wo-chip" data-sec="carb" data-g="${g}" onclick="woSel('carb',${g})"><div class="wo-g">+${g}<small>g</small></div><div class="wo-p" id="woCarbP${g}">+${pr} <small>${woU}</small></div></div>`});
+    h+=`</div></div>`;
+    // Protein extra (single type, no dropdown)
+    h+=`<div class="wo-sec"><div class="wo-type">🥩 ${L==='ar'?'إضافة '+T(p0):'EXTRA '+p0.en}</div><div class="wo-chips" id="woProChips">`;
+    h+=`<div class="wo-chip on" data-sec="pro" data-g="0" onclick="woSel('pro',0)"><div class="wo-g">${L==='ar'?'بدون':'None'}</div><div class="wo-p" id="woProP0">0 <small>${woU}</small></div></div>`;
+    ADDON_G.forEach(g=>{const pr=p0[g]||0;h+=`<div class="wo-chip" data-sec="pro" data-g="${g}" onclick="woSel('pro',${g})"><div class="wo-g">+${g}<small>g</small></div><div class="wo-p" id="woProP${g}">+${pr} <small>${woU}</small></div></div>`});
+    h+=`</div></div>`;
+    h+=`<div class="wo-total"><div class="wo-total-l">${L==='ar'?'المجموع':'TOTAL'}</div><div class="wo-total-v" id="woTotalV">${baseP} <small>${woU}</small></div></div>`;
+    const extVeg=L==='ar'?'خضار':'Vegetables';const extSauce=L==='ar'?'صوص':'Sauce';const extPer=L==='ar'?'لكل إضافة':'per extra';
+    h+=`<div class="wo-extras"><div class="wo-ext-item">🥬 ${extVeg} <span class="wo-ext-price">+3 ${woU}</span> <span style="font-size:10px;color:rgba(42,38,37,.35)">${extPer}</span></div><div class="wo-ext-item">🫙 ${extSauce} <span class="wo-ext-price">+3 ${woU}</span> <span style="font-size:10px;color:rgba(42,38,37,.35)">${extPer}</span></div></div>`;
+    h+=`</div>`;
+  } else {
+    // LEGACY MODE: weight-based pricing
+    woState={carbIdx:0,carbGrams:100,proIdx:0,proGrams:100};
+    const cOpts=i.wo.carbs.map((c,ci)=>`<option value="${ci}">${T(c)}</option>`).join('');
+    const pOpts=i.wo.proteins.map((p,pi)=>`<option value="${pi}">${T(p)}</option>`).join('');
+    const c0=i.wo.carbs[0];const p0=i.wo.proteins[0];
+    const defCarbP=c0[100]||0;const defProP=p0[100]||0;const defTotal=defCarbP+defProP;
+    h+=`<div class="wo-wrap">`;
+    h+=`<div class="wo-sec"><div class="wo-type">🍚 ${L==='ar'?'كارب':'CARB'}</div><select class="wo-sel" id="woCarbSel" onchange="woSelType(this,'carb')">${cOpts}</select><div class="wo-chips" id="woCarbChips">`;
+    WO_GRAMS.forEach(g=>{const pr=c0[g]||0;h+=`<div class="wo-chip${g===100?' on':''}" data-sec="carb" data-g="${g}" onclick="woSel('carb',${g})"><div class="wo-g">${g}<small>g</small></div><div class="wo-p" id="woCarbP${g}">${pr} <small>${woU}</small></div></div>`});
+    h+=`</div></div>`;
+    h+=`<div class="wo-sec"><div class="wo-type">🥩 ${L==='ar'?'بروتين':'PROTEIN'}</div><select class="wo-sel" id="woProSel" onchange="woSelType(this,'pro')">${pOpts}</select><div class="wo-chips" id="woProChips">`;
+    WO_GRAMS.forEach(g=>{const pr=p0[g]||0;h+=`<div class="wo-chip${g===100?' on':''}" data-sec="pro" data-g="${g}" onclick="woSel('pro',${g})"><div class="wo-g">${g}<small>g</small></div><div class="wo-p" id="woProP${g}">${pr} <small>${woU}</small></div></div>`});
+    h+=`</div></div>`;
+    h+=`<div class="wo-total"><div class="wo-total-l">${L==='ar'?'المجموع':'TOTAL'}</div><div class="wo-total-v" id="woTotalV">${defTotal} <small>${woU}</small></div></div>`;
+    const extVeg=L==='ar'?'خضار':'Vegetables';const extSauce=L==='ar'?'صوص':'Sauce';const extPer=L==='ar'?'لكل إضافة':'per extra';
+    h+=`<div class="wo-extras"><div class="wo-ext-item">🥬 ${extVeg} <span class="wo-ext-price">+3 ${woU}</span> <span style="font-size:10px;color:rgba(42,38,37,.35)">${extPer}</span></div><div class="wo-ext-item">🫙 ${extSauce} <span class="wo-ext-price">+3 ${woU}</span> <span style="font-size:10px;color:rgba(42,38,37,.35)">${extPer}</span></div></div>`;
+    h+=`</div>`;
+  }
+} else {
+  h+=`<div class="mpr"><div class="mp">${p}${i.price} <small>${u}</small></div></div>`;
+}
+h+=`<div class="st">${K.n}</div><div class="nug"><div class="nub"><div class="nuv">${i.mac.cal}</div><div class="nuu">kcal</div><div class="nul">${K.c}</div></div><div class="nub"><div class="nuv">${i.mac.protein}<span class="nuu">g</span></div><div class="nul">${K.p}</div></div><div class="nub"><div class="nuv">${i.mac.carbs}<span class="nuu">g</span></div><div class="nul">${K.cb}</div></div><div class="nub"><div class="nuv">${i.mac.fat}<span class="nuu">g</span></div><div class="nul">${K.f}</div></div></div>`;
+if(i.mac.cal>0){const burnMin=Math.round(i.mac.cal/11);const burnLabel=L==='ar'?'المدة الزمنية لحرق الوجبة :':'Burn time :';const burnAct=L==='ar'?'جري':'Running';const burnUnit=L==='ar'?'دقيقة':'min';h+=`<div class="burn-note">${burnLabel} ${burnAct} ${burnMin} ${burnUnit}</div>`}
+if(i.al.length)h+=`<div class="st">${K.a}</div><div class="al">${i.al.map(a=>`<div class="ab">${alName(a)}</div>`).join('')}</div>`;
+h+=`<div class="st">${K.g}</div><div class="ic">${ig.map(x=>`<div class="ip">${x}</div>`).join('')}</div></div>`;
+document.getElementById('mbody').innerHTML=h;document.getElementById('mbg').classList.add('on');document.getElementById('msh').classList.add('on');document.body.style.overflow='hidden'}
+
+function cM(){document.getElementById('mbg').classList.remove('on');document.getElementById('msh').classList.remove('on');document.body.style.overflow=''}
+function fC(c){document.querySelectorAll('.tb').forEach(b=>b.classList.toggle('on',b.dataset.c===c));rMenu(c)}
+function tgLang(){L=L==='ar'?'en':'ar';const d=L==='ar'?'rtl':'ltr';document.documentElement.lang=L;document.documentElement.dir=d;document.body.dir=d;document.querySelector('.lbtn').textContent=L==='ar'?'EN':'عربي';document.getElementById('ht').textContent=L==='ar'?'أكل حقيقي لناس حقيقية':'Real food for real people';document.getElementById('tbText').textContent=L==='ar'?'الأكثر مبيعاً — تشيكن سيزر راب':'BEST SELLER — CHOPPED CHICKEN CAESAR WRAP';rTabs();rMenu();rSauces();cM()}
+
+// ═══ BUILD YOUR BOWL ═══
+const DEF_SAUCES={
+"spicy":{ar:"سبايسي",en:"Spicy",icon:"",allergens:["eggs","soy"],cal:228,serve:50,desc:{ar:"صوص حار بلمسة مدخنة وعمق من صويا محمصة",en:"A bold hot sauce with a smoky edge and roasted soy depth"},ingredients:{ar:["سريراتشا","فلفل أسود","ملح","ترياكي","ليمون","صويا لايت","خل رز","شبت","بقدونس","كايين","زيت زيتون","مايونيز ياباني","مايونيز"],en:["Sriracha","Black Pepper","Salt","Teriyaki","Lime Juice","Soya Light","Rice Vinegar","Dill","Parsley","Cayenne","Olive Oil","Japanese Mayo","Mayonnaise"]}},
+"creamy-pesto":{ar:"كريمي بيستو",en:"Creamy Pesto",icon:"",allergens:["eggs","fish","nuts","mustard"],cal:243,serve:50,desc:{ar:"كريمة غنية بالريحان مع لمسة مكسرات ونكهة خردل خفية",en:"Rich basil cream with a nutty finish and a subtle mustard note"},ingredients:{ar:["سردين","بقدونس","ريحان","جوز","طرخون","مريمية","ملح","فلفل أسود","صفار بيض","مسطردة ديجون","زيت زيتون","مايونيز ياباني","مايونيز"],en:["Sardine","Parsley","Basil","Walnut","Tarragon","Sage","Salt","Black Pepper","Egg Yolk","Dijon Mustard","Olive Oil","Japanese Mayo","Mayonnaise"]}},
+"smoky-lime":{ar:"سموكي لايم",en:"Smoky Lime",icon:"",allergens:["eggs","fish","soy"],cal:239,serve:50,desc:{ar:"حموضة الليمون مع دخان خفيف ولمسة صويا متوازنة",en:"Bright lime citrus with a light smoky touch and balanced soy"},ingredients:{ar:["ورشستر","خل رز","سائل مدخن","صوص سمك","ليمون","ملح","كايين","شبت","بقدونس","زيت زيتون","مايونيز ياباني","مايونيز"],en:["Worcestershire","Rice Vinegar","Smoked Liquid","Fish Sauce","Lime Juice","Salt","Cayenne","Dill","Parsley","Olive Oil","Japanese Mayo","Mayonnaise"]}},
+"sweet-maple":{ar:"سويت ميبل",en:"Sweet Maple",icon:"",allergens:["eggs","dairy"],cal:243,serve:50,desc:{ar:"حلاوة الميبل الطبيعية مع كريمة ناعمة ولمسة خفيفة من الخل",en:"Natural maple sweetness with smooth cream and a light vinegar lift"},ingredients:{ar:["مابل","حليب مكثف","ملح","فلفل أسود","سكر بني","ليمون","زيت زيتون","مايونيز ياباني","مايونيز"],en:["Maple","Condensed Milk","Salt","Black Pepper","Brown Sugar","Lime Juice","Olive Oil","Japanese Mayo","Mayonnaise"]}},
+"tangy-dijon":{ar:"تانقي ديجون",en:"Tangy Dijon",icon:"",allergens:["eggs","soy","mustard"],cal:227,serve:50,desc:{ar:"حدة الديجون مع حموضة خفيفة ونكهة خردل مميزة",en:"Sharp Dijon kick with a tangy edge and distinct mustard character"},ingredients:{ar:["ليمون","مسطردة ديجون","ملح","فلفل أسود","ورشستر","حبوب خردل","خل رز","زيت زيتون","مايونيز ياباني","مايونيز"],en:["Lime Juice","Dijon Mustard","Salt","Black Pepper","Worcestershire","Mustard Seed","Rice Vinegar","Olive Oil","Japanese Mayo","Mayonnaise"]}},
+"thousand-island":{ar:"ثاوزند آيلاند",en:"Thousand Island",icon:"",allergens:["eggs"],cal:200,serve:50,desc:{ar:"صوص كلاسيكي كريمي بنكهة حلوة وحامضة",en:"Classic creamy sauce with a sweet and tangy flavor"},ingredients:{ar:[],en:[]}},
+"pomegranate-molasses":{ar:"دبس رمان",en:"Pomegranate Molasses",icon:"",allergens:[],cal:90,serve:50,desc:{ar:"دبس رمان طبيعي بحموضة غنية وحلاوة خفيفة",en:"Natural pomegranate molasses with rich tartness and mild sweetness"},ingredients:{ar:[],en:[]}},
+"ranch":{ar:"رانش",en:"Ranch",icon:"",allergens:["dairy","eggs"],cal:260,serve:50,desc:{ar:"صوص كريمي كلاسيكي بالأعشاب",en:"Classic creamy herb dressing"},ingredients:{ar:[],en:[]}},
+"diet-ranch":{ar:"رانش دايت",en:"Diet Ranch",icon:"",allergens:["dairy"],cal:120,serve:50,desc:{ar:"نسخة خفيفة من الرانش بسعرات أقل",en:"A lighter ranch with fewer calories"},ingredients:{ar:[],en:[]}}
+};
+const DEF_BYB={
+enabled:true,
+proteins:[{id:"chicken",ar:"دجاج",en:"Chicken",price:35,icon:"🍗"},{id:"beef",ar:"لحم",en:"Beef",price:43,icon:"🥩"},{id:"shrimp",ar:"روبيان",en:"Shrimp",price:59,icon:"🦐"}],
+carbs:[{id:"sushi-rice",ar:"رز سوشي",en:"Sushi Rice",icon:"🍚"},{id:"brown-rice",ar:"رز بني",en:"Brown Rice",icon:"🍚"},{id:"white-rice",ar:"رز أبيض",en:"White Rice",icon:"🍚"}],
+veggies:[{id:"lettuce",ar:"خس",en:"Lettuce",icon:""},{id:"cucumber",ar:"خيار",en:"Cucumber",icon:""},{id:"corn",ar:"ذرة",en:"Corn",icon:""},{id:"broccoli",ar:"بروكلي",en:"Broccoli",icon:""},{id:"carrot",ar:"جزر",en:"Carrot",icon:""},{id:"cabbage",ar:"ملفوف",en:"Cabbage",icon:""},{id:"pomegranate",ar:"رمان",en:"Pomegranate",icon:""},{id:"cherry-tomato",ar:"طماطم شيري",en:"Cherry Tomato",icon:""},{id:"edamame",ar:"إدامامي",en:"Edamame",icon:""},{id:"beetroot",ar:"شمندر",en:"Beetroot",icon:""}],
+maxVeggies:3,
+extras:{carb:{ar:"سكوب كارب إضافي",en:"Extra Carb Scoop",price:5},protein:{ar:"سكوب بروتين إضافي",en:"Extra Protein Scoop",price:15}},
+cheese:[{id:"none",ar:"بدون",en:"None",icon:""},{id:"halloumi",ar:"حلوم",en:"Halloumi",icon:""},{id:"feta",ar:"فيتا",en:"Feta",icon:""}],
+sauces:["spicy","creamy-pesto","smoky-lime","sweet-maple","tangy-dijon","thousand-island","pomegranate-molasses","ranch","diet-ranch"],
+garnish:[{id:"pumpkin-seeds",ar:"بذور قرع",en:"Pumpkin Seeds",icon:""},{id:"sesame",ar:"سمسم",en:"Sesame Seeds",icon:""},{id:"walnuts",ar:"جوز",en:"Walnuts",icon:"",allergens:["nuts"]}],
+scoopNote:{ar:"السكوب الواحد يتراوح بين ١٠٠-١٢٠ جرام",en:"Each scoop is approximately 100-120g"},
+_sauces:null
+};
+let bybData=null,bybState={protein:null,carb:null,veggies:[],cheese:'none',sauce:null,garnish:[],extraCarb:false,extraProtein:false};
+function openBYB(){
+  if(!bybData)return;
+  bybState={protein:null,carb:null,veggies:[],cheese:'none',sauce:null,garnish:[],extraCarb:false,extraProtein:false};
+  document.getElementById('bybPage').classList.add('on');document.getElementById('bybFab').style.display='none';document.body.style.overflow='hidden';
+  document.getElementById('bybTitle').textContent=L==='ar'?'اصنع طبقك بنفسك':'Build Your Bowl';
+  rBYB();
+}
+function closeBYB(){document.getElementById('bybPage').classList.remove('on');document.getElementById('bybFab').style.display='';document.body.style.overflow=''}
+function bybSel(type,id){
+  if(type==='protein')bybState.protein=id;
+  else if(type==='carb')bybState.carb=id;
+  else if(type==='veggie'){
+    const i=bybState.veggies.indexOf(id);
+    if(i>=0)bybState.veggies.splice(i,1);
+    else if(bybState.veggies.length<(bybData.maxVeggies||5))bybState.veggies.push(id);
+  }
+  else if(type==='cheese')bybState.cheese=id;
+  else if(type==='sauce')bybState.sauce=bybState.sauce===id?null:id;
+  else if(type==='garnish'){
+    const i=bybState.garnish.indexOf(id);if(i>=0)bybState.garnish=[];else bybState.garnish=[id];
+  }
+  rBYB();
+}
+function bybExtra(type){
+  if(type==='carb')bybState.extraCarb=!bybState.extraCarb;
+  else bybState.extraProtein=!bybState.extraProtein;
+  rBYB();
+}
+function bybPrice(){
+  if(!bybState.protein||!bybData)return 0;
+  const p=bybData.proteins.find(x=>x.id===bybState.protein);
+  let t=p?p.price:0;
+  if(bybState.extraCarb)t+=(bybData.extras.carb.price||5);
+  if(bybState.extraProtein)t+=(bybData.extras.protein.price||15);
+  return t;
+}
+function rBYB(){
+  if(!bybData)return;
+  const u=L==='ar'?'ر.س':'SAR';const b=bybData;const s=bybState;
+  let h='';
+  // Step 1: Protein + Extra Protein underneath
+  h+=`<div class="byb-step"><div class="byb-step-t"><span class="step-num">1</span>${L==='ar'?'اختر البروتين':'CHOOSE PROTEIN'}</div><div class="byb-opts">`;
+  b.proteins.forEach(p=>{h+=`<div class="byb-opt${s.protein===p.id?' on':''}" onclick="bybSel('protein','${p.id}')"><div class="opt-icon">${p.icon}</div><div class="opt-name">${T(p)}</div><div class="opt-price">${p.price} ${u}</div></div>`});
+  h+=`</div>`;
+  const extP=b.extras.protein;
+  h+=`<div class="byb-extras-row" style="margin-top:12px">`;
+  h+=`<div class="byb-ext-btn${s.extraProtein?' on':''}" onclick="bybExtra('protein')"><div class="ext-name">${T(extP)}</div><div class="ext-price">+${extP.price} ${u}</div></div>`;
+  h+=`</div><div class="byb-note">${T(b.scoopNote)}</div></div>`;
+  // Step 2: Carb + Extra Carb underneath
+  h+=`<div class="byb-step"><div class="byb-step-t"><span class="step-num">2</span>${L==='ar'?'اختر الكارب':'CHOOSE CARB'}</div><div class="byb-opts">`;
+  b.carbs.forEach(c=>{h+=`<div class="byb-opt${s.carb===c.id?' on':''}" onclick="bybSel('carb','${c.id}')"><div class="opt-icon">${c.icon}</div><div class="opt-name">${T(c)}</div></div>`});
+  h+=`</div>`;
+  const extC=b.extras.carb;
+  h+=`<div class="byb-extras-row" style="margin-top:12px">`;
+  h+=`<div class="byb-ext-btn${s.extraCarb?' on':''}" onclick="bybExtra('carb')"><div class="ext-name">${T(extC)}</div><div class="ext-price">+${extC.price} ${u}</div></div>`;
+  h+=`</div><div class="byb-note">${T(b.scoopNote)}</div></div>`;
+  // Step 3: Veggies
+  const maxV=b.maxVeggies||5;
+  h+=`<div class="byb-step"><div class="byb-step-t"><span class="step-num">3</span>${L==='ar'?'اختر الخضار':'CHOOSE VEGGIES'} <span style="font-weight:400;opacity:.5">(${maxV})</span></div><div class="byb-opts veg">`;
+  b.veggies.forEach(v=>{h+=`<div class="byb-opt${s.veggies.includes(v.id)?' on':''}" onclick="bybSel('veggie','${v.id}')"><div class="opt-name">${T(v)}</div></div>`});
+  h+=`</div><div class="byb-veg-ct">${s.veggies.length}/${maxV}</div></div>`;
+  // Step 4: Cheese
+  h+=`<div class="byb-step"><div class="byb-step-t"><span class="step-num">4</span>${L==='ar'?'الجبن':'CHEESE'}</div><div class="byb-opts">`;
+  b.cheese.forEach(c=>{h+=`<div class="byb-opt${s.cheese===c.id?' on':''}" onclick="bybSel('cheese','${c.id}')"><div class="opt-name">${T(c)}</div></div>`});
+  h+=`</div></div>`;
+  // Step 5: Sauce (1 choice only)
+  h+=`<div class="byb-step"><div class="byb-step-t"><span class="step-num">5</span>${L==='ar'?'اختر الصوص':'CHOOSE SAUCE'} <span style="font-weight:400;opacity:.5">(1)</span></div><div class="byb-opts">`;
+  const sauceMap=bybData._sauces||{};
+  b.sauces.forEach(sid=>{const sc=sauceMap[sid];if(!sc)return;h+=`<div class="byb-opt${s.sauce===sid?' on':''}" onclick="bybSel('sauce','${sid}')"><div class="opt-name">${T(sc)}</div></div>`});
+  h+=`</div>`;
+  if(s.sauce&&sauceMap[s.sauce]&&sauceMap[s.sauce].desc){h+=`<div class="byb-sauce-desc show">${T(sauceMap[s.sauce].desc)}</div>`}
+  h+=`</div>`;
+  // Step 6: Garnish (1 choice only)
+  h+=`<div class="byb-step"><div class="byb-step-t"><span class="step-num">6</span>${L==='ar'?'القارنش':'GARNISH'} <span style="font-weight:400;opacity:.5">(1)</span></div><div class="byb-opts">`;
+  b.garnish.forEach(g=>{h+=`<div class="byb-opt${s.garnish.includes(g.id)?' on':''}" onclick="bybSel('garnish','${g.id}')"><div class="opt-name">${T(g)}</div></div>`});
+  h+=`</div></div>`;
+  // Total
+  const total=bybPrice();
+  h+=`<div class="byb-total-bar"><div class="btl">${L==='ar'?'المجموع':'TOTAL'}</div><div class="btv">${total} <small>${u}</small></div></div>`;
+  document.getElementById('bybBody').innerHTML=h;
+}
+
+function woSel(sec,g){
+  if(sec==='carb')woState.carbGrams=g;else woState.proGrams=g;
+  document.querySelectorAll(`.wo-chip[data-sec="${sec}"]`).forEach(c=>{c.classList.toggle('on',+c.dataset.g===g)});
+  woCalc()}
+function woSelType(sel,sec){
+  const idx=parseInt(sel.value)||0;const u=L==='ar'?'ر.س':'SAR';
+  const isAddon=woData&&woData.mode==='addon';
+  const grams=isAddon?[0,50,100]:WO_GRAMS;
+  if(sec==='carb'){
+    woState.carbIdx=idx;const t=woData.carbs[idx];
+    grams.forEach(g=>{const el=document.getElementById('woCarbP'+g);if(el&&t){const pr=t[g]||0;el.innerHTML=(isAddon&&g>0?'+':'')+pr+' <small>'+u+'</small>'}});
+  } else {
+    woState.proIdx=idx;const t=woData.proteins[idx];
+    grams.forEach(g=>{const el=document.getElementById('woProP'+g);if(el&&t){const pr=t[g]||0;el.innerHTML=(isAddon&&g>0?'+':'')+pr+' <small>'+u+'</small>'}});
+  }
+  woCalc()}
+function woCalc(){
+  if(!woData)return;
+  const c=woData.carbs[woState.carbIdx];const p=woData.proteins[woState.proIdx];
+  const cP=c?c[woState.carbGrams]||0:0;const pP=p?p[woState.proGrams]||0:0;
+  const u=L==='ar'?'ر.س':'SAR';
+  let t;
+  if(woData.mode==='addon'){
+    const baseEl=document.querySelector('.wo-base-price');
+    const baseP=baseEl?parseFloat(baseEl.textContent):0;
+    t=baseP+cP+pP;
+  } else {
+    t=cP+pP;
+  }
+  const el=document.getElementById('woTotalV');if(el)el.innerHTML=t+' <small>'+u+'</small>'}
+
+let sy=0;const sh=document.getElementById('msh');
+sh.addEventListener('touchstart',e=>{sy=e.touches[0].clientY},{passive:true});
+sh.addEventListener('touchmove',e=>{if(e.touches[0].clientY-sy>80)cM()},{passive:true});
+
+// ════════════ ADMIN ════════════
+const IMGBB_KEY = 'cc97af44708a9fa53da105d22fafd3fd';
+function openAP(){document.getElementById('apx').classList.add('on');document.body.style.overflow='hidden';rAP()}
+function closeAP(){document.getElementById('apx').classList.remove('on');document.body.style.overflow=''}
+function showCfm(t,m,cb){document.getElementById('cfmT').textContent=t;document.getElementById('cfmM').textContent=m;document.getElementById('cfmY').onclick=()=>{cb();closeCfm()};document.getElementById('cfmBg').classList.add('on')}
+function closeCfm(){document.getElementById('cfmBg').classList.remove('on')}
+
+let adminTab='items';
+function switchATab(t){adminTab=t;document.querySelectorAll('.atab').forEach(b=>b.classList.toggle('on',b.dataset.t===t));document.querySelectorAll('.asec').forEach(s=>s.classList.toggle('on',s.dataset.t===t))}
+
+async function loadAll(){
+  try{const r=await fetch(API+'/all',{headers:{'x-pin':PIN}});if(!r.ok)throw 0;return await r.json()}catch(e){PIN=null;rAP();return null}}
+
+async function saveAll(d){
+  await fetch(API,{method:'PUT',headers:{'Content-Type':'application/json','x-pin':PIN},body:JSON.stringify(d)});
+  await load()}
+
+function rAP(){
+  const el=document.getElementById('apc');
+  if(!PIN){el.innerHTML=`<div class="aph"><div class="apt">🔐 إدارة المنيو</div><button class="apclose" onclick="closeAP()">✕</button></div><div class="aplogin"><div style="color:var(--sg);font-size:14px;margin-bottom:20px">ادخل PIN المالك</div><input type="password" id="pini" maxlength="6" inputmode="numeric" placeholder="••••••"><button onclick="doPin()">دخول</button><div class="aperr" id="perr"></div></div>`;setTimeout(()=>{const i=document.getElementById('pini');if(i)i.focus()},100);return}
+  loadAll().then(d=>{if(!d)return;raw=d.items||[];
+  let h=`<div class="aph"><div class="apt">📋 لوحة التحكم</div><button class="apclose" onclick="closeAP()">✕</button></div>`;
+  // Tabs
+  h+=`<div class="atabs"><button class="atab ${adminTab==='items'?'on':''}" data-t="items" onclick="switchATab('items')">الأصناف (${raw.length})</button><button class="atab ${adminTab==='cats'?'on':''}" data-t="cats" onclick="switchATab('cats')">المجموعات</button><button class="atab ${adminTab==='byb'?'on':''}" data-t="byb" onclick="switchATab('byb')">🥣 اصنع طبقك</button><button class="atab ${adminTab==='sauces'?'on':''}" data-t="sauces" onclick="switchATab('sauces')">🫙 الصوصات</button></div>`;
+
+  // ═══ ITEMS TAB ═══
+  h+=`<div class="asec ${adminTab==='items'?'on':''}" data-t="items">`;
+  raw.forEach((it,i)=>{const av=it.available!==false;const hid24=it.hiddenUntil&&Date.now()<it.hiddenUntil;
+  const hasWo=it.weightOptions&&it.weightOptions.enabled;
+  h+=`<div class="apc${!av?' hid':''}"><div class="apc-h"><img class="apc-img" src="${it.image||''}" alt="" onerror="this.style.display='none'"><div style="flex:1;min-width:0"><span class="av ${av?'y':'n'}">${av?'ظاهر':hid24?'مخفي 24س':'مخفي'}</span>${hasWo?'<span class="av y" style="background:rgba(200,215,150,.12);color:var(--sg)">⚖️ أوزان</span>':''}<div class="apc-n">${it.name.ar}</div><div class="apc-en">${it.name.en}</div></div><div class="apc-p">${it.price} ر.س</div></div>${hid24?`<div class="ahid-info">⏰ يرجع تلقائي: ${new Date(it.hiddenUntil).toLocaleString('ar-SA',{hour:'2-digit',minute:'2-digit',month:'short',day:'numeric'})}</div>`:''}
+  <div class="apc-f"><button class="apb apb-e" onclick="eItem(${i})">✏️ تعديل</button>${av?`<button class="apb apb-h" onclick="hide24(${i})">🕐 إخفاء 24 ساعة</button>`:`<button class="apb apb-s" onclick="tgAv(${i},true)">👁 إظهار</button>`}<button class="apb apb-d" onclick="delItem(${i})">🗑 حذف</button></div></div>`});
+  h+=`<button class="apb-add" onclick="eItem(-1)">+ إضافة صنف جديد</button></div>`;
+
+  // ═══ CATEGORIES TAB ═══
+  h+=`<div class="asec ${adminTab==='cats'?'on':''}" data-t="cats">`;
+  h+=`<div class="cat-add-row"><input type="text" id="newCatAr" placeholder="اسم المجموعة عربي"><input type="text" id="newCatEn" placeholder="English name"><button onclick="addCat()">إضافة</button></div>`;
+  const dCats=(d.categories||[]);
+  dCats.forEach((c,ci)=>{
+    const cnt=raw.filter(x=>x.category===c.id).length;
+    h+=`<div class="catc"><div><div class="catc-n">${c.ar} / ${c.en}</div><div class="catc-ct">${cnt} صنف</div></div><div class="catc-a"><button class="catc-ren" onclick="renCat(${ci})">✏️</button><button class="catc-del" onclick="delCat('${c.id}',${cnt})">🗑</button></div></div>`;
+  });
+  h+=`</div>`;
+
+  // ═══ BYB TAB ═══
+  h+=`<div class="asec ${adminTab==='byb'?'on':''}" data-t="byb">`;
+  h+=`<div style="color:var(--sg);font-size:13px;font-weight:600;margin-bottom:12px">⚙️ أسعار البروتين</div>`;
+  const bybP=bybData?bybData.proteins:DEF_BYB.proteins;
+  bybP.forEach((p,i)=>{
+  h+=`<div class="apc" style="padding:10px 14px;margin-bottom:6px"><div style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--wh);font-size:14px">${p.icon} ${p.ar} / ${p.en}</span><div style="display:flex;align-items:center;gap:6px"><input class="ei" type="number" id="bybPr${i}" value="${p.price}" style="width:80px;text-align:center;font-size:16px;font-weight:700"><span style="color:rgba(255,255,255,.3);font-size:11px">ر.س</span></div></div></div>`;
+  });
+  h+=`<div style="color:var(--sg);font-size:13px;font-weight:600;margin:16px 0 12px">⚙️ أسعار الإكسترا</div>`;
+  const bybE=bybData?bybData.extras:DEF_BYB.extras;
+  h+=`<div class="apc" style="padding:10px 14px;margin-bottom:6px"><div style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--wh);font-size:13px">سكوب كارب إضافي</span><div style="display:flex;align-items:center;gap:6px"><input class="ei" type="number" id="bybExCarb" value="${bybE.carb.price}" style="width:80px;text-align:center;font-size:16px;font-weight:700"><span style="color:rgba(255,255,255,.3);font-size:11px">ر.س</span></div></div></div>`;
+  h+=`<div class="apc" style="padding:10px 14px;margin-bottom:6px"><div style="display:flex;align-items:center;justify-content:space-between"><span style="color:var(--wh);font-size:13px">سكوب بروتين إضافي</span><div style="display:flex;align-items:center;gap:6px"><input class="ei" type="number" id="bybExPro" value="${bybE.protein.price}" style="width:80px;text-align:center;font-size:16px;font-weight:700"><span style="color:rgba(255,255,255,.3);font-size:11px">ر.س</span></div></div></div>`;
+  h+=`<button class="apb-add" onclick="saveBYB()" style="margin-top:12px">💾 حفظ أسعار اصنع طبقك</button>`;
+  h+=`</div>`;
+
+  // ═══ SAUCES TAB ═══
+  h+=`<div class="asec ${adminTab==='sauces'?'on':''}" data-t="sauces">`;
+  h+=`<div style="color:rgba(255,255,255,.4);font-size:11px;margin-bottom:12px;font-family:var(--fe)">السيرف: 50g لكل صحن</div>`;
+  const sMap=(bybData&&bybData._sauces)?bybData._sauces:DEF_SAUCES;
+  const sKeys=Object.keys(sMap);
+  sKeys.forEach((sk,si)=>{
+    const sc=sMap[sk];
+    h+=`<div class="apc" style="padding:12px 14px;margin-bottom:8px">`;
+    h+=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span style="color:rgba(255,255,255,.3);font-size:10px;font-family:var(--fe)">${sk}</span><button style="background:rgba(239,68,68,.1);color:#f66;border:none;border-radius:8px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:inherit" onclick="delSauce('${sk}')">حذف</button></div>`;
+    h+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px"><input class="ei" id="sAr_${sk}" value="${sc.ar}" placeholder="عربي" style="font-size:13px"><input class="ei" id="sEn_${sk}" value="${sc.en}" placeholder="English" style="font-size:13px"></div>`;
+    h+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px"><div><div class="el">سعرات / 50g</div><input class="ei" id="sCal_${sk}" type="number" value="${sc.cal||0}" style="font-size:13px"></div><div><div class="el">الحساسيات</div><div class="eal" id="sAl_${sk}">${AK.map(a=>`<button class="ealb${sc.allergens&&sc.allergens.includes(a)?' on':''}" data-sa="${a}" onclick="this.classList.toggle('on')" style="font-size:10px;padding:3px 8px">${AL_TEXT[a]?(L==='ar'?AL_TEXT[a].ar:AL_TEXT[a].en):a}</button>`).join('')}</div></div></div>`;
+    h+=`</div>`;
+  });
+  h+=`<div style="margin-top:12px;padding:12px;background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.1);border-radius:14px"><div style="color:var(--sg);font-size:12px;font-weight:600;margin-bottom:8px">+ إضافة صوص جديد</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px"><input class="ei" id="newSauceId" placeholder="sauce-id" style="font-size:12px"><input class="ei" id="newSauceAr" placeholder="الاسم عربي" style="font-size:12px"><input class="ei" id="newSauceEn" placeholder="Name EN" style="font-size:12px"></div><button style="margin-top:8px;padding:8px 20px;background:var(--dg);color:var(--wh);border:none;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit" onclick="addSauce()">إضافة</button></div>`;
+  h+=`<button class="apb-add" onclick="saveSauces()" style="margin-top:12px">💾 حفظ الصوصات</button>`;
+  h+=`</div>`;
+
+  el.innerHTML=h})}
+
+async function doPin(){const p=document.getElementById('pini').value;try{const r=await fetch(API+'/all',{headers:{'x-pin':p}});if(!r.ok)throw 0;PIN=p;rAP()}catch(e){document.getElementById('perr').textContent='PIN غلط'}}
+
+// ═══ HIDE 24 HOURS ═══
+async function hide24(i){
+  const d=await loadAll();if(!d)return;
+  d.items[i].available=false;
+  d.items[i].hiddenUntil=Date.now()+24*60*60*1000;
+  await saveAll(d);rAP()}
+
+async function tgAv(i,v){const d=await loadAll();if(!d)return;d.items[i].available=v;d.items[i].hiddenUntil=null;await saveAll(d);rAP()}
+
+// ═══ SAVE BYB PRICES ═══
+async function saveBYB(){
+  const d=await loadAll();if(!d)return;
+  if(!d.byb)d.byb=JSON.parse(JSON.stringify(DEF_BYB));
+  const bP=bybData?bybData.proteins:DEF_BYB.proteins;
+  bP.forEach((p,i)=>{const el=document.getElementById('bybPr'+i);if(el)d.byb.proteins[i].price=parseFloat(el.value)||0});
+  const ecEl=document.getElementById('bybExCarb');
+  const epEl=document.getElementById('bybExPro');
+  if(ecEl)d.byb.extras.carb.price=parseFloat(ecEl.value)||0;
+  if(epEl)d.byb.extras.protein.price=parseFloat(epEl.value)||0;
+  if(!d.sauces)d.sauces=DEF_SAUCES;
+  await saveAll(d);
+  bybData=d.byb;bybData._sauces=d.sauces;
+  rAP();
+}
+
+// ═══ DELETE PERMANENTLY ═══
+function delItem(i){
+  const name=raw[i]?raw[i].name.ar:'';
+  showCfm('🗑 حذف نهائي',`"${name}" — لا يمكن التراجع. متأكد؟`,async()=>{
+    const d=await loadAll();if(!d)return;
+    d.items.splice(i,1);
+    await saveAll(d);rAP()})}
+
+// ═══ ADD CATEGORY ═══
+async function addCat(){
+  const ar=document.getElementById('newCatAr').value.trim();
+  const en=document.getElementById('newCatEn').value.trim();
+  if(!ar||!en)return;
+  const d=await loadAll();if(!d)return;
+  if(!d.categories)d.categories=[];
+  d.categories.push({id:'cat_'+Date.now(),ar,en});
+  await saveAll(d);rAP()}
+
+async function renCat(ci){
+  const d=await loadAll();if(!d)return;
+  const c=d.categories[ci];if(!c)return;
+  const ar=prompt('الاسم عربي:',c.ar);if(!ar)return;
+  const en=prompt('English name:',c.en);if(!en)return;
+  c.ar=ar.trim();c.en=en.trim();
+  await saveAll(d);rAP()}
+
+function delCat(id,cnt){
+  showCfm('🗑 حذف المجموعة',cnt>0?`فيها ${cnt} صنف — بتنحذف معها. متأكد؟`:'المجموعة فارغة. متأكد؟',async()=>{
+    const d=await loadAll();if(!d)return;
+    d.categories=d.categories.filter(c=>c.id!==id);
+    d.items=d.items.filter(x=>x.category!==id);
+    await saveAll(d);rAP()})}
+
+// ═══ AUTO-UNHIDE (check on load) ═══
+async function checkHidden(){
+  const d=await loadAll();if(!d)return;
+  let changed=false;
+  d.items.forEach(it=>{
+    if(!it.available&&it.hiddenUntil&&Date.now()>=it.hiddenUntil){
+      it.available=true;it.hiddenUntil=null;changed=true}});
+  if(changed)await saveAll(d)}
+
+// ═══ ImgBB UPLOAD ═══
+async function uploadImg(file,cb){
+  console.log('uploadImg called, IMGBB_KEY:', IMGBB_KEY ? 'SET ('+IMGBB_KEY.substring(0,4)+'...)' : 'EMPTY');
+  if(!IMGBB_KEY){
+    alert('⚠️ مفتاح ImgBB غير موجود — حط IMGBB_KEY بالكود');
+    cb('');return}
+  // Convert to base64 first
+  const toBase64 = f => new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(f)});
+  try{
+    const b64 = await toBase64(file);
+    console.log('Base64 ready, length:', b64.length);
+    const form = new FormData();
+    form.append('key', IMGBB_KEY);
+    form.append('image', b64);
+    console.log('Uploading to ImgBB...');
+    const res = await fetch('https://api.imgbb.com/1/upload', {method:'POST', body:form});
+    const j = await res.json();
+    console.log('ImgBB response:', j);
+    if(j.data && j.data.display_url){
+      console.log('✅ URL:', j.data.display_url);
+      cb(j.data.display_url);
+    } else {
+      console.error('ImgBB error:', j);
+      alert('خطأ ImgBB: ' + (j.error ? j.error.message : JSON.stringify(j)));
+      cb('');
+    }
+  }catch(e){
+    console.error('Upload failed:', e);
+    alert('فشل الاتصال بـ ImgBB: ' + e.message);
+    cb('');
+  }}
+
+function handleImgFile(inp){
+  const f=inp.files?.[0];if(!f)return;
+  console.log('File selected:', f.name, (f.size/1024).toFixed(0)+'KB');
+  const img=document.getElementById('imgPrev');
+  const ph=document.getElementById('imgPH');
+  const uping=document.getElementById('imgUping');
+  const wrap=document.getElementById('imgWrap');
+  const status=document.getElementById('imgStatus');
+  if(status){status.textContent='📷 جاري تجهيز الصورة...';status.style.color='var(--sg)'}
+  // Preview immediately
+  const r=new FileReader();r.onload=e=>{img.src=e.target.result;img.classList.add('on');if(ph)ph.style.display='none';if(wrap)wrap.classList.add('has')};r.readAsDataURL(f);
+  // Upload
+  if(uping)uping.classList.add('on');
+  if(status)status.textContent='⬆️ جاري الرفع على ImgBB...';
+  uploadImg(f,url=>{
+    document.getElementById('eimg').value=url;
+    if(uping)uping.classList.remove('on');
+    if(status){
+      if(url&&url.startsWith('http')){status.textContent='✅ تم الرفع: '+url.substring(0,40)+'...';status.style.color='#8f8'}
+      else{status.textContent='❌ فشل الرفع — شيك الكونسول';status.style.color='#f66'}
+    }
+  })}
+
+const AK=['gluten','dairy','seafood','soy','eggs','nuts','mushroom','fish','mustard','sesame','peanuts'];
+const AL_TEXT={gluten:{ar:'جلوتين',en:'Gluten'},dairy:{ar:'حليب ومشتقاته',en:'Dairy'},seafood:{ar:'قشريات',en:'Crustaceans'},soy:{ar:'فول الصويا',en:'Soybeans'},eggs:{ar:'بيض',en:'Eggs'},nuts:{ar:'مكسرات',en:'Tree Nuts'},mushroom:{ar:'فطر',en:'Mushroom'},fish:{ar:'أسماك',en:'Fish'},mustard:{ar:'خردل',en:'Mustard'},sesame:{ar:'سمسم',en:'Sesame'},peanuts:{ar:'فول سوداني',en:'Peanuts'}};
+function alName(a){const t=AL_TEXT[a];if(t)return L==='ar'?t.ar:t.en;const m=alMap[a];if(m){const n=T(m);if(n)return n;}return a;}
+let eIdx=-1,eWoCarbs=[],eWoProteins=[];
+
+function tgWo(){
+  const sec=document.getElementById('woFields');
+  const chk=document.getElementById('woEnabled');
+  if(sec)sec.style.display=chk&&chk.checked?'block':'none';
+}
+function rWoList(type){
+  const arr=type==='carb'?eWoCarbs:eWoProteins;
+  const el=document.getElementById(type==='carb'?'woCarbList':'woProList');
+  if(!el)return;
+  el.innerHTML=arr.map((t,i)=>{
+    const pfx=type==='carb'?'wc':'wp';
+    return `<div style="background:rgba(0,0,0,.2);border-radius:10px;padding:10px;margin-bottom:6px">
+    <div style="display:flex;gap:6px;margin-bottom:6px"><input style="flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:var(--wh);padding:7px 10px;border-radius:8px;font-size:12px;font-family:inherit;outline:none" placeholder="عربي" value="${t.ar||''}" onchange="eWo('${type}',${i},'ar',this.value)"><input style="flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:var(--wh);padding:7px 10px;border-radius:8px;font-size:12px;font-family:var(--fe);outline:none" placeholder="English" value="${t.en||''}" onchange="eWo('${type}',${i},'en',this.value)"><button style="background:rgba(239,68,68,.15);color:#f66;border:none;border-radius:8px;padding:4px 10px;font-size:14px;cursor:pointer" onclick="dWoType('${type}',${i})">✕</button></div>
+    <div class="awo-grid"><div class="awo-lbl"></div>${WO_GRAMS.map(g=>`<div class="awo-lbl" style="text-align:center">${g}g</div>`).join('')}
+    <div class="awo-ptype">سعر</div>${WO_GRAMS.map(g=>`<input type="number" value="${t[g]||0}" placeholder="0" onchange="eWo('${type}',${i},'${g}',this.value)">`).join('')}</div></div>`}).join('');
+}
+function addWoType(type){
+  const arr=type==='carb'?eWoCarbs:eWoProteins;
+  arr.push({ar:'',en:'',100:0,150:0,200:0});rWoList(type);
+}
+function dWoType(type,i){
+  const arr=type==='carb'?eWoCarbs:eWoProteins;
+  arr.splice(i,1);rWoList(type);
+}
+function eWo(type,i,k,v){
+  const arr=type==='carb'?eWoCarbs:eWoProteins;
+  if(k==='ar'||k==='en')arr[i][k]=v;
+  else arr[i][parseInt(k)]=parseFloat(v)||0;
+}
+
+function eItem(i){
+  eIdx=i;
+  const it=i>=0?JSON.parse(JSON.stringify(raw[i])):{id:'i'+Date.now(),category:cats.length>1?cats[1].id:'poke',cookType:'grill',image:'',name:{ar:'',en:''},description:{ar:'',en:''},price:0,priceLabel:null,allergens:[],ingredients:{ar:[],en:[]},macros:{cal:0,protein:0,carbs:0,fat:0},available:true,order:raw.length+1,weightOptions:null};
+  const cs=cats.filter(c=>c.id!=='all');
+  const hasImg=!!it.image;
+  const wo=it.weightOptions||{enabled:false,carbs:[],proteins:[]};
+  eWoCarbs=JSON.parse(JSON.stringify(wo.carbs||[]));
+  eWoProteins=JSON.parse(JSON.stringify(wo.proteins||[]));
+  let h=`<div class="emt">${i>=0?'✏️ تعديل':'➕ جديد'}</div>
+  <div class="er2"><div class="er"><div class="el">الاسم عربي</div><input class="ei" id="na" value="${it.name.ar}"></div><div class="er"><div class="el">Name EN</div><input class="ei" id="ne" value="${it.name.en}"></div></div>
+  <div class="er"><div class="el">الوصف عربي</div><textarea class="ei" id="da">${it.description.ar}</textarea></div>
+  <div class="er"><div class="el">Description EN</div><textarea class="ei" id="de">${it.description.en}</textarea></div>
+  <div class="er"><div class="el">صورة الصنف${IMGBB_KEY?' (ImgBB)':''}</div>
+    <div class="img-up" id="imgWrap">
+      <img src="${it.image||''}"${hasImg?' class="on"':''} id="imgPrev">
+      <div class="iph" id="imgPH"${hasImg?' style="display:none"':''}><div class="ico">📷</div><div>لا توجد صورة</div></div>
+      <div class="uping" id="imgUping">جاري الرفع...</div>
+    </div>
+    <button type="button" class="img-btn" onclick="document.getElementById('imgFileInput').click()">📷 اختر صورة</button>
+    <input type="file" id="imgFileInput" accept="image/*" style="display:none" onchange="handleImgFile(this)">
+    <input type="hidden" id="eimg" value="${it.image||''}">
+    <div id="imgStatus" style="font-size:11px;margin-top:4px;color:rgba(255,255,255,.3)"></div>
+  </div>
+  <div class="er2"><div class="er"><div class="el">السعر SAR</div><input class="ei" id="epr" type="number" value="${it.price}"></div><div class="er"><div class="el">الفئة</div><select class="ei" id="eca">${cs.map(c=>`<option value="${c.id}"${it.category===c.id?' selected':''}>${T(c)}</option>`).join('')}</select></div></div>
+  <div class="er2"><div class="er"><div class="el">الطبخ</div><select class="ei" id="eco"><option value="grill"${it.cookType==='grill'?' selected':''}>🔥 Grill</option><option value="fry"${it.cookType==='fry'?' selected':''}>🍳 Fry</option></select></div><div class="er"><div class="el">بادئة (اختياري)</div><input class="ei" id="epl" value="${it.priceLabel?it.priceLabel.ar:''}" placeholder="يبدأ من"></div></div>
+  <div class="er"><div class="el">الصوص المستخدم</div><div class="eal">${Object.keys((bybData&&bybData._sauces)?bybData._sauces:DEF_SAUCES).map(sk=>{const sc=((bybData&&bybData._sauces)?bybData._sauces:DEF_SAUCES)[sk];const itemSauceIds=(it.sauce||'').split(',').map(s=>s.trim()).filter(Boolean);return `<button class="ealb${itemSauceIds.includes(sk)?' on':''}" data-s="${sk}" onclick="this.classList.toggle('on')">${sc?sc.icon:''} ${sc?sc.ar:sk}</button>`}).join('')}</div></div>
+  <div class="er"><div class="el">الحساسيات</div><div class="eal">${AK.map(a=>`<button class="ealb${it.allergens.includes(a)?' on':''}" data-a="${a}" onclick="this.classList.toggle('on')">${AL_TEXT[a]?(L==='ar'?AL_TEXT[a].ar:AL_TEXT[a].en):a}</button>`).join('')}</div></div>
+  <div class="er"><div class="el">Badge (عربي | EN)</div><div class="er2"><input class="ei" id="ebdgAr" value="${it.badge?it.badge.ar:''}" placeholder="طبق الأسبوع"><input class="ei" id="ebdgEn" value="${it.badge?it.badge.en:''}" placeholder="Bowl of the Week"></div></div>
+  <div class="er"><div class="el">Macros</div><div class="er4"><div><div class="el">Cal</div><input class="ei" id="ecal" type="number" value="${it.macros.cal}"></div><div><div class="el">Pro</div><input class="ei" id="epro" type="number" value="${it.macros.protein}"></div><div><div class="el">Carb</div><input class="ei" id="ecrb" type="number" value="${it.macros.carbs}"></div><div><div class="el">Fat</div><input class="ei" id="efat" type="number" value="${it.macros.fat}"></div></div></div>
+  <div class="er"><div class="el">المكونات عربي (فاصلة)</div><input class="ei" id="eia" value="${(it.ingredients.ar||[]).join('، ')}"></div>
+  <div class="er"><div class="el">Ingredients EN (comma)</div><input class="ei" id="eie" value="${(it.ingredients.en||[]).join(', ')}"></div>
+  <div class="awo-wrap">
+    <label class="awo-toggle"><input type="checkbox" id="woEnabled" ${wo.enabled?'checked':''} onchange="tgWo()"><span>⚖️ خيارات الأوزان</span></label>
+    <div id="woFields" style="${wo.enabled?'':'display:none'}">
+      <div class="awo-sec"><div class="awo-sec-t">🍚 أنواع الكارب</div><div id="woCarbList"></div><button type="button" style="margin-top:6px;padding:8px 16px;background:rgba(200,215,150,.12);border:1px solid rgba(200,215,150,.25);color:var(--sg);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit" onclick="addWoType('carb')">+ نوع كارب</button></div>
+      <div class="awo-sec"><div class="awo-sec-t">🥩 أنواع البروتين</div><div id="woProList"></div><button type="button" style="margin-top:6px;padding:8px 16px;background:rgba(200,215,150,.12);border:1px solid rgba(200,215,150,.25);color:var(--sg);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit" onclick="addWoType('pro')">+ نوع بروتين</button></div>
+    </div>
+  </div>
+  <button class="emsave" onclick="saveE()">💾 حفظ</button><button class="emcancel" onclick="closeE()">إلغاء</button>`;
+  document.getElementById('emc').innerHTML=h;document.getElementById('emx').classList.add('on');
+  rWoList('carb');rWoList('pro')}
+
+function closeE(){document.getElementById('emx').classList.remove('on')}
+
+async function saveE(){
+  const d=await loadAll();if(!d)return;
+  const pl=document.getElementById('epl').value.trim();
+  const als=Array.from(document.querySelectorAll('.ealb.on[data-a]')).map(b=>b.dataset.a);
+  const it={id:eIdx>=0?raw[eIdx].id:'i'+Date.now(),category:document.getElementById('eca').value,cookType:document.getElementById('eco').value,image:document.getElementById('eimg').value.trim(),
+    name:{ar:document.getElementById('na').value.trim(),en:document.getElementById('ne').value.trim()},
+    description:{ar:document.getElementById('da').value.trim(),en:document.getElementById('de').value.trim()},
+    price:parseFloat(document.getElementById('epr').value)||0,priceLabel:pl?{ar:pl,en:pl}:null,allergens:als,
+    ingredients:{ar:document.getElementById('eia').value.split(/[،,]/).map(s=>s.trim()).filter(Boolean),en:document.getElementById('eie').value.split(',').map(s=>s.trim()).filter(Boolean)},
+    macros:{cal:+document.getElementById('ecal').value||0,protein:+document.getElementById('epro').value||0,carbs:+document.getElementById('ecrb').value||0,fat:+document.getElementById('efat').value||0},
+    available:eIdx>=0?(raw[eIdx].available!==false):true,order:eIdx>=0?(raw[eIdx].order||eIdx+1):d.items.length+1};
+  const bdgAr=(document.getElementById('ebdgAr')?document.getElementById('ebdgAr').value.trim():'');
+  const bdgEn=(document.getElementById('ebdgEn')?document.getElementById('ebdgEn').value.trim():'');
+  it.badge=bdgAr||bdgEn?{ar:bdgAr,en:bdgEn}:null;
+  const selSauces=Array.from(document.querySelectorAll('.ealb[data-s].on')).map(b=>b.dataset.s);
+  it.sauce=selSauces.length?selSauces.join(','):null;
+  const woOn=document.getElementById('woEnabled')&&document.getElementById('woEnabled').checked;
+  if(woOn){
+    const carbs=eWoCarbs.filter(c=>c.ar||c.en);
+    const proteins=eWoProteins.filter(p=>p.ar||p.en);
+    it.weightOptions={enabled:true,carbs,proteins};
+  } else {
+    it.weightOptions=eIdx>=0&&raw[eIdx].weightOptions?{...raw[eIdx].weightOptions,enabled:false}:null;
+  }
+  if(eIdx>=0)d.items[eIdx]=it;else d.items.push(it);
+  await saveAll(d);closeE();rAP()}
+
+// ═══ SAUCE CRUD ═══
+async function saveSauces(){
+  const d=await loadAll();if(!d)return;
+  const sMap=(bybData&&bybData._sauces)?{...bybData._sauces}:{...DEF_SAUCES};
+  Object.keys(sMap).forEach(sk=>{
+    const arEl=document.getElementById('sAr_'+sk);
+    const enEl=document.getElementById('sEn_'+sk);
+    const calEl=document.getElementById('sCal_'+sk);
+    if(arEl)sMap[sk].ar=arEl.value.trim();
+    if(enEl)sMap[sk].en=enEl.value.trim();
+    if(calEl)sMap[sk].cal=parseInt(calEl.value)||0;
+    sMap[sk].serve=50;
+    const alBtns=document.querySelectorAll('#sAl_'+sk+' .ealb.on');
+    sMap[sk].allergens=Array.from(alBtns).map(b=>b.dataset.sa);
+  });
+  d.sauces=sMap;
+  if(!d.byb)d.byb=JSON.parse(JSON.stringify(DEF_BYB));
+  await saveAll(d);
+  bybData._sauces=sMap;
+  rAP();
+}
+async function addSauce(){
+  const id=(document.getElementById('newSauceId').value||'').trim().toLowerCase().replace(/\s+/g,'-');
+  const ar=(document.getElementById('newSauceAr').value||'').trim();
+  const en=(document.getElementById('newSauceEn').value||'').trim();
+  if(!id||!ar||!en){alert('عبّي كل الحقول');return}
+  const sMap=(bybData&&bybData._sauces)?bybData._sauces:DEF_SAUCES;
+  if(sMap[id]){alert('الـ ID موجود');return}
+  sMap[id]={ar,en,icon:"",allergens:[],cal:0,serve:50,ingredients:{ar:[],en:[]}};
+  if(bybData)bybData._sauces=sMap;
+  const d=await loadAll();if(!d)return;
+  d.sauces=sMap;
+  if(!d.byb)d.byb=JSON.parse(JSON.stringify(DEF_BYB));
+  if(!d.byb.sauces)d.byb.sauces=[];
+  d.byb.sauces.push(id);
+  await saveAll(d);rAP();
+}
+function delSauce(sk){
+  showCfm('حذف صوص','متأكد تبي تحذف "'+sk+'"؟',async()=>{
+    const sMap=(bybData&&bybData._sauces)?{...bybData._sauces}:{...DEF_SAUCES};
+    delete sMap[sk];
+    const d=await loadAll();if(!d)return;
+    d.sauces=sMap;
+    if(d.byb&&d.byb.sauces)d.byb.sauces=d.byb.sauces.filter(s=>s!==sk);
+    await saveAll(d);
+    if(bybData)bybData._sauces=sMap;
+    rAP();
+  });
+}
+
+load();
+// Check hidden items on page load
+setTimeout(()=>{if(PIN)checkHidden()},2000);
+</script>
+</body>
+</html>.wo-base{text-align:center;padding:12px;margin-bottom:14px;background:rgba(0,82,64,.04);border-radius:14px}
 .wo-base-price{font-size:28px;font-weight:800;color:var(--dg);font-family:var(--fe)}
 .wo-base-note{font-size:11px;color:rgba(42,38,37,.45);margin-top:4px}
 .wo-sec{margin-bottom:16px}
