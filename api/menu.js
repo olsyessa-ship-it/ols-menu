@@ -142,6 +142,8 @@ module.exports = async function(req, res) {
       return res.json({
         categories: d.categories,
         allergens: d.allergens,
+        sauces: d.sauces,
+        byb: d.byb,
         items: (d.items || []).filter(i => i.available !== false)
       });
     }
