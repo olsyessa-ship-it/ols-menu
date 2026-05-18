@@ -129,6 +129,13 @@ textarea.ei{min-height:55px;resize:vertical}
 .cfm-y{background:rgba(239,68,68,.15);color:#f66}.cfm-n{background:rgba(255,255,255,.05);color:rgba(255,255,255,.4)}
 .top-banner{background:var(--bk);color:var(--wh);text-align:center;padding:8px 16px;font-size:11px;font-weight:600;letter-spacing:1.5px;font-family:var(--fe);display:flex;align-items:center;justify-content:center;gap:6px}.tb-icon{font-size:13px}.tb-text{opacity:.85}
 .prep-badge{position:absolute;bottom:10px;left:10px;padding:4px 10px;border-radius:8px;font-size:9px;font-weight:600;letter-spacing:.5px;font-family:var(--fe);background:rgba(0,0,0,.7);color:var(--wh);backdrop-filter:blur(6px);display:flex;align-items:center;gap:4px}body[dir="ltr"] .prep-badge{left:auto;right:10px}.prep-badge .pb-icon{font-size:11px}
+.xsec{padding:24px 16px 0;position:relative;z-index:1;max-width:720px;margin:0 auto}.xsec-t{font-size:14px;font-weight:700;letter-spacing:1px;color:var(--dg);margin-bottom:14px;padding:0 4px;font-family:var(--fa)}
+.sc{background:var(--wh);border-radius:16px;padding:14px;margin-bottom:10px;border:1px solid rgba(42,38,37,.04);display:flex;align-items:flex-start;gap:12px}.sc-icon{font-size:20px;flex-shrink:0;width:36px;height:36px;background:var(--cr);border-radius:10px;display:flex;align-items:center;justify-content:center}.sc-info{flex:1;min-width:0}.sc-name{font-size:14px;font-weight:600;color:var(--ch)}.sc-desc{font-size:11.5px;color:rgba(42,38,37,.5);margin-top:2px;line-height:1.4}.sc-meta{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap}.sc-cal{font-size:10px;font-family:var(--fe);color:var(--dg);font-weight:600;background:rgba(0,82,64,.06);padding:2px 8px;border-radius:6px}.sc-al{font-size:10px;color:rgba(42,38,37,.4);padding:2px 8px;border-radius:6px;background:var(--cr)}
+.byb-g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}.byb-c{background:var(--wh);border-radius:16px;padding:16px 12px;text-align:center;border:1px solid rgba(42,38,37,.04)}.byb-ic{font-size:28px;margin-bottom:6px}.byb-n{font-size:13px;font-weight:600;color:var(--ch)}.byb-p{font-family:var(--fe);font-size:15px;font-weight:700;color:var(--dg);margin-top:4px}.byb-p small{font-size:10px;font-weight:400;color:rgba(42,38,37,.35)}
+.byb-note{background:rgba(0,82,64,.06);border-radius:12px;padding:12px 16px;text-align:center;font-size:12px;color:var(--dg);font-weight:500;margin-top:8px}
+.byb-sub{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(42,38,37,.4);margin:14px 0 8px;font-family:var(--fe)}
+.byb-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.byb-tag{padding:6px 14px;background:var(--wh);border-radius:100px;font-size:12px;color:var(--ch);font-weight:500;border:1px solid rgba(42,38,37,.06)}
+.byb-extra{background:var(--wh);border-radius:12px;padding:10px 14px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;border:1px solid rgba(42,38,37,.04)}.byb-extra-n{font-size:13px;font-weight:500;color:var(--ch)}.byb-extra-p{font-family:var(--fe);font-size:13px;font-weight:700;color:var(--dg)}
 </style>
 </head>
 <body dir="ltr">
@@ -142,18 +149,20 @@ textarea.ei{min-height:55px;resize:vertical}
 <main id="grid"></main>
 <div class="mbg" id="mbg" onclick="cM()"></div>
 <div class="msh" id="msh"><div class="mha"></div><button class="mx" onclick="cM()">✕</button><div id="mbody"></div></div>
+<div id="sauceSec"></div>
+<div id="bybSec"></div>
 <footer class="ft"><div class="ftl"><img src="/ols-logo.png" alt="OLS"></div><div class="fts">أكل نظيف وطعم مختلف</div><div class="ftk"><a href="https://www.instagram.com/olsyes/" target="_blank">Instagram</a><a href="https://share.google/WuZBnUt12gPBpYM0S" target="_blank">Location</a></div><div class="ftc">© OLS 2025 — Developed by Mohammed Al-Hasoon</div></footer>
 <div class="apx" id="apx"><div class="ap" id="apc"></div></div>
 <div class="emx" id="emx"><div class="em" id="emc"></div></div>
 <div class="cfm-bg" id="cfmBg"><div class="cfm-box"><h3 id="cfmT"></h3><p id="cfmM"></p><div class="cfm-btns"><button class="cfm-y" id="cfmY">تأكيد</button><button class="cfm-n" onclick="closeCfm()">إلغاء</button></div></div></div>
 <script>
-let L='en',PIN=null,cats=[],alMap={},items=[],raw=[];
+let L='en',PIN=null,cats=[],alMap={},items=[],raw=[],sauces={},byb={};
 const API='/api/menu';
 function T(o){return o?L==='ar'?o.ar:o.en:''}
 function M(i){return{id:i.id,cat:i.category,cook:i.cookType,img:i.image,ar:{name:i.name.ar,desc:i.description.ar},en:{name:i.name.en,desc:i.description.en},price:i.price,pl:i.priceLabel,al:i.allergens||[],ing:i.ingredients||{ar:[],en:[]},mac:i.macros||{cal:0,protein:0,carbs:0,fat:0},avail:i.available!==false}}
 
 async function load(){
-  try{const r=await fetch(API);const d=await r.json();cats=[{id:'all',ar:'الكل',en:'All'},...d.categories];alMap=d.allergens||{};items=d.items.sort((a,b)=>(a.order||0)-(b.order||0)).map(M);rTabs();rMenu()}
+  try{const r=await fetch(API);const d=await r.json();cats=[{id:'all',ar:'الكل',en:'All'},...d.categories];alMap=d.allergens||{};sauces=d.sauces||{};byb=d.byb||{};items=d.items.sort((a,b)=>(a.order||0)-(b.order||0)).map(M);rTabs();rMenu();rSauces();rBYB()}
   catch(e){document.getElementById('grid').innerHTML='<div style="text-align:center;padding:60px 20px;color:rgba(42,38,37,.4)">جاري التحميل...</div>'}
 }
 
@@ -177,7 +186,50 @@ document.getElementById('mbody').innerHTML=h;document.getElementById('mbg').clas
 
 function cM(){document.getElementById('mbg').classList.remove('on');document.getElementById('msh').classList.remove('on');document.body.style.overflow=''}
 function fC(c){document.querySelectorAll('.tb').forEach(b=>b.classList.toggle('on',b.dataset.c===c));rMenu(c)}
-function tgLang(){L=L==='ar'?'en':'ar';const d=L==='ar'?'rtl':'ltr';document.documentElement.lang=L;document.documentElement.dir=d;document.body.dir=d;document.querySelector('.lbtn').textContent=L==='ar'?'EN':'عربي';document.getElementById('ht').textContent=L==='ar'?'أكل نظيف وطعم مختلف':'Clean food, real flavor';document.getElementById('tbText').textContent=L==='ar'?'الأكثر مبيعاً — تشيكن سيزر راب':'BEST SELLER — CHOPPED CHICKEN CAESAR WRAP';rTabs();rMenu();cM()}
+function tgLang(){L=L==='ar'?'en':'ar';const d=L==='ar'?'rtl':'ltr';document.documentElement.lang=L;document.documentElement.dir=d;document.body.dir=d;document.querySelector('.lbtn').textContent=L==='ar'?'EN':'عربي';document.getElementById('ht').textContent=L==='ar'?'أكل نظيف وطعم مختلف':'Clean food, real flavor';document.getElementById('tbText').textContent=L==='ar'?'الأكثر مبيعاً — تشيكن سيزر راب':'BEST SELLER — CHOPPED CHICKEN CAESAR WRAP';rTabs();rMenu();rSauces();rBYB();cM()}
+
+function rSauces(){
+  const keys=Object.keys(sauces);if(!keys.length)return;
+  const u=L==='ar'?'ر.س':'SAR';
+  let h=`<div class="xsec"><div class="xsec-t">${L==='ar'?'الصوصات':'Sauces'}</div>`;
+  keys.forEach(k=>{const s=sauces[k];
+    const alTags=(s.allergens||[]).map(a=>alMap[a]?`<span class="sc-al">${alMap[a].icon} ${T(alMap[a])}</span>`:'').join('');
+    h+=`<div class="sc"><div class="sc-icon">${s.icon||'🥣'}</div><div class="sc-info"><div class="sc-name">${T(s)}</div><div class="sc-desc">${T(s.desc)}</div><div class="sc-meta"><span class="sc-cal">${s.cal} kcal / ${s.serve}g</span>${alTags}</div></div></div>`});
+  h+=`</div>`;document.getElementById('sauceSec').innerHTML=h}
+
+function rBYB(){
+  if(!byb.enabled)return;
+  const u=L==='ar'?'ر.س':'SAR';
+  let h=`<div class="xsec"><div class="xsec-t">${L==='ar'?'ابني طبقك':'Build Your Bowl'}</div>`;
+  // Proteins with prices
+  h+=`<div class="byb-sub">${L==='ar'?'البروتين':'PROTEIN'}</div><div class="byb-g">`;
+  (byb.proteins||[]).forEach(p=>{h+=`<div class="byb-c"><div class="byb-ic">${p.icon}</div><div class="byb-n">${T(p)}</div><div class="byb-p">${p.price} <small>${u}</small></div></div>`});
+  h+=`</div>`;
+  // Carbs
+  h+=`<div class="byb-sub">${L==='ar'?'الكارب':'CARBS'}</div><div class="byb-tags">`;
+  (byb.carbs||[]).forEach(c=>{h+=`<div class="byb-tag">${c.icon} ${T(c)}</div>`});
+  h+=`</div>`;
+  // Veggies
+  h+=`<div class="byb-sub">${L==='ar'?'الخضار (اختر ٣)':'VEGGIES (PICK 3)'}</div><div class="byb-tags">`;
+  (byb.veggies||[]).forEach(v=>{h+=`<div class="byb-tag">${v.icon} ${T(v)}</div>`});
+  h+=`</div>`;
+  // Cheese
+  if(byb.cheese){h+=`<div class="byb-sub">${L==='ar'?'الجبن':'CHEESE'}</div><div class="byb-tags">`;
+  byb.cheese.filter(c=>c.id!=='none').forEach(c=>{h+=`<div class="byb-tag">${c.icon} ${T(c)}</div>`});
+  h+=`</div>`}
+  // Garnish
+  if(byb.garnish){h+=`<div class="byb-sub">${L==='ar'?'التوبينج':'GARNISH'}</div><div class="byb-tags">`;
+  byb.garnish.forEach(g=>{h+=`<div class="byb-tag">${g.icon} ${T(g)}</div>`});
+  h+=`</div>`}
+  // Extras
+  if(byb.extras){
+    h+=`<div class="byb-sub">${L==='ar'?'إضافات':'EXTRAS'}</div>`;
+    if(byb.extras.carb)h+=`<div class="byb-extra"><span class="byb-extra-n">${T(byb.extras.carb)}</span><span class="byb-extra-p">+${byb.extras.carb.price} ${u}</span></div>`;
+    if(byb.extras.protein)h+=`<div class="byb-extra"><span class="byb-extra-n">${T(byb.extras.protein)}</span><span class="byb-extra-p">+${byb.extras.protein.price} ${u}</span></div>`;
+  }
+  // Scoop note
+  if(byb.scoopNote)h+=`<div class="byb-note">📏 ${T(byb.scoopNote)}</div>`;
+  h+=`</div>`;document.getElementById('bybSec').innerHTML=h}
 
 let sy=0;const sh=document.getElementById('msh');
 sh.addEventListener('touchstart',e=>{sy=e.touches[0].clientY},{passive:true});
