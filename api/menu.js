@@ -15,14 +15,15 @@ const DEF={categories:[{id:"poke",ar:"بوكي بول",en:"Poke Bowls",order:1},
 },byb:{
 enabled:true,
 proteins:[
-{id:"chicken",ar:"دجاج",en:"Chicken",price:35,icon:"🍗"},
-{id:"beef",ar:"لحم",en:"Beef",price:43,icon:"🥩"},
-{id:"shrimp",ar:"روبيان",en:"Shrimp",price:59,icon:"🦐"}
+{id:"chicken",ar:"دجاج",en:"Chicken",icon:"🍗",weights:{"100g":16,"150g":24,"200g":31}},
+{id:"beef",ar:"لحم",en:"Beef",icon:"🥩",weights:{"100g":23,"150g":34,"200g":47}},
+{id:"shrimp",ar:"روبيان",en:"Shrimp",icon:"🦐",weights:{"100g":27,"150g":42,"200g":55}},
+{id:"salmon",ar:"سالمون",en:"Salmon",icon:"🐟",weights:{},soon:true}
 ],
 carbs:[
-{id:"sushi-rice",ar:"رز سوشي",en:"Sushi Rice",icon:"🍚"},
-{id:"brown-rice",ar:"رز بني",en:"Brown Rice",icon:"🍚"},
-{id:"white-rice",ar:"رز أبيض",en:"White Rice",icon:"🍚"}
+{id:"white-rice",ar:"رز أبيض",en:"White Rice",icon:"🍚",weights:{"50g":3,"100g":6,"150g":9,"200g":12,"250g":15}},
+{id:"brown-rice",ar:"رز بني",en:"Brown Rice",icon:"🌾",weights:{"50g":3.5,"100g":7,"150g":10.5,"200g":14,"250g":17.5}},
+{id:"potato",ar:"بطاطس",en:"Potato",icon:"🥔",weights:{"50g":3.5,"100g":7,"150g":10.5,"200g":14,"250g":17.5}}
 ],
 veggies:[
 {id:"lettuce",ar:"خس",en:"Lettuce",icon:"🥬"},
