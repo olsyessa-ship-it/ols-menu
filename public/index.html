@@ -229,15 +229,32 @@ function showSauceDetail(k){const s=sauces[k];if(!s)return;
 
 function rBYB(){
   if(!byb.enabled)return;
-  const u=L==='ar'?'ر.س':'SAR',wl=L==='ar'?'الوزن':'Weight',pl=L==='ar'?'السعر':'Price',nl=L==='ar'?'الصنف':'Item';
+  const u=L==='ar'?'ر.س':'SAR';
   let h=`<div class="acc-wrap"><button class="acc-btn" onclick="tgBYB(this)">🍽 ${L==='ar'?'اصنع طبقك بنفسك':'Build Your Bowl'} <span class="acc-arrow">▼</span></button><div class="acc-body" id="bybBody"><div class="acc-inner">`;
-  // Protein table
-  h+=`<div class="byb-sub">${L==='ar'?'البروتين':'PROTEIN'}</div><table class="byb-tbl"><thead><tr><th>${nl}</th><th>${wl}</th><th>${pl}</th></tr></thead><tbody>`;
-  (byb.proteins||[]).forEach(p=>{h+=`<tr><td>${p.icon} ${T(p)}</td><td class="tw">100-120g</td><td class="tp">${p.price} ${u}</td></tr>`});
+  // Protein table with weight columns
+  const prots=(byb.proteins||[]).filter(p=>!p.soon);
+  const pWeights=prots.length?Object.keys(prots[0].weights||{}):[];
+  h+=`<div class="byb-sub">💪 ${L==='ar'?'أسعار البروتين بالوزن':'Protein Price by Weight'}</div><table class="byb-tbl"><thead><tr><th>${L==='ar'?'البروتين':'Protein'}</th>`;
+  pWeights.forEach(w=>{h+=`<th style="text-align:center">${w}</th>`});
+  h+=`</tr></thead><tbody>`;
+  (byb.proteins||[]).forEach(p=>{
+    h+=`<tr><td>${p.icon} ${T(p)}</td>`;
+    if(p.soon){pWeights.forEach(()=>{h+=`<td style="text-align:center;color:rgba(42,38,37,.25)">—</td>`});
+    }else{const wts=p.weights||{};pWeights.forEach(w=>{h+=`<td class="tp" style="text-align:center">${wts[w]||'—'}</td>`})}
+    h+=`</tr>`});
+  const soonP=(byb.proteins||[]).find(p=>p.soon);
+  if(soonP)h+=`<tr><td colspan="${pWeights.length+1}" style="font-size:11px;color:rgba(42,38,37,.35);padding-top:6px">🔜 ${T(soonP)} ${L==='ar'?'قريباً':'coming soon'}</td></tr>`;
   h+=`</tbody></table>`;
-  // Carbs table
-  h+=`<div class="byb-sub">${L==='ar'?'الكارب':'CARBS'}</div><table class="byb-tbl"><thead><tr><th>${nl}</th><th>${wl}</th></tr></thead><tbody>`;
-  (byb.carbs||[]).forEach(c=>{h+=`<tr><td>${c.icon} ${T(c)}</td><td class="tw">100-120g</td></tr>`});
+  // Carbs table with weight columns
+  const carbs=(byb.carbs||[]);
+  const cWeights=carbs.length?Object.keys(carbs[0].weights||{}):[];
+  h+=`<div class="byb-sub">🍚 ${L==='ar'?'أسعار الكارب بالوزن':'Carb Price by Weight'}</div><table class="byb-tbl"><thead><tr><th>${L==='ar'?'الكارب':'Carbs'}</th>`;
+  cWeights.forEach(w=>{h+=`<th style="text-align:center">${w}</th>`});
+  h+=`</tr></thead><tbody>`;
+  carbs.forEach(c=>{const wts=c.weights||{};
+    h+=`<tr><td>${c.icon} ${T(c)}</td>`;
+    cWeights.forEach(w=>{h+=`<td class="tp" style="text-align:center">${wts[w]||'—'}</td>`});
+    h+=`</tr>`});
   h+=`</tbody></table>`;
   // Veggies
   h+=`<div class="byb-sub">${L==='ar'?'الخضار (اختر ٣)':'VEGGIES (PICK 3)'}</div><div class="byb-chips">`;
