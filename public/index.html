@@ -153,6 +153,17 @@ body[dir="ltr"] .byb-tbl th{text-align:left}
 .sauce-detail.on{display:block}
 .sd-name{font-size:16px;font-weight:700;color:var(--ch);margin-bottom:4px}.sd-desc{font-size:12px;color:rgba(42,38,37,.5);line-height:1.5;margin-bottom:10px}
 .sd-row{display:flex;gap:8px;flex-wrap:wrap}.sd-tag{padding:4px 10px;border-radius:8px;font-size:11px;font-weight:500}.sd-tag.cal{background:rgba(0,82,64,.08);color:var(--dg)}.sd-tag.al{background:var(--cr);color:rgba(42,38,37,.5)}
+/* Policy modals */
+.pol-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);z-index:300;opacity:0;pointer-events:none;transition:opacity .3s;display:flex;align-items:flex-end;justify-content:center}.pol-bg.on{opacity:1;pointer-events:all}
+.pol-sh{width:100%;max-width:560px;max-height:88vh;background:var(--wh);border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);overflow:hidden;display:flex;flex-direction:column}.pol-bg.on .pol-sh{transform:translateY(0)}
+.pol-hdr{padding:14px 18px;border-bottom:1px solid rgba(42,38,37,.06);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}.pol-title{font-size:16px;font-weight:700;color:var(--ch)}.pol-close{background:none;border:none;font-size:18px;cursor:pointer;color:rgba(42,38,37,.4);padding:4px 8px}
+.pol-body{overflow-y:auto;padding:18px 20px 32px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.pol-body h3{font-size:14px;font-weight:700;color:var(--ch);margin:18px 0 8px;border-bottom:2px solid var(--sg);display:inline-block;padding-bottom:2px}
+.pol-body p{font-size:13px;line-height:1.75;color:rgba(42,38,37,.7);margin-bottom:8px}
+.pol-body ul{margin:0 0 10px 0;padding:0 16px}.pol-body li{font-size:13px;line-height:1.75;color:rgba(42,38,37,.7);margin-bottom:4px}
+.pol-contact{background:var(--cr);border-radius:12px;padding:14px 16px;margin-top:14px}.pol-contact div{font-size:13px;color:var(--ch);margin-bottom:4px;font-weight:500}.pol-contact a{color:var(--dg);text-decoration:none;font-weight:600}
+.pol-updated{font-size:11px;color:rgba(42,38,37,.35);text-align:center;margin-top:16px;font-family:var(--fe)}
+.ft-links{display:flex;gap:12px;justify-content:center;margin-top:14px;flex-wrap:wrap}.ft-link{color:rgba(255,255,255,.45);text-decoration:none;font-size:11px;font-family:var(--fe);cursor:pointer;transition:color .2s}.ft-link:hover{color:var(--sg)}
 </style>
 </head>
 <body dir="ltr">
@@ -168,7 +179,110 @@ body[dir="ltr"] .byb-tbl th{text-align:left}
 <div class="msh" id="msh"><div class="mha"></div><button class="mx" onclick="cM()">✕</button><div id="mbody"></div></div>
 <div id="sauceSec"></div>
 <div id="bybSec"></div>
-<footer class="ft"><div class="ftl"><img src="/ols-logo.png" alt="OLS"></div><div class="fts">أكل نظيف وطعم مختلف</div><div class="ftk"><a href="https://www.instagram.com/olsyes/" target="_blank">Instagram</a><a href="https://share.google/WuZBnUt12gPBpYM0S" target="_blank">Location</a></div><div class="ftc">© OLS 2025 — Developed by Mohammed Al-Hasoon</div></footer>
+<footer class="ft"><div class="ftl"><img src="/ols-logo.png" alt="OLS"></div><div class="fts">أكل نظيف وطعم مختلف</div><div class="ftk"><a href="https://www.instagram.com/olsyes/" target="_blank">Instagram</a><a href="https://share.google/WuZBnUt12gPBpYM0S" target="_blank">Location</a></div><div class="ft-links"><span class="ft-link" onclick="openPol('privacy')">سياسة الخصوصية</span><span class="ft-link">|</span><span class="ft-link" onclick="openPol('refund')">سياسة الاسترجاع</span></div><div class="ftc">© OLS 2025 — شركة انداد الشرق التجارية — سجل تجاري 2051259105</div></footer>
+<!-- Privacy Modal -->
+<div class="pol-bg" id="polPrivacy" onclick="if(event.target===this)closePol('privacy')"><div class="pol-sh"><div class="pol-hdr"><div class="pol-title">سياسة الخصوصية</div><button class="pol-close" onclick="closePol('privacy')">✕</button></div><div class="pol-body">
+<p>توضّح سياسة الخصوصية هذه كيفية قيام شركة انداد الشرق التجارية ("الشركة" أو "نحن") بجمع بياناتك الشخصية ومعالجتها وحمايتها عند استخدامك لموقعنا الإلكتروني www.ols.sa أو خدماتنا الخاصة بطلب الطعام والحجوزات. باستخدامك للموقع فإنك توافق على الممارسات الموضحة في هذه السياسة.</p>
+<p>نلتزم بأحكام نظام حماية البيانات الشخصية الصادر في المملكة العربية السعودية ولائحته التنفيذية، الخاضع لإشراف الهيئة السعودية للبيانات والذكاء الاصطناعي (سدايا).</p>
+<h3>١. البيانات التي نجمعها</h3>
+<ul>
+<li>بيانات التعريف: الاسم، رقم الجوال، البريد الإلكتروني.</li>
+<li>بيانات الطلب: تفاصيل طلبك من الطعام، الكمية، الملاحظات الخاصة، وسجل الطلبات السابقة.</li>
+<li>بيانات التوصيل: العنوان الوطني أو عنوان التوصيل والأحياء المخدومة.</li>
+<li>بيانات الدفع: تتم معالجة عمليات الدفع عبر بوابة دفع آمنة (مصرف الراجحي)، ولا نقوم بتخزين بيانات بطاقات البنكية كاملةً على أنظمتنا.</li>
+<li>بيانات تقنية: عنوان الـ IP، نوع الجهاز والمتصفح، وبيانات التصفح التي تُجمع عبر ملفات تعريف الارتباط (Cookies).</li>
+</ul>
+<h3>٢. الغرض من جمع البيانات</h3>
+<ul>
+<li>تنفيذ طلباتك وتوصيلها وإتمام عمليات الدفع.</li>
+<li>التواصل معك بخصوص حالة الطلب أو أي استفسار أو شكوى.</li>
+<li>تحسين جودة خدماتنا وقائمة الطعام وتجربة المستخدم على الموقع.</li>
+<li>إرسال العروض والرسائل التسويقية في حال موافقتك على ذلك، ويمكنك إلغاء الاشتراك في أي وقت.</li>
+<li>الالتزام بالمتطلبات النظامية والمحاسبية والضريبية في المملكة.</li>
+</ul>
+<h3>٣. الأساس النظامي للمعالجة</h3>
+<p>نعتمد في معالجة بياناتك على موافقتك الصريحة، أو على ما تتطلبه طبيعة تنفيذ العقد بيننا (تنفيذ طلبك)، أو لتحقيق مصلحة مشروعة لا تتعارض مع حقوقك، أو للوفاء بالتزام نظامي.</p>
+<h3>٤. مشاركة البيانات مع الغير</h3>
+<p>لا نبيع بياناتك الشخصية. وقد نشاركها بالقدر اللازم مع:</p>
+<ul>
+<li>مزودي خدمات التوصيل لإيصال طلبك.</li>
+<li>بوابة الدفع والبنوك لإتمام عمليات السداد.</li>
+<li>مزودي الخدمات التقنية والاستضافة الذين يعالجون بياناتك نيابةً عنا وفق التزامات السرية.</li>
+<li>الجهات الحكومية أو القضائية المختصة عند وجود متطلب نظامي.</li>
+</ul>
+<h3>٥. ملفات تعريف الارتباط (Cookies)</h3>
+<p>يستخدم موقعنا ملفات تعريف الارتباط لتحسين تجربتك وتذكّر تفضيلاتك وتحليل أداء الموقع. يمكنك التحكم في هذه الملفات أو تعطيلها من إعدادات متصفحك.</p>
+<h3>٦. حفظ البيانات ومدة الاحتفاظ</h3>
+<p>نحتفظ ببياناتك الشخصية طوال المدة اللازمة لتحقيق الأغراض المذكورة في هذه السياسة أو للمدة التي تفرضها الأنظمة المعمول بها في المملكة، ثم نقوم بإتلافها بطريقة آمنة.</p>
+<h3>٧. حماية البيانات</h3>
+<p>نطبّق إجراءات تقنية وتنظيمية مناسبة لحماية بياناتك من الوصول أو الاستخدام أو الإفصاح غير المصرّح به، بما في ذلك تشفير الاتصال والتعاملات المالية عبر قنوات آمنة.</p>
+<h3>٨. حقوقك كصاحب بيانات</h3>
+<ul>
+<li>العلم بكيفية جمع بياناتك والغرض منها.</li>
+<li>الوصول إلى بياناتك والحصول على نسخة منها.</li>
+<li>طلب تصحيح بياناتك أو تحديثها.</li>
+<li>طلب إتلاف بياناتك التي انتهت الحاجة منها.</li>
+<li>العدول عن موافقتك على معالجة بياناتك في أي وقت.</li>
+</ul>
+<h3>٩. خصوصية القاصرين</h3>
+<p>خدماتنا موجهة للأشخاص الذين بلغوا السن النظامية. ولا نجمع عمداً بيانات الأطفال دون موافقة ولي الأمر.</p>
+<h3>١٠. التعديلات على هذه السياسة</h3>
+<p>قد نقوم بتحديث هذه السياسة من وقت لآخر، وتُنشر النسخة المحدّثة على الموقع مع تحديث تاريخ "آخر تحديث". ننصحك بمراجعتها دورياً.</p>
+<h3>١١. التواصل معنا</h3>
+<div class="pol-contact">
+<div>📱 الجوال: <a href="tel:0559706488">0559706488</a></div>
+<div>📧 البريد: <a href="mailto:olsyes.sa@gmail.com">olsyes.sa@gmail.com</a></div>
+<div>🌐 الموقع: <a href="https://www.ols.sa">www.ols.sa</a></div>
+<div>📍 العنوان: حي العقربية، الأمير فهد بن سلمان، الخبر 34446</div>
+</div>
+<div class="pol-updated">آخر تحديث: يونيو 2026</div>
+</div></div></div>
+<!-- Refund Modal -->
+<div class="pol-bg" id="polRefund" onclick="if(event.target===this)closePol('refund')"><div class="pol-sh"><div class="pol-hdr"><div class="pol-title">سياسة الاستبدال والاسترجاع</div><button class="pol-close" onclick="closePol('refund')">✕</button></div><div class="pol-body">
+<p>توضّح هذه السياسة شروط وإجراءات الإلغاء والاستبدال والاسترجاع المتعلقة بالطلبات التي تتم عبر موقع شركة انداد الشرق التجارية www.ols.sa. وبإتمامك للطلب فإنك تقرّ باطلاعك على هذه السياسة وموافقتك عليها.</p>
+<p>نظراً لطبيعة منتجاتنا كأطعمة ومشروبات تُحضّر طازجة عند الطلب، فإن بعض أحكام الاسترجاع تختلف عن المنتجات العادية، وذلك حفاظاً على سلامة الغذاء وجودته.</p>
+<h3>١. إلغاء الطلب</h3>
+<ul>
+<li>لا يمكن إلغاء الطلب بعد تأكيده وإتمام الدفع، وذلك لأن تحضير الطلب يبدأ مباشرةً بعد التأكيد.</li>
+<li>في حال رغبتك بأي تعديل، يُرجى التواصل معنا فوراً عبر بيانات التواصل أدناه، وسنبذل ما بوسعنا قبل بدء التحضير دون أي التزام.</li>
+</ul>
+<h3>٢. الطلب الخاطئ أو الناقص أو التالف</h3>
+<p>نلتزم بتقديم طلبك صحيحاً وكاملاً. وفي حال استلمت طلباً خاطئاً أو ناقصاً أو غير مطابق أو تالفاً، فإننا نوفّر لك حل الاستبدال على النحو التالي:</p>
+<ul>
+<li>تواصل معنا خلال مدة أقصاها ساعتان من استلام الطلب مع إرفاق صورة توضّح المشكلة إن أمكن.</li>
+<li>بعد التحقق، نقوم باستبدال الصنف الخاطئ أو التالف أو إكمال الناقص دون أي رسوم إضافية عليك.</li>
+<li>الحل المعتمد في هذه الحالات هو الاستبدال أو إعادة تجهيز الطلب بشكل صحيح، وليس الاسترداد النقدي.</li>
+</ul>
+<h3>٣. الحالات التي لا تقبل الاستبدال</h3>
+<ul>
+<li>تغيّر رأي العميل بعد تأكيد الطلب أو بدء التحضير.</li>
+<li>الأطعمة والمشروبات التي تم استلامها وتناول جزء منها.</li>
+<li>الأخطاء الناتجة عن بيانات عنوان أو تواصل غير صحيحة أدخلها العميل.</li>
+<li>التأخير الناتج عن ظروف خارجة عن إرادتنا (زحام، أحوال جوية، تأخر مزود التوصيل).</li>
+</ul>
+<h3>٤. استرداد المبلغ</h3>
+<p>لا يتم الاسترداد النقدي إلا في حالات استثنائية يتعذّر فيها الاستبدال أو تنفيذ الطلب من جهتنا، وبعد التحقق والموافقة، وفي حال إقرار الاسترداد:</p>
+<ul>
+<li>يُعاد المبلغ إلى نفس وسيلة الدفع المستخدمة عند الشراء (البطاقة البنكية).</li>
+<li>تستغرق عملية إرجاع المبلغ من 7 إلى 14 يوم عمل، وفقاً لإجراءات البنك المصدر للبطاقة.</li>
+<li>قد تختلف مدة ظهور المبلغ في حسابك حسب سياسة البنك المصدر، وهي خارج سيطرتنا.</li>
+</ul>
+<h3>٥. كيفية تقديم طلب استبدال أو شكوى</h3>
+<p>للإبلاغ عن مشكلة في طلبك أو تقديم طلب استبدال، تواصل معنا عبر:</p>
+<div class="pol-contact">
+<div>📱 الجوال: <a href="tel:0559706488">0559706488</a></div>
+<div>📧 البريد: <a href="mailto:olsyes.sa@gmail.com">olsyes.sa@gmail.com</a></div>
+<div>🌐 الموقع: <a href="https://www.ols.sa">www.ols.sa</a></div>
+</div>
+<p style="margin-top:10px">يُرجى تجهيز رقم الطلب وتاريخه لتسريع معالجة طلبك.</p>
+<h3>٦. أحكام عامة</h3>
+<ul>
+<li>تخضع هذه السياسة لأنظمة المملكة العربية السعودية، بما فيها نظام التجارة الإلكترونية ولائحته.</li>
+<li>نحتفظ بحق تحديث هذه السياسة في أي وقت، وتُنشر النسخة المحدّثة على الموقع مع تاريخ آخر تحديث.</li>
+<li>في حال وجود أي نزاع، نسعى لحلّه ودياً، وعند تعذّر ذلك يُحال للجهات المختصة في المملكة.</li>
+</ul>
+<div class="pol-updated">آخر تحديث: يونيو 2026</div>
+</div></div></div>
 <div class="apx" id="apx"><div class="ap" id="apc"></div></div>
 <div class="emx" id="emx"><div class="em" id="emc"></div></div>
 <div class="cfm-bg" id="cfmBg"><div class="cfm-box"><h3 id="cfmT"></h3><p id="cfmM"></p><div class="cfm-btns"><button class="cfm-y" id="cfmY">تأكيد</button><button class="cfm-n" onclick="closeCfm()">إلغاء</button></div></div></div>
@@ -279,6 +393,9 @@ function rBYB(){
   h+=`</div></div></div>`;document.getElementById('bybSec').innerHTML=h}
 
 function tgBYB(btn){btn.classList.toggle('open');document.getElementById('bybBody').classList.toggle('open')}
+
+function openPol(type){const id=type==='privacy'?'polPrivacy':'polRefund';document.getElementById(id).classList.add('on');document.body.style.overflow='hidden'}
+function closePol(type){const id=type==='privacy'?'polPrivacy':'polRefund';document.getElementById(id).classList.remove('on');document.body.style.overflow=''}
 
 let sy=0;const sh=document.getElementById('msh');
 sh.addEventListener('touchstart',e=>{sy=e.touches[0].clientY},{passive:true});
